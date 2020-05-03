@@ -10,12 +10,12 @@ import { ThemeProvider } from "@material-ui/styles";
 import Layout from "./components/Layout/Layout";
 
 // Pages
-import LandingPage from "./pages/onboarding/LandingPage";
-import Signup from "./pages/onboarding/Signup";
-import Login from "./pages/onboarding/Login";
-import TermsOfUse from "./pages/onboarding/TermsOfUse";
-import PrivacyPolicy from "./pages/onboarding/PrivacyPolicy";
-import AboutUs from "./pages/onboarding/AboutUs";
+import LandingPage from "./pages/LandingPage";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import TermsOfUse from "./pages/TermsOfUse";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
