@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { theme } from "./util/theme";
+
+// Mui stuff
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/styles";
+
+// Components
+import Layout from "./components/Layout/Layout";
+
+// Pages
+import LandingPage from "./pages/onboarding/LandingPage";
+import Signup from "./pages/onboarding/Signup";
+import Login from "./pages/onboarding/Login";
+import TermsOfUse from "./pages/onboarding/TermsOfUse";
+import PrivacyPolicy from "./pages/onboarding/PrivacyPolicy";
+import AboutUs from "./pages/onboarding/AboutUs";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ThemeProvider theme={theme(false)}>
+        <CssBaseline />
+        <Layout>
+          <Switch>
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route path="/terms-of-use" component={TermsOfUse} />
+            <Route path="/privacy-policy" component={PrivacyPolicy} />
+            <Route path="/about" component={AboutUs} />
+            <Route exact path="/" component={LandingPage} />
+          </Switch>
+        </Layout>
+      </ThemeProvider>
+    </Router>
   );
 }
 
