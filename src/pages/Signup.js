@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-// import TextField from "@material-ui/core/Textfield";
+import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +56,7 @@ const Signup = () => {
         <Typography variant="body1">
           Getting started with hayek is free and takes less than a minute.
         </Typography>
-        {/* <TextField
+        <TextField
           id="username"
           name="username"
           type="text"
@@ -91,7 +91,7 @@ const Signup = () => {
           onChange={handleChange}
           style={{ margin: "10px 0" }}
           fullWidth
-        /> */}
+        />
         <Button
           variant="contained"
           color="primary"
