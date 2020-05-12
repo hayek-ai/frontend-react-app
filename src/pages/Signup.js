@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/styles";
@@ -8,6 +9,25 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 
+// Redux
+import { connect } from "react-redux";
+import { signupUser } from "../store/actions/userActions";
+
+function validateSignupData(newUserData) {
+  const errors = {};
+  if (newUserData.username.length < 4) {
+    errors.username = "must be at least 4 characters long";
+  }
+  if (newUserData.username.length > 20) {
+    errors.username = "cannot be more than 20 characters long";
+  }
+  if (/[~`@\s!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(newUserData.username)) {
+    errors.username =
+      "cannot contain spaces or special symbols (use the underscore '_' instead of spaces)";
+  }
+  return errors;
+}
+
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
@@ -15,26 +35,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Signup = () => {
+const Signup = (props) => {
   const classes = useStyles();
   const [state, setState] = useState({
     username: "",
+    email: "",
     password: "",
     loading: false,
     errors: {},
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(event);
-  };
-
-  const handleChange = (event) => [
+  const handleChange = (event) => {
     setState({
       ...state,
       [event.target.name]: event.target.value,
-    }),
-  ];
+      errors: validateSignupData({
+        ...state,
+        [event.target.name]: event.target.value,
+      }),
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newUserData = {
+      username: state.username,
+      email: state.email,
+      password: state.password,
+    };
+    setState((prevState) => ({ ...prevState, loading: true }));
+    const responseErrors = await props.signupUser(newUserData);
+    if (responseErrors.length > 0) {
+      let errors = {};
+      for (let i = 0; i < responseErrors.length; i++) {
+        errors[responseErrors[i].field] = responseErrors[i].detail;
+      }
+      setState((prevState) => ({
+        ...prevState,
+        errors: errors,
+        loading: false,
+      }));
+    } else {
+      props.history.push(`/confirm`);
+    }
+  };
 
   return (
     <Paper
@@ -97,6 +141,7 @@ const Signup = () => {
           color="primary"
           onClick={handleSubmit}
           style={{ width: "100%", margin: "30px 0 20px" }}
+          disabled={state.loading}
         >
           Sign up
         </Button>
@@ -125,4 +170,8 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+Signup.propTypes = {
+  signupUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, { signupUser })(Signup);

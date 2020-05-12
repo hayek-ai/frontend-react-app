@@ -33,17 +33,17 @@ const AboutUs = (props) => {
         </Typography>
         <Typography variant="body1" className={classes.paragraph}>
           Founded in May 2020, hayek.ai is an online marketplace for investment
-          research. We help analysts establish a track record and sell their
-          research. We help investors find high-quality investment ideas at an
-          affordable price point.
+          research. By giving analyst a platform to establish a track record and
+          sell their research, we can offer investors unparalleled access to
+          high-quality investment ideas.
         </Typography>
         <Typography variant="h5" color="primary" className={classes.heading}>
           Careers
         </Typography>
         <Typography variant="body1" className={classes.paragraph}>
           We are always looking for talented people to help us on our mission to
-          democratize the field of investing. If you want to join us, shoot us
-          an email at team@hayek.ai.
+          democratize the field of investing and revolutionize the capital
+          markets. If you want to join us, shoot us an email at team@hayek.ai.
         </Typography>
         <Typography variant="h5" color="primary" className={classes.heading}>
           What We Believe
