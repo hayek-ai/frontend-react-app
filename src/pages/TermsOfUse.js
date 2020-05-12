@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: theme.palette.primary.main,
   },
+  list: {
+    ...theme.typography.body1,
+    margin: "10px 0",
+  },
 }));
 
 const TermsOfUse = (props) => {
@@ -70,17 +74,19 @@ const TermsOfUse = (props) => {
         </Typography>
         <Typography variant="body1" className={classes.paragraph}>
           We reserve the right at any time to:
-          <ul>
-            <li>Change the terms and conditions of the TOU;</li>
-            <li>
-              Change the Site, including eliminating or discontinuing any
-              content or feature of the Site; or
-            </li>
-            <li>
-              Impose fees, charges or other conditions for use of the Site or
-              parts thereof (with reasonable notice).
-            </li>
-          </ul>
+        </Typography>
+        <ul className={classes.list}>
+          <li>Change the terms and conditions of the TOU;</li>
+          <li>
+            Change the Site, including eliminating or discontinuing any content
+            or feature of the Site; or
+          </li>
+          <li>
+            Impose fees, charges or other conditions for use of the Site or
+            parts thereof (with reasonable notice).
+          </li>
+        </ul>
+        <Typography variant="body1" className={classes.paragraph}>
           Hayek may modify the Site at any time without prior notice, and you
           accept those modifications if you continue to use the Site. You should
           check the Site frequently to see recent changes.
@@ -233,50 +239,50 @@ const TermsOfUse = (props) => {
           In addition, in connection with your use of the Site and its services
           (including by sending private messages to other registered users of
           the Site via your Hayek direct messaging account), you agree not to:
-          <ul>
-            <li>
-              Restrict or inhibit any other visitor from using the Site,
-              including, without limitation, by means of "hacking" or defacing
-              any portion of the Site;
-            </li>
-            <li>Use the Site for any unlawful purpose;</li>
-            <li>
-              Express or imply that any statements you make are endorsed by us,
-              without our prior written consent;
-            </li>
-            <li>
-              Modify, adapt, sublicense, translate, sell, reverse engineer,
-              decompile or disassemble any portion of the Site;
-            </li>
-            <li>
-              Disable, damage or alter the functioning or appearance of the
-              Site, including the presentation of advertising;
-            </li>
-            <li>
-              "Frame" or "mirror" any part of the Site without our prior written
-              authorization;
-            </li>
-            <li>
-              Use any robot, spider, site search/retrieval application, or other
-              manual or automatic device or process to download, retrieve,
-              index, "data mine", "scrape", "harvest" or in any way reproduce or
-              circumvent the navigational structure or presentation of the Site
-              or its contents;
-            </li>
-            <li>
-              Harvest or collect information about visitors to the Site without
-              their express consent;
-            </li>
-            <li>
-              Send unsolicited or unauthorized advertisements, spam, chain
-              letters, etc to other users of the Site;
-            </li>
-            <li>
-              Transmit any Content which contains software viruses, or other
-              harmful computer code, files or programs.
-            </li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>
+            Restrict or inhibit any other visitor from using the Site,
+            including, without limitation, by means of "hacking" or defacing any
+            portion of the Site;
+          </li>
+          <li>Use the Site for any unlawful purpose;</li>
+          <li>
+            Express or imply that any statements you make are endorsed by us,
+            without our prior written consent;
+          </li>
+          <li>
+            Modify, adapt, sublicense, translate, sell, reverse engineer,
+            decompile or disassemble any portion of the Site;
+          </li>
+          <li>
+            Disable, damage or alter the functioning or appearance of the Site,
+            including the presentation of advertising;
+          </li>
+          <li>
+            "Frame" or "mirror" any part of the Site without our prior written
+            authorization;
+          </li>
+          <li>
+            Use any robot, spider, site search/retrieval application, or other
+            manual or automatic device or process to download, retrieve, index,
+            "data mine", "scrape", "harvest" or in any way reproduce or
+            circumvent the navigational structure or presentation of the Site or
+            its contents;
+          </li>
+          <li>
+            Harvest or collect information about visitors to the Site without
+            their express consent;
+          </li>
+          <li>
+            Send unsolicited or unauthorized advertisements, spam, chain
+            letters, etc to other users of the Site;
+          </li>
+          <li>
+            Transmit any Content which contains software viruses, or other
+            harmful computer code, files or programs.
+          </li>
+        </ul>
         <Typography variant="body1" className={classes.paragraph}>
           You also agree to comply with all applicable laws, rules and
           regulations in connection with your use of the Site and the content
@@ -301,31 +307,28 @@ const TermsOfUse = (props) => {
           In order to access some of the services of the Site, you will have to
           create an account. By creating this account you agree to the
           following:
-          <ul>
-            <li>You may only maintain a single account;</li>
-            <li>
-              You may never share your account user name or password or
-              knowingly provide or authorize access to your account (including
-              without limitation a "Subscription", as defined below in Section
-              20);
-            </li>
-            <li>
-              You may never use another user's account without permission;
-            </li>
-            <li>
-              When creating your account, you must provide accurate and complete
-              information;
-            </li>
-            <li>
-              You are solely responsible for the activity that occurs on your
-              account, and you must keep your account password secure;
-            </li>
-            <li>
-              You must notify us immediately of any breach of security or
-              unauthorized use of your account.
-            </li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>You may only maintain a single account;</li>
+          <li>
+            You may never share your account user name or password or knowingly
+            provide or authorize access to your account (including without
+            limitation a "Subscription", as defined below in Section 20);
+          </li>
+          <li>You may never use another user's account without permission;</li>
+          <li>
+            When creating your account, you must provide accurate and complete
+            information;
+          </li>
+          <li>
+            You are solely responsible for the activity that occurs on your
+            account, and you must keep your account password secure;
+          </li>
+          <li>
+            You must notify us immediately of any breach of security or
+            unauthorized use of your account.
+          </li>
+        </ul>
         <Typography variant="body1" className={classes.paragraph}>
           You will be liable for any use made of your account or password and
           the losses of Hayek or others due to such unauthorized use. We will
@@ -358,47 +361,47 @@ const TermsOfUse = (props) => {
           On user-generated Content and Comments, Hayek reserves the right to
           remove content that violates one of the following principles, as
           determined by Hayek, at our discretion:
-          <ul>
-            <li>
-              No incitement to hatred. Material that promotes hatred toward
-              groups based on race or ethnic origin, religion, disability,
-              gender, age, veteran status, or sexual orientation/gender identity
-              will be removed.
-            </li>
-            <li>No pornography or pedophilia</li>
-            <li>
-              No direct or veiled threats against any person or group of people.
-            </li>
-            <li>No copyright infringement</li>
-            <li>
-              No plagiarism. This includes posting content verbatim from other
-              sources without proper attribution and/or repurposing content from
-              other sources and presenting it without reference to the content's
-              creator.
-            </li>
-            <li>
-              No publishing of other people's personal information, such as
-              credit card numbers, Social Security Numbers, and driver's and
-              other license numbers.
-            </li>
-            <li>
-              No impersonation of others in a manner that is intended to or does
-              mislead or confuse others.
-            </li>
-            <li>
-              No use for unlawful purposes or for promotion of dangerous and
-              illegal activities. Your account may be terminated and you may be
-              reported to the appropriate authorities.
-            </li>
-            <li>
-              No spamming, link-spamming or transmitting malware and viruses.
-            </li>
-            <li>No personal attacks.</li>
-            <li>No profanity or vulgarity.</li>
-            <li>No business solicitations or advertising.</li>
-            <li>No inappropriate, unethical or misleading behavior.</li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>
+            No incitement to hatred. Material that promotes hatred toward groups
+            based on race or ethnic origin, religion, disability, gender, age,
+            veteran status, or sexual orientation/gender identity will be
+            removed.
+          </li>
+          <li>No pornography or pedophilia</li>
+          <li>
+            No direct or veiled threats against any person or group of people.
+          </li>
+          <li>No copyright infringement</li>
+          <li>
+            No plagiarism. This includes posting content verbatim from other
+            sources without proper attribution and/or repurposing content from
+            other sources and presenting it without reference to the content's
+            creator.
+          </li>
+          <li>
+            No publishing of other people's personal information, such as credit
+            card numbers, Social Security Numbers, and driver's and other
+            license numbers.
+          </li>
+          <li>
+            No impersonation of others in a manner that is intended to or does
+            mislead or confuse others.
+          </li>
+          <li>
+            No use for unlawful purposes or for promotion of dangerous and
+            illegal activities. Your account may be terminated and you may be
+            reported to the appropriate authorities.
+          </li>
+          <li>
+            No spamming, link-spamming or transmitting malware and viruses.
+          </li>
+          <li>No personal attacks.</li>
+          <li>No profanity or vulgarity.</li>
+          <li>No business solicitations or advertising.</li>
+          <li>No inappropriate, unethical or misleading behavior.</li>
+        </ul>
         <Typography variant="body1" className={classes.paragraph}>
           <strong>Important note:</strong> Hayek encourages civil,
           thought-provoking debate and idea-sharing among investors and
@@ -452,27 +455,26 @@ const TermsOfUse = (props) => {
         <Typography variant="body1" className={classes.paragraph}>
           When you post any User Submission on the Site or give Hayek permission
           to post your Content, you agree to:
-          <ul>
-            <li>
-              Post comments in both tone and content that contribute in a
-              positive and high quality manner to the substantive exchange of
-              information and the subject matter of the Site.
-            </li>
-            <li>
-              Automatically grant Hayek a royalty-free, perpetual, worldwide,
-              irrevocable, non-exclusive and fully transferable and
-              sublicensable right and license to use, reproduce, modify, adapt,
-              publish, translate, create derivative works from, distribute,
-              perform and display any User Submission (in whole or in part)
-              and/or to incorporate any of your User Submission in other works
-              now or in the future and in any media formats and through any
-              media channels, and you confirm and warrant to Hayek that you own
-              the copyright in each of your User Submissions and have all the
-              rights, power and authority necessary to grant the above license
-              and rights.
-            </li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>
+            Post comments in both tone and content that contribute in a positive
+            and high quality manner to the substantive exchange of information
+            and the subject matter of the Site.
+          </li>
+          <li>
+            Automatically grant Hayek a royalty-free, perpetual, worldwide,
+            irrevocable, non-exclusive and fully transferable and sublicensable
+            right and license to use, reproduce, modify, adapt, publish,
+            translate, create derivative works from, distribute, perform and
+            display any User Submission (in whole or in part) and/or to
+            incorporate any of your User Submission in other works now or in the
+            future and in any media formats and through any media channels, and
+            you confirm and warrant to Hayek that you own the copyright in each
+            of your User Submissions and have all the rights, power and
+            authority necessary to grant the above license and rights.
+          </li>
+        </ul>
         <Typography variant="body1" className={classes.paragraph}>
           Hayek will use commercially reasonable efforts to attribute material
           User Submissions to the author.
@@ -492,113 +494,109 @@ const TermsOfUse = (props) => {
         <Typography variant="body1" className={classes.paragraph}>
           When you post any User Submission on the Site, you also agree to abide
           by the following disclosure rules:
-          <ul>
-            <li>
-              To disclose the existence at the time of writing of a long or
-              short position (including stocks, options or other instruments) in
-              any stock mentioned in any User Submission (except for
-              "Comments").
-            </li>
-            <li>
-              You may not write about a stock with the intention to boost or
-              reduce the stock's price and sell (or buy) the stock into the
-              resulting strength or weakness.
-            </li>
-            <li>
-              If you intend at the time or writing to sell or buy a stock within
-              three days of publication of a User Submission that discusses that
-              stock, you must disclose this intention.
-            </li>
-            <li>
-              Abide by the following conflict of interest rule: You will
-              disclose any material relationships with companies whose stocks
-              you write about in a User Submission or parties that stand to gain
-              in any way from the viewpoint you are outlining. Examples: You
-              must disclose if you are employed by a company whose stock you are
-              writing about; perform consulting for a company you write about;
-              receive paid advertising revenue or any other form of sponsorship
-              fee from a company you write about. This applies to narrow asset
-              classes as well. For example, if you are paid to promote a gold
-              dealer, that must be disclosed in any User Submission about gold.
-            </li>
-            <li>
-              If you choose an alias, be responsible for all statements made and
-              acts or omissions that occur by use of your alias.
-            </li>
-            <li>
-              Waive any and all rights against Hayek and hold Hayek harmless in
-              connection with any claims relating to any action taken by Hayek
-              as part of its investigation of a suspected violation or result of
-              its conclusion that a violation of these TOU has occurred,
-              including but not limited to the removal of User Submission from
-              the Site or a suspension or termination of your access to the
-              Site.
-            </li>
-            <li>
-              Maintain and promptly update your registration data to keep it
-              true, accurate, current and complete.
-            </li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>
+            To disclose the existence at the time of writing of a long or short
+            position (including stocks, options or other instruments) in any
+            stock mentioned in any User Submission (except for "Comments").
+          </li>
+          <li>
+            You may not write about a stock with the intention to boost or
+            reduce the stock's price and sell (or buy) the stock into the
+            resulting strength or weakness.
+          </li>
+          <li>
+            If you intend at the time or writing to sell or buy a stock within
+            three days of publication of a User Submission that discusses that
+            stock, you must disclose this intention.
+          </li>
+          <li>
+            Abide by the following conflict of interest rule: You will disclose
+            any material relationships with companies whose stocks you write
+            about in a User Submission or parties that stand to gain in any way
+            from the viewpoint you are outlining. Examples: You must disclose if
+            you are employed by a company whose stock you are writing about;
+            perform consulting for a company you write about; receive paid
+            advertising revenue or any other form of sponsorship fee from a
+            company you write about. This applies to narrow asset classes as
+            well. For example, if you are paid to promote a gold dealer, that
+            must be disclosed in any User Submission about gold.
+          </li>
+          <li>
+            If you choose an alias, be responsible for all statements made and
+            acts or omissions that occur by use of your alias.
+          </li>
+          <li>
+            Waive any and all rights against Hayek and hold Hayek harmless in
+            connection with any claims relating to any action taken by Hayek as
+            part of its investigation of a suspected violation or result of its
+            conclusion that a violation of these TOU has occurred, including but
+            not limited to the removal of User Submission from the Site or a
+            suspension or termination of your access to the Site.
+          </li>
+          <li>
+            Maintain and promptly update your registration data to keep it true,
+            accurate, current and complete.
+          </li>
+        </ul>
         <Typography variant="body1" className={classes.paragraph}>
           You agree not to:
-          <ul>
-            <li>
-              Choose an alias that is threatening, abusive, offensive,
-              harassing, derisive, defamatory, vulgar, obscene, libelous,
-              hatefully, racially, ethnically or otherwise or objectionable.
-            </li>
-            <li>
-              Post or transmit any Content that you either know or should know
-              is false, deceptive or misleading, or misrepresent or deceive
-              others as to the source, accuracy, integrity or completeness of
-              any comment you post.
-            </li>
-            <li>
-              Post or transmit any Content that is unlawful, harmful or
-              injurious to others, contains software viruses, or other harmful
-              computer code, files or programs, threatening, abusive, offensive,
-              harassing, derisive, defamatory, vulgar, obscene, libelous,
-              hatefully, racially, ethnically or otherwise tortious or
-              objectionable.
-            </li>
-            <li>
-              Post or transmit any Content that does or may invade the privacy
-              or violate or infringe on any rights of others, including, without
-              limitation, copyrights and other intellectual property rights.
-            </li>
-            <li>
-              By use of your alias or in any comment, impersonate any person or
-              entity, falsely or deceptively state, infer or otherwise
-              misrepresent your affiliation with or connection to any person or
-              entity.
-            </li>
-            <li>
-              Post or transmit any Content which, either the act of posting or
-              the comment itself, you do not have a right to do under any law,
-              regulation or order of any court, or as a result of an employment,
-              contractual, fiduciary or other legal obligation or relationship.
-            </li>
-            <li>
-              Post or transmit any advertising, promotional materials, so called
-              "chain letters," "pyramid" or other schemes or invitations to
-              participate in these or any other form of solicitation or
-              promotion.
-            </li>
-            <li>
-              Post or transmit any non-public or otherwise restricted,
-              confidential or proprietary information without authorization.
-            </li>
-            <li>
-              Violate any local, state, national or international law,
-              regulation or order of any court, including but not limited to
-              regulations of the U.S. Securities and Exchange Commission or any
-              rules of any securities exchange, including without limitation,
-              the New York Stock Exchange, the American Stock Exchange or The
-              Nasdaq Stock Market.
-            </li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>
+            Choose an alias that is threatening, abusive, offensive, harassing,
+            derisive, defamatory, vulgar, obscene, libelous, hatefully,
+            racially, ethnically or otherwise or objectionable.
+          </li>
+          <li>
+            Post or transmit any Content that you either know or should know is
+            false, deceptive or misleading, or misrepresent or deceive others as
+            to the source, accuracy, integrity or completeness of any comment
+            you post.
+          </li>
+          <li>
+            Post or transmit any Content that is unlawful, harmful or injurious
+            to others, contains software viruses, or other harmful computer
+            code, files or programs, threatening, abusive, offensive, harassing,
+            derisive, defamatory, vulgar, obscene, libelous, hatefully,
+            racially, ethnically or otherwise tortious or objectionable.
+          </li>
+          <li>
+            Post or transmit any Content that does or may invade the privacy or
+            violate or infringe on any rights of others, including, without
+            limitation, copyrights and other intellectual property rights.
+          </li>
+          <li>
+            By use of your alias or in any comment, impersonate any person or
+            entity, falsely or deceptively state, infer or otherwise
+            misrepresent your affiliation with or connection to any person or
+            entity.
+          </li>
+          <li>
+            Post or transmit any Content which, either the act of posting or the
+            comment itself, you do not have a right to do under any law,
+            regulation or order of any court, or as a result of an employment,
+            contractual, fiduciary or other legal obligation or relationship.
+          </li>
+          <li>
+            Post or transmit any advertising, promotional materials, so called
+            "chain letters," "pyramid" or other schemes or invitations to
+            participate in these or any other form of solicitation or promotion.
+          </li>
+          <li>
+            Post or transmit any non-public or otherwise restricted,
+            confidential or proprietary information without authorization.
+          </li>
+          <li>
+            Violate any local, state, national or international law, regulation
+            or order of any court, including but not limited to regulations of
+            the U.S. Securities and Exchange Commission or any rules of any
+            securities exchange, including without limitation, the New York
+            Stock Exchange, the American Stock Exchange or The Nasdaq Stock
+            Market.
+          </li>
+        </ul>
         <Typography variant="h5" className={classes.heading}>
           9. Caveats
         </Typography>
@@ -748,43 +746,42 @@ const TermsOfUse = (props) => {
           If you believe that your work has been copied in a way that
           constitutes copyright infringement, please provide our Copyright Agent
           the following information:
-          <ul>
-            <li>
-              16.1: an electronic or physical signature of the person authorized
-              to act on behalf of the owner of the copyright interest;
-            </li>
-            <li>
-              16.2: a description of the copyrighted work that you claim has
-              been infringed, including the URL (web page address) of the
-              location where the copyrighted work exists or a copy of the
-              copyrighted work;
-            </li>
-            <li>
-              16.3: a description of where the material that you claim is
-              infringing is located on the Site, including the URL;
-            </li>
-            <li>16.4: your address, telephone number, and email address;</li>
-            <li>
-              16.5: a statement by you that you have a good faith belief that
-              the disputed use is not authorized by the copyright owner, its
-              agent, or the law; and
-            </li>
-            <li>
-              16.6: a statement by you, made under penalty of perjury, that the
-              above information in your Notice is accurate and that you are the
-              copyright owner or authorized to act on the copyright owner's
-              behalf.
-            </li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>
+            16.1: an electronic or physical signature of the person authorized
+            to act on behalf of the owner of the copyright interest;
+          </li>
+          <li>
+            16.2: a description of the copyrighted work that you claim has been
+            infringed, including the URL (web page address) of the location
+            where the copyrighted work exists or a copy of the copyrighted work;
+          </li>
+          <li>
+            16.3: a description of where the material that you claim is
+            infringing is located on the Site, including the URL;
+          </li>
+          <li>16.4: your address, telephone number, and email address;</li>
+          <li>
+            16.5: a statement by you that you have a good faith belief that the
+            disputed use is not authorized by the copyright owner, its agent, or
+            the law; and
+          </li>
+          <li>
+            16.6: a statement by you, made under penalty of perjury, that the
+            above information in your Notice is accurate and that you are the
+            copyright owner or authorized to act on the copyright owner's
+            behalf.
+          </li>
+        </ul>
         <Typography variant="body1" className={classes.paragraph}>
           Hayek's Copyright Agent for Notice of claims of copyright infringement
           can be reached as follows:
-          <ul>
-            <li>By phone: 732-977-3873</li>
-            <li>By email: team@hayek.ai</li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>By phone: 732-977-3873</li>
+          <li>By email: team@hayek.ai</li>
+        </ul>
         <Typography variant="body1" className={classes.paragraph}>
           Please also note that under Section 512(f) any person who knowingly
           materially misrepresents that material or activity is infringing may
@@ -800,126 +797,120 @@ const TermsOfUse = (props) => {
           including those set forth in the Apple App Store Terms of Service,
           effective as of the date that you download the Licensed Application.
           In addition, you agree to the following terms:
-          <ul>
-            <li>
-              You acknowledge that this TOU is entered into by and between you
-              and Hayek exclusively and not with Apple, Inc. or its subsidiaries
-              ("Apple").
-            </li>
-            <li>
-              Any appearance of the word "Site" in the TOU is also intended,
-              where appropriate, to include a reference to the Licensed
-              Application.
-            </li>
-            <li>
-              As between Hayek and Apple, we are exclusively responsible for the
-              Licensed Application and its content, unless specifically noted
-              otherwise in the TOU,
-            </li>
-            <li>
-              Hayek grants you a nontransferable, nonexclusive, royalty-free,
-              fully paid, worldwide license (without the right to sublicense) to
-              install and use one copy of the Licensed Application, in
-              executable object code format only, solely on your iPhone® mobile
-              device.
-            </li>
-            <li>
-              Except as required by applicable law, you acknowledge that neither
-              Hayek nor Apple are obligated to maintain or support the Licensed
-              Application. Notwithstanding the foregoing, from time to time, we
-              may provide updates or upgrades to the Licensed Application (each
-              a "Revision"), but we are not under any obligation to do so. Such
-              Revisions will be supplied according to Hayek's then-current
-              policies, which may include automatic updating or upgrading
-              without any additional notice to you. You consent to any such
-              automatic updating or upgrading of the Licensed Application. All
-              references herein to the Licensed Application shall include
-              Revisions. This TOU shall govern any Revisions that replace or
-              supplement the original Licensed Application unless the Revision
-              is accompanied by a separate license agreement which will govern
-              the Revision.
-            </li>
-            <li>
-              Currently, we do not charge for your use of the Licensed
-              Application, however, your use of the Licensed Application
-              requires and utilizes internet connection or data access. To the
-              extent that a third party service provider or carrier charges for
-              your internet or data usage, you agree to be solely responsible
-              for those charges.
-            </li>
-            <li>
-              In the event of any failure of the Licensed Application to conform
-              to any applicable warranty provided herein, you may notify Apple,
-              and Apple will refund the purchase price, if any, for the Licensed
-              Application to you. Furthermore, to the maximum extent permitted
-              by applicable law, Apple will have no other warranty obligation
-              whatsoever with respect to the Licensed Application, and any other
-              claims, losses, liabilities, damages, costs or expenses
-              attributable to any failure of the Licensed Application to conform
-              to any warranty.
-            </li>
-            <li>
-              To the extent that a claim is permitted pursuant to this TOU,
-              Hayek, and not Apple, is responsible for addressing your claims or
-              those of any third party relating to the Licensed Application or
-              your possession and/or use of the Licensed Application, including,
-              but not limited to: (i) product liability claims; (ii) any claim
-              that the Licensed Application fails to conform to any applicable
-              legal or regulatory requirement; and (iii) claims arising under
-              consumer protection or similar legislation. Similarly, if there is
-              a third party claim that the Licensed Application or Your
-              possession and use of the Licensed Application infringes a third
-              party's intellectual property rights, Hayek, not Apple, will be
-              solely responsible for the investigation, defense, settlement and
-              discharge of any such intellectual property infringement claim.
-            </li>
-            <li>
-              You represent and warrant that (i) You are not located in a
-              country that is subject to a U.S. Government embargo or that has
-              been designated by the U.S. Government as a "terrorist supporting"
-              country; and (ii) You are not listed on any U.S. Government list
-              of prohibited or restricted parties.
-            </li>
-            <li>
-              Apple is an intended third-party beneficiary of this Section 17,
-              Additional Terms. You acknowledge that Apple will have the right
-              (and will be deemed to have accepted the right) to enforce any of
-              the terms or conditions of this Section 17 against you as a
-              third-party beneficiary of this Section 17.
-            </li>
-          </ul>
         </Typography>
+        <ul className={classes.list}>
+          <li>
+            You acknowledge that this TOU is entered into by and between you and
+            Hayek exclusively and not with Apple, Inc. or its subsidiaries
+            ("Apple").
+          </li>
+          <li>
+            Any appearance of the word "Site" in the TOU is also intended, where
+            appropriate, to include a reference to the Licensed Application.
+          </li>
+          <li>
+            As between Hayek and Apple, we are exclusively responsible for the
+            Licensed Application and its content, unless specifically noted
+            otherwise in the TOU,
+          </li>
+          <li>
+            Hayek grants you a nontransferable, nonexclusive, royalty-free,
+            fully paid, worldwide license (without the right to sublicense) to
+            install and use one copy of the Licensed Application, in executable
+            object code format only, solely on your iPhone® mobile device.
+          </li>
+          <li>
+            Except as required by applicable law, you acknowledge that neither
+            Hayek nor Apple are obligated to maintain or support the Licensed
+            Application. Notwithstanding the foregoing, from time to time, we
+            may provide updates or upgrades to the Licensed Application (each a
+            "Revision"), but we are not under any obligation to do so. Such
+            Revisions will be supplied according to Hayek's then-current
+            policies, which may include automatic updating or upgrading without
+            any additional notice to you. You consent to any such automatic
+            updating or upgrading of the Licensed Application. All references
+            herein to the Licensed Application shall include Revisions. This TOU
+            shall govern any Revisions that replace or supplement the original
+            Licensed Application unless the Revision is accompanied by a
+            separate license agreement which will govern the Revision.
+          </li>
+          <li>
+            Currently, we do not charge for your use of the Licensed
+            Application, however, your use of the Licensed Application requires
+            and utilizes internet connection or data access. To the extent that
+            a third party service provider or carrier charges for your internet
+            or data usage, you agree to be solely responsible for those charges.
+          </li>
+          <li>
+            In the event of any failure of the Licensed Application to conform
+            to any applicable warranty provided herein, you may notify Apple,
+            and Apple will refund the purchase price, if any, for the Licensed
+            Application to you. Furthermore, to the maximum extent permitted by
+            applicable law, Apple will have no other warranty obligation
+            whatsoever with respect to the Licensed Application, and any other
+            claims, losses, liabilities, damages, costs or expenses attributable
+            to any failure of the Licensed Application to conform to any
+            warranty.
+          </li>
+          <li>
+            To the extent that a claim is permitted pursuant to this TOU, Hayek,
+            and not Apple, is responsible for addressing your claims or those of
+            any third party relating to the Licensed Application or your
+            possession and/or use of the Licensed Application, including, but
+            not limited to: (i) product liability claims; (ii) any claim that
+            the Licensed Application fails to conform to any applicable legal or
+            regulatory requirement; and (iii) claims arising under consumer
+            protection or similar legislation. Similarly, if there is a third
+            party claim that the Licensed Application or Your possession and use
+            of the Licensed Application infringes a third party's intellectual
+            property rights, Hayek, not Apple, will be solely responsible for
+            the investigation, defense, settlement and discharge of any such
+            intellectual property infringement claim.
+          </li>
+          <li>
+            You represent and warrant that (i) You are not located in a country
+            that is subject to a U.S. Government embargo or that has been
+            designated by the U.S. Government as a "terrorist supporting"
+            country; and (ii) You are not listed on any U.S. Government list of
+            prohibited or restricted parties.
+          </li>
+          <li>
+            Apple is an intended third-party beneficiary of this Section 17,
+            Additional Terms. You acknowledge that Apple will have the right
+            (and will be deemed to have accepted the right) to enforce any of
+            the terms or conditions of this Section 17 against you as a
+            third-party beneficiary of this Section 17.
+          </li>
+        </ul>
         <Typography variant="h5" className={classes.heading}>
           18. Additional Terms that Apply to Hayek Paid Subscriptions
         </Typography>
-        <Typography variant="body1" className={classes.paragraph}>
-          <ul>
-            <li>
-              By subscribing to Hayek subscription products (the
-              “Subscription”), you agree to pay the applicable Subscription fees
-              set forth on the Site. Hayek reserves the right to revise
-              Subscription fees upon reasonable notice.
-            </li>
-            <li>
-              We remind you that all the rules applicable to setting up an
-              account under Section 6 above (entitled, "User Conduct") apply to
-              your Subscriptions.
-            </li>
-            <li>
-              Unless we notify you in writing otherwise, you are not permitted
-              to share Content available through your Subscriptions.
-            </li>
-            <li>
-              Unless stated otherwise in writing, Subscription fees are
-              nonrefundable.
-            </li>
-            <li>
-              Hayek reserves the right to cancel a Subscription at any time. If
-              we cancel a Subscription due to a breach of these Terms of Use you
-              will not be eligible for any refund.
-            </li>
-          </ul>
-        </Typography>
+        <ul className={classes.list}>
+          <li>
+            By subscribing to Hayek subscription products (the “Subscription”),
+            you agree to pay the applicable Subscription fees set forth on the
+            Site. Hayek reserves the right to revise Subscription fees upon
+            reasonable notice.
+          </li>
+          <li>
+            We remind you that all the rules applicable to setting up an account
+            under Section 6 above (entitled, "User Conduct") apply to your
+            Subscriptions.
+          </li>
+          <li>
+            Unless we notify you in writing otherwise, you are not permitted to
+            share Content available through your Subscriptions.
+          </li>
+          <li>
+            Unless stated otherwise in writing, Subscription fees are
+            nonrefundable.
+          </li>
+          <li>
+            Hayek reserves the right to cancel a Subscription at any time. If we
+            cancel a Subscription due to a breach of these Terms of Use you will
+            not be eligible for any refund.
+          </li>
+        </ul>
         <Typography variant="h5" className={classes.heading}>
           19. Miscellaneous
         </Typography>
