@@ -1,9 +1,4 @@
-import {
-  SET_AUTHENTICATED,
-  SET_UNAUTHENTICATED,
-  SET_USER,
-  SET_CONFIRMED,
-} from "../types";
+import { SET_UNAUTHENTICATED, SET_USER, SET_CONFIRMED } from "../types";
 
 import axios from "../../util/axios";
 import jwtDecode from "jwt-decode";
@@ -34,6 +29,38 @@ export const loginUser = (userData) => (dispatch) => {
       return [];
     })
     .catch((err) => err.response.data.errors);
+};
+
+export const confirmUser = (verificationCode) => (dispatch) => {
+  return axios
+    .get(`/user/confirm/${verificationCode}`)
+    .then(() => {
+      dispatch({ type: SET_CONFIRMED });
+      return [];
+    })
+    .catch((err) => err.response.data.errors);
+};
+
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("accessToken");
+  delete axios.defaults.headers.common["Authorization"];
+  dispatch({ type: SET_UNAUTHENTICATED });
+};
+
+export const getUserData = () => (dispatch) => {
+  const token = localStorage.accessToken;
+  const decodedToken = jwtDecode(token);
+
+  return axios
+    .get(`/user/${decodedToken.identity}`)
+    .then((res) => {
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
+      return [];
+    })
+    .catch(() => dispatch({ type: SET_UNAUTHENTICATED }));
 };
 
 const setAuthorizationHeader = (token) => {
