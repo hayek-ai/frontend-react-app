@@ -21,7 +21,7 @@ function validateSignupData(newUserData) {
   if (newUserData.username.length > 20) {
     errors.username = "cannot be more than 20 characters long";
   }
-  if (/[~`@\s!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(newUserData.username)) {
+  if (/[~`@\s!#$%^&*+=\-[\]\\';,/{}|\\":<>?]/g.test(newUserData.username)) {
     errors.username =
       "cannot contain spaces or special symbols (use the underscore '_' instead of spaces)";
   }

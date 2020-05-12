@@ -3,10 +3,12 @@ import {
   SET_UNAUTHENTICATED,
   SET_USER,
   SET_CONFIRMED,
+  TOGGLE_DARKMODE,
 } from "../types";
 
 const initialState = {
   isAuthenticated: false,
+  prefersDarkmode: false,
   isConfirmed: false,
   isAnalyst: false,
   isProTier: false,
@@ -27,6 +29,8 @@ export default function (state = initialState, action) {
       return { ...action.payload, isAuthenticated: true };
     case SET_CONFIRMED:
       return { ...state, isAuthenticated: true, isConfirmed: true };
+    case TOGGLE_DARKMODE:
+      return { ...state, prefersDarkmode: action.payload };
     default:
       return state;
   }

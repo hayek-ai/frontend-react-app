@@ -1,4 +1,9 @@
-import { SET_UNAUTHENTICATED, SET_USER, SET_CONFIRMED } from "../types";
+import {
+  SET_UNAUTHENTICATED,
+  SET_USER,
+  SET_CONFIRMED,
+  TOGGLE_DARKMODE,
+} from "../types";
 
 import axios from "../../util/axios";
 import jwtDecode from "jwt-decode";
@@ -61,6 +66,20 @@ export const getUserData = () => (dispatch) => {
       return [];
     })
     .catch(() => dispatch({ type: SET_UNAUTHENTICATED }));
+};
+
+export const toggleDarkmode = (prefersDarkmode, userId) => (dispatch) => {
+  axios
+    .put(`/user/${userId}`, {
+      prefersDarkmode: !prefersDarkmode,
+    })
+    .then(() =>
+      dispatch({
+        type: TOGGLE_DARKMODE,
+        payload: !prefersDarkmode,
+      })
+    )
+    .catch((err) => console.log(err));
 };
 
 const setAuthorizationHeader = (token) => {

@@ -28,10 +28,11 @@ import Confirmation from "./pages/Confirmation";
 import TermsOfUse from "./pages/TermsOfUse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUs from "./pages/AboutUs";
+import Help from "./pages/Help";
 import Feed from "./pages/Feed";
 
 function App(props) {
-  const { prefersDarkMode, isAuthenticated, username } = props;
+  const { prefersDarkmode, isAuthenticated, username } = props;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -58,7 +59,7 @@ function App(props) {
 
   return (
     <Router>
-      <ThemeProvider theme={theme(prefersDarkMode)}>
+      <ThemeProvider theme={theme(prefersDarkmode)}>
         <CssBaseline />
         <WithLoading loading={loading}>
           <Layout>
@@ -67,6 +68,7 @@ function App(props) {
               <Route path="/login" component={Login} />
               <Route path="/terms-of-use" component={TermsOfUse} />
               <Route path="/privacy-policy" component={PrivacyPolicy} />
+              <Route path="/help" component={Help} />
               <Route path="/about" component={AboutUs} />
               <Route path="/confirm" component={Confirmation} />
               <PrivateRoute path="/feed" component={Feed} />
@@ -86,7 +88,7 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => ({
-  prefersDarkMode: state.user.prefersDarkMode,
+  prefersDarkmode: state.user.prefersDarkmode,
   isAuthenticated: state.user.isAuthenticated,
   username: state.user.username,
 });
