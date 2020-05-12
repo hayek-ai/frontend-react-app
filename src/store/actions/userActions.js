@@ -22,6 +22,20 @@ export const signupUser = (newUserData) => (dispatch) => {
     .catch((err) => err.response.data.errors);
 };
 
+export const loginUser = (userData) => (dispatch) => {
+  return axios
+    .post("/login", userData)
+    .then((res) => {
+      setAuthorizationHeader(res.data.accessToken);
+      dispatch({
+        type: SET_USER,
+        payload: res.data.user,
+      });
+      return [];
+    })
+    .catch((err) => err.response.data.errors);
+};
+
 const setAuthorizationHeader = (token) => {
   const accessToken = `Bearer ${token}`;
   localStorage.setItem("accessToken", accessToken);

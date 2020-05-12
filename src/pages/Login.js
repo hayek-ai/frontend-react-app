@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/styles";
@@ -8,26 +9,29 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 
+// Redux
+import { connect } from "react-redux";
+import { loginUser } from "../store/actions/userActions";
+
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     color: theme.palette.primary.main,
   },
+  generalError: {
+    color: theme.palette.error.main,
+    marginTop: 20,
+  },
 }));
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
-    username: "",
+    emailOrUsername: "",
     password: "",
-    loading: false,
     errors: {},
   });
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(event);
-  };
 
   const handleChange = (event) => [
     setState({
@@ -35,6 +39,29 @@ const Login = () => {
       [event.target.name]: event.target.value,
     }),
   ];
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const userData = {
+      emailOrUsername: state.emailOrUsername,
+      password: state.password,
+    };
+    setLoading(true);
+    const responseErrors = await props.loginUser(userData);
+    if (responseErrors.length > 0) {
+      let errors = {};
+      for (let i = 0; i < responseErrors.length; i++) {
+        errors[responseErrors[i].field] = responseErrors[i].detail;
+      }
+      setState((prevState) => ({
+        ...prevState,
+        errors: errors,
+      }));
+      setLoading(false);
+    } else {
+      props.history.push("/");
+    }
+  };
 
   return (
     <Paper
@@ -54,10 +81,10 @@ const Login = () => {
         }}
       >
         <TextField
-          id="username"
-          name="username"
+          id="emailOrUsername"
+          name="emailOrUsername"
           type="text"
-          label="Username"
+          label="Email or Username"
           helperText={state.errors.username}
           error={state.errors.username ? true : false}
           value={state.username}
@@ -77,16 +104,22 @@ const Login = () => {
           style={{ margin: "10px 0" }}
           fullWidth
         />
+        {state.errors.general && (
+          <Typography variant="subtitle1" className={classes.generalError}>
+            {state.errors.general}
+          </Typography>
+        )}
         <Button
           variant="contained"
           color="primary"
           onClick={handleSubmit}
           style={{ width: "100%", margin: "30px 0" }}
+          disabled={loading}
         >
           Log in
         </Button>
         <div style={{ padding: 10 }}>
-          <Link to="/recover-password" style={{ textDecoration: "none" }}>
+          <Link to="/recover-password" className={classes.link}>
             <Typography variant="body1" color="primary">
               Forgot password?
             </Typography>
@@ -105,4 +138,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, { loginUser })(Login);

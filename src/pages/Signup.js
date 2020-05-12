@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = (props) => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     username: "",
     email: "",
     password: "",
-    loading: false,
     errors: {},
   });
 
@@ -63,7 +63,7 @@ const Signup = (props) => {
       email: state.email,
       password: state.password,
     };
-    setState((prevState) => ({ ...prevState, loading: true }));
+    setLoading(true);
     const responseErrors = await props.signupUser(newUserData);
     if (responseErrors.length > 0) {
       let errors = {};
@@ -73,11 +73,11 @@ const Signup = (props) => {
       setState((prevState) => ({
         ...prevState,
         errors: errors,
-        loading: false,
       }));
     } else {
       props.history.push(`/confirm`);
     }
+    setLoading(false);
   };
 
   return (
@@ -141,7 +141,7 @@ const Signup = (props) => {
           color="primary"
           onClick={handleSubmit}
           style={{ width: "100%", margin: "30px 0 20px" }}
-          disabled={state.loading}
+          disabled={loading}
         >
           Sign up
         </Button>
