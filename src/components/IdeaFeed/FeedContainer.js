@@ -6,6 +6,7 @@ import EmptyFeed from "../util/EmptyFeed";
 import IdeaCard from "./IdeaCard/IdeaCard";
 import IdeaCardHeader from "./IdeaCard/IdeaCardHeader/IdeaCardHeader";
 import IdeaCardBody from "./IdeaCard/IdeaCardBody/IdeaCardBody";
+import IdeaCardActions from "./IdeaCard/IdeaCardActions/IdeaCardActions";
 
 class FeedContainer extends React.Component {
   _isMounted = false;
@@ -28,6 +29,14 @@ class FeedContainer extends React.Component {
     this._isMounted = false;
   }
 
+  handleCommentOpen(ideaId) {
+    console.log(ideaId);
+  }
+
+  handleVote(ideaId) {
+    console.log(ideaId);
+  }
+
   handleViewReport = (ideaId) => {
     this.props.history.push(`/report/${ideaId}`);
   };
@@ -39,6 +48,11 @@ class FeedContainer extends React.Component {
           <IdeaCard key={index}>
             <IdeaCardHeader idea={idea} />
             <IdeaCardBody idea={idea} />
+            <IdeaCardActions
+              idea={idea}
+              handleCommentOpen={this.handleCommentOpen}
+              handleVote={this.handleVote}
+            />
           </IdeaCard>
         ))
       ) : (

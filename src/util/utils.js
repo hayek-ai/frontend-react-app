@@ -23,3 +23,9 @@ export const formatNumber = (x, significantFigures, dollars, percentage) => {
 export const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+export const getBaseUrl = () => {
+  let getUrl = window.location;
+  let baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+  return baseUrl;
+};

@@ -20,7 +20,7 @@ const Feed = (props) => {
     let mounted = true;
     getIdeaFeed("following").then((ideas) => {
       if (mounted) {
-        setFeed(ideas);
+        setFeed([...ideas]);
         setLoading(false);
       }
     });
@@ -33,11 +33,11 @@ const Feed = (props) => {
     setLoading(true);
     if (newPanelIndex === 0) {
       const ideas = await getIdeaFeed("following");
-      setFeed(ideas);
+      setFeed([...ideas]);
       setLoading(false);
     } else {
       const ideas = await getIdeaFeed("discover");
-      setFeed(ideas);
+      setFeed([...ideas]);
       setLoading(false);
     }
   };
