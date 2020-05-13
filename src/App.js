@@ -36,8 +36,9 @@ function App(props) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (username) setLoading(false);
-    else {
+    if (username) {
+      setLoading(false);
+    } else {
       const token = localStorage.accessToken;
       if (token) {
         const decodedToken = jwtDecode(token);

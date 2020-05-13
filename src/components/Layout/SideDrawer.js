@@ -30,9 +30,12 @@ const SideDrawer = (props) => {
 
   const handleListItemClick = (text) => {
     setOpen(false);
-    if (text === "Logout") logoutUser();
-    if (text === "Toggle Dark Mode")
+    if (text === "Logout") {
+      logoutUser();
+    }
+    if (text === "Toggle Dark Mode") {
       toggleDarkmode(user.prefersDarkmode, user.id);
+    }
   };
 
   // if unauthed

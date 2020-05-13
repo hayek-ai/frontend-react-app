@@ -7,11 +7,13 @@ import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
 
 // Redux
 import { connect } from "react-redux";
 import { loginUser } from "../store/actions/userActions";
+
+// Components
+import FullPageLayout from "../components/Layout/FullPageLayout";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -48,7 +50,7 @@ const Login = (props) => {
     };
     setLoading(true);
     const responseErrors = await props.loginUser(userData);
-    if (responseErrors.length > 0) {
+    if (responseErrors) {
       let errors = {};
       for (let i = 0; i < responseErrors.length; i++) {
         errors[responseErrors[i].field] = responseErrors[i].detail;
@@ -59,82 +61,67 @@ const Login = (props) => {
       }));
       setLoading(false);
     } else {
+      setLoading(false);
       props.history.push("/");
     }
   };
 
   return (
-    <Paper
-      elevation={0}
-      style={{
-        height: "100vh",
-        borderRadius: 0,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 425,
-          margin: "auto",
-          textAlign: "center",
-          padding: 25,
-          paddingTop: 50,
-        }}
+    <FullPageLayout containerType="narrowContainer">
+      <TextField
+        id="emailOrUsername"
+        name="emailOrUsername"
+        type="text"
+        label="Email or Username"
+        helperText={state.errors.username}
+        error={state.errors.username ? true : false}
+        value={state.username}
+        onChange={handleChange}
+        style={{ margin: "10px 0" }}
+        fullWidth
+      />
+      <TextField
+        id="password"
+        name="password"
+        type="password"
+        label="Password"
+        helperText={state.errors.password}
+        error={state.errors.password ? true : false}
+        value={state.password}
+        onChange={handleChange}
+        style={{ margin: "10px 0" }}
+        fullWidth
+      />
+      {state.errors.general && (
+        <Typography variant="subtitle1" className={classes.generalError}>
+          {state.errors.general}
+        </Typography>
+      )}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+        style={{ width: "100%", margin: "30px 0" }}
+        disabled={loading}
       >
-        <TextField
-          id="emailOrUsername"
-          name="emailOrUsername"
-          type="text"
-          label="Email or Username"
-          helperText={state.errors.username}
-          error={state.errors.username ? true : false}
-          value={state.username}
-          onChange={handleChange}
-          style={{ margin: "10px 0" }}
-          fullWidth
-        />
-        <TextField
-          id="password"
-          name="password"
-          type="password"
-          label="Password"
-          helperText={state.errors.password}
-          error={state.errors.password ? true : false}
-          value={state.password}
-          onChange={handleChange}
-          style={{ margin: "10px 0" }}
-          fullWidth
-        />
-        {state.errors.general && (
-          <Typography variant="subtitle1" className={classes.generalError}>
-            {state.errors.general}
+        Log in
+      </Button>
+      <div style={{ padding: 10 }}>
+        <Link to="/recover-password" className={classes.link}>
+          <Typography variant="body1" color="primary">
+            Forgot password?
           </Typography>
-        )}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          style={{ width: "100%", margin: "30px 0" }}
-          disabled={loading}
-        >
-          Log in
-        </Button>
-        <div style={{ padding: 10 }}>
-          <Link to="/recover-password" className={classes.link}>
-            <Typography variant="body1" color="primary">
-              Forgot password?
-            </Typography>
-          </Link>
-        </div>
-        <div style={{ padding: 10 }}>
-          <Typography variant="body1">
-            Don't have an account?{" "}
-            <Link to="/signup" className={classes.link}>
-              Sign up
-            </Link>
-          </Typography>
-        </div>
+        </Link>
       </div>
-    </Paper>
+      <div style={{ padding: 10 }}>
+        <Typography variant="body1">
+          Don't have an account?{" "}
+          <Link to="/signup" className={classes.link}>
+            Sign up
+          </Link>
+        </Typography>
+      </div>
+    </FullPageLayout>
   );
 };
 

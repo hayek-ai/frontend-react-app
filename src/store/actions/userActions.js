@@ -17,7 +17,6 @@ export const signupUser = (newUserData) => (dispatch) => {
         type: SET_USER,
         payload: res.data.user,
       });
-      return [];
     })
     .catch((err) => err.response.data.errors);
 };
@@ -31,7 +30,6 @@ export const loginUser = (userData) => (dispatch) => {
         type: SET_USER,
         payload: res.data.user,
       });
-      return [];
     })
     .catch((err) => err.response.data.errors);
 };
@@ -41,7 +39,6 @@ export const confirmUser = (verificationCode) => (dispatch) => {
     .get(`/user/confirm/${verificationCode}`)
     .then(() => {
       dispatch({ type: SET_CONFIRMED });
-      return [];
     })
     .catch((err) => err.response.data.errors);
 };
@@ -63,7 +60,6 @@ export const getUserData = () => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
-      return [];
     })
     .catch(() => dispatch({ type: SET_UNAUTHENTICATED }));
 };
