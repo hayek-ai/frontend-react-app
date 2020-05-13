@@ -23,21 +23,31 @@ const useStyles = makeStyles((theme) => ({
     padding: 25,
     paddingTop: 50,
   },
+  feedContainer: {
+    maxWidth: 425,
+    margin: "auto",
+    textAlign: "center",
+    marginTop: 10,
+  },
 }));
 
-const FullPageLayout = ({ children, containerType }) => {
+const FullPageLayout = ({ children, containerType, paperBackground }) => {
   const classes = useStyles();
-  return (
-    <React.Fragment>
-      <Paper elevation={0} className={classes.background}>
-        <div className={classes[containerType]}>{children}</div>
-      </Paper>
-    </React.Fragment>
+
+  const markup = paperBackground ? (
+    <Paper elevation={0} className={classes.background}>
+      <div className={classes[containerType]}>{children}</div>
+    </Paper>
+  ) : (
+    <div className={classes[containerType]}>{children}</div>
   );
+
+  return markup;
 };
 
 FullPageLayout.propTypes = {
   containerType: PropTypes.string.isRequired,
+  paperBackground: PropTypes.bool.isRequired,
 };
 
 export default FullPageLayout;

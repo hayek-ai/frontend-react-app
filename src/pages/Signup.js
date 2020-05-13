@@ -84,7 +84,7 @@ const Signup = (props) => {
   };
 
   return (
-    <FullPageLayout containerType="narrowContainer">
+    <FullPageLayout containerType="narrowContainer" paperBackground={true}>
       <Typography variant="body1">
         Getting started with hayek is free and takes less than a minute.
       </Typography>

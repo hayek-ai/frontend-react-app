@@ -16,7 +16,7 @@ const Help = () => {
   const classes = useStyles();
 
   return (
-    <FullPageLayout containerType="wideContainer">
+    <FullPageLayout containerType="wideContainer" paperBackground={true}>
       <Typography variant="body1" className={classes.paragraph}>
         Need help? Don’t hesitate to reach out!
       </Typography>

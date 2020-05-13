@@ -28,7 +28,7 @@ const LandingPage = (props) => {
   };
 
   return (
-    <FullPageLayout containerType="narrowContainer">
+    <FullPageLayout containerType="narrowContainer" paperBackground={true}>
       <img src={Logo} alt="logo" className={classes.logo} />
       <Typography variant="h5" color="primary" align="center">
         Welcome to hayek.ai
