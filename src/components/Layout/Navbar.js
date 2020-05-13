@@ -53,7 +53,7 @@ const Navbar = (props) => {
   return (
     <React.Fragment>
       <ElevationScroll>
-        <AppBar color="inherit">
+        <AppBar variant="outlined" color="inherit">
           <Toolbar className={classes.toolbar}>
             <IconButton
               edge="start"
