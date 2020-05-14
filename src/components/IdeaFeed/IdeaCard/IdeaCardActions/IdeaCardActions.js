@@ -24,14 +24,12 @@ export const useStyles = makeStyles((theme) => ({
   iconBox: {
     width: "33%",
     textAlign: "center",
+    color: theme.palette.text.secondary,
   },
   iconText: {
-    fontSize: 16,
+    fontSize: "16px",
     color: theme.palette.text.secondary,
     marginLeft: "10px",
-  },
-  icon: {
-    color: theme.palette.text.secondary,
   },
   paper: {
     position: "absolute",
@@ -46,7 +44,6 @@ export const useStyles = makeStyles((theme) => ({
 
 const IdeaCardActions = (props) => {
   const { idea, handleCommentOpen, handleVote } = props;
-  console.log(idea);
   const classes = useStyles();
   const [alertState, setAlertState] = useState({
     open: false,

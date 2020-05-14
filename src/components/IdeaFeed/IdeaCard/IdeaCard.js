@@ -6,7 +6,7 @@ import Card from "@material-ui/core/Card";
 const styles = {
   root: {
     margin: "auto",
-    marginTop: 10,
+    marginTop: "10px",
     padding: 0,
     borderRadius: 0,
     textAlign: "left",

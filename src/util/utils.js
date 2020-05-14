@@ -1,5 +1,5 @@
 export const getNumberWithOrdinal = (n) => {
-  var s = ["th", "st", "nd", "rd"],
+  const s = ["th", "st", "nd", "rd"],
     v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 };
@@ -25,7 +25,7 @@ export const capitalizeFirstLetter = (string) => {
 };
 
 export const getBaseUrl = () => {
-  let getUrl = window.location;
-  let baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+  const getUrl = window.location;
+  const baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
   return baseUrl;
 };

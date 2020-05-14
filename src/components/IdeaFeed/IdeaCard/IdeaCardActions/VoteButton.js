@@ -47,47 +47,54 @@ const VoteButton = ({ user, idea, handleVote }) => {
     handleVote("removeDownvote", idea.id);
   };
 
-  const voteButton = upvotedIdea() ? (
-    <div>
-      <div style={{ color: `${GREEN}` }}>
-        <MyButton tip="Undo Upvote" onClick={removeUpvote}>
+  let voteButton;
+  if (upvotedIdea()) {
+    voteButton = (
+      <div>
+        <div style={{ color: `${GREEN}` }}>
+          <MyButton tip="Undo Upvote" onClick={removeUpvote}>
+            <ArrowUpwardIcon />
+          </MyButton>
+          <span className={classes.iconText} style={{ margin: 0, padding: 5 }}>
+            {idea.score}
+          </span>
+        </div>
+        <MyButton tip="Downvote" onClick={downvote}>
+          <ArrowDownwardIcon className={classes.icon} />
+        </MyButton>
+      </div>
+    );
+  } else if (downvotedIdea()) {
+    voteButton = (
+      <div>
+        <MyButton tip="Upvote" onClick={upvote}>
+          <ArrowUpwardIcon />
+        </MyButton>
+        <div style={{ color: `${RED}` }}>
+          <span className={classes.iconText} style={{ margin: 0, padding: 5 }}>
+            {idea.score}
+          </span>
+          <MyButton tip="Undo Downvote" onClick={removeDownvote}>
+            <ArrowDownwardIcon className={classes.icon} />
+          </MyButton>
+        </div>
+      </div>
+    );
+  } else {
+    voteButton = (
+      <div>
+        <MyButton tip="Upvote" onClick={upvote}>
           <ArrowUpwardIcon />
         </MyButton>
         <span className={classes.iconText} style={{ margin: 0, padding: 5 }}>
           {idea.score}
         </span>
-      </div>
-      <MyButton tip="Downvote" onClick={downvote}>
-        <ArrowDownwardIcon className={classes.icon} />
-      </MyButton>
-    </div>
-  ) : downvotedIdea() ? (
-    <div>
-      <MyButton tip="Upvote" onClick={upvote}>
-        <ArrowUpwardIcon />
-      </MyButton>
-      <div style={{ color: `${RED}` }}>
-        <span className={classes.iconText} style={{ margin: 0, padding: 5 }}>
-          {idea.score}
-        </span>
-        <MyButton tip="Undo Downvote" onClick={removeDownvote}>
+        <MyButton tip="Downvote" onClick={downvote}>
           <ArrowDownwardIcon className={classes.icon} />
         </MyButton>
       </div>
-    </div>
-  ) : (
-    <div>
-      <MyButton tip="Upvote" onClick={upvote}>
-        <ArrowUpwardIcon />
-      </MyButton>
-      <span className={classes.iconText} style={{ margin: 0, padding: 5 }}>
-        {idea.score}
-      </span>
-      <MyButton tip="Downvote" onClick={downvote}>
-        <ArrowDownwardIcon className={classes.icon} />
-      </MyButton>
-    </div>
-  );
+    );
+  }
 
   return voteButton;
 };
