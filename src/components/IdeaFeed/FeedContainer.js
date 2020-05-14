@@ -1,6 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// Redux stuff
+import { connect } from "react-redux";
+import {
+  upvoteIdea,
+  removeUpvote,
+  downvoteIdea,
+  removeDownvote,
+} from "../../store/actions/userActions";
+
 // Components
 import EmptyFeed from "../util/EmptyFeed";
 import IdeaCard from "./IdeaCard/IdeaCard";
@@ -33,9 +42,37 @@ class FeedContainer extends React.Component {
     console.log(ideaId);
   }
 
-  handleVote(ideaId) {
-    console.log(ideaId);
-  }
+  handleVote = async (type, ideaId) => {
+    let updatedIdea;
+    switch (type) {
+      case "upvote":
+        updatedIdea = await this.props.upvoteIdea(ideaId);
+        break;
+      case "removeUpvote":
+        updatedIdea = await this.props.removeUpvote(ideaId);
+        break;
+      case "downvote":
+        updatedIdea = await this.props.downvoteIdea(ideaId);
+        break;
+      case "removeDownvote":
+        updatedIdea = await this.props.removeDownvote(ideaId);
+        break;
+      default:
+        console.log("Error: Incorrect Vote Type.");
+    }
+    // update feed state
+    if (this._isMounted) {
+      this.setState((prevState) => {
+        let index = this.props.ideaFeed.findIndex(
+          (idea) => idea.id === updatedIdea.id
+        );
+        this.props.ideaFeed[index] = updatedIdea;
+        return {
+          ...prevState,
+        };
+      });
+    }
+  };
 
   handleViewReport = (ideaId) => {
     this.props.history.push(`/report/${ideaId}`);
@@ -66,6 +103,17 @@ class FeedContainer extends React.Component {
 FeedContainer.propTypes = {
   ideaFeed: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
+  upvoteIdea: PropTypes.func.isRequired,
+  removeUpvote: PropTypes.func.isRequired,
+  downvoteIdea: PropTypes.func.isRequired,
+  removeDownvote: PropTypes.func.isRequired,
 };
 
-export default FeedContainer;
+const mapActionsToProps = {
+  upvoteIdea,
+  removeUpvote,
+  downvoteIdea,
+  removeDownvote,
+};
+
+export default connect(null, mapActionsToProps)(FeedContainer);

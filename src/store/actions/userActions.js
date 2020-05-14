@@ -3,6 +3,10 @@ import {
   SET_USER,
   SET_CONFIRMED,
   TOGGLE_DARKMODE,
+  UPVOTE_IDEA,
+  REMOVE_UPVOTE,
+  DOWNVOTE_IDEA,
+  REMOVE_DOWNVOTE,
 } from "../types";
 
 import axios from "../../util/axios";
@@ -75,11 +79,63 @@ export const toggleDarkmode = (prefersDarkmode, userId) => (dispatch) => {
         payload: !prefersDarkmode,
       })
     )
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.response.data.errors));
 };
 
 const setAuthorizationHeader = (token) => {
   const accessToken = `Bearer ${token}`;
   localStorage.setItem("accessToken", accessToken);
   axios.defaults.headers.common["Authorization"] = accessToken;
+};
+
+export const upvoteIdea = (ideaId) => (dispatch) => {
+  return axios
+    .post(`/idea/${ideaId}/upvote`)
+    .then((res) => {
+      dispatch({
+        type: UPVOTE_IDEA,
+        payload: res.data.idea,
+      });
+      return res.data.idea;
+    })
+    .catch((err) => console.log(err.response.data.errors));
+};
+
+export const removeUpvote = (ideaId) => (dispatch) => {
+  return axios
+    .post(`/idea/${ideaId}/upvote`)
+    .then((res) => {
+      dispatch({
+        type: REMOVE_UPVOTE,
+        payload: res.data.idea,
+      });
+      return res.data.idea;
+    })
+    .catch((err) => console.log(err.response.data.errors));
+};
+
+export const downvoteIdea = (ideaId) => (dispatch) => {
+  return axios
+    .post(`/idea/${ideaId}/downvote`)
+    .then((res) => {
+      dispatch({
+        type: DOWNVOTE_IDEA,
+        payload: res.data.idea,
+      });
+      return res.data.idea;
+    })
+    .catch((err) => console.log(err.response.data.errors));
+};
+
+export const removeDownvote = (ideaId) => (dispatch) => {
+  return axios
+    .post(`/idea/${ideaId}/downvote`)
+    .then((res) => {
+      dispatch({
+        type: REMOVE_DOWNVOTE,
+        payload: res.data.idea,
+      });
+      return res.data.idea;
+    })
+    .catch((err) => console.log(err.response.data.errors));
 };
