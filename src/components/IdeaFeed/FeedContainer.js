@@ -9,6 +9,7 @@ import {
   downvoteIdea,
   removeDownvote,
 } from "../../store/actions/userActions";
+import { getIdea, deleteComment } from "../../api";
 
 // Components
 import EmptyFeed from "../util/EmptyFeed";
@@ -16,6 +17,7 @@ import IdeaCard from "./IdeaCard/IdeaCard";
 import IdeaCardHeader from "./IdeaCard/IdeaCardHeader/IdeaCardHeader";
 import IdeaCardBody from "./IdeaCard/IdeaCardBody/IdeaCardBody";
 import IdeaCardActions from "./IdeaCard/IdeaCardActions/IdeaCardActions";
+import CommentDialog from "./CommentDialog";
 
 class FeedContainer extends React.Component {
   _isMounted = false;
@@ -23,7 +25,7 @@ class FeedContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      idea: {},
+      idea: { positionType: "", comments: [], analyst: {} },
       commentOpen: false,
       downloading: false,
       errors: {},
@@ -38,9 +40,37 @@ class FeedContainer extends React.Component {
     this._isMounted = false;
   }
 
-  handleCommentOpen(ideaId) {
-    console.log(ideaId);
-  }
+  handleCommentOpen = async (ideaId) => {
+    getIdea(ideaId).then((idea) => {
+      if (this._isMounted) {
+        this.setState({
+          idea: idea,
+          commentOpen: true,
+        });
+      }
+    });
+  };
+
+  handleCommentClose = () => {
+    this.setState({ commentOpen: false });
+  };
+
+  handleCommentDelete = async (commentId) => {
+    deleteComment(commentId).then((res) => {
+      if (this._isMounted) {
+        this.setState((prevState) => {
+          const index = this.props.ideaFeed.findIndex(
+            (idea) => idea.id === res.id
+          );
+          this.props.ideaFeed[index] = res;
+          return {
+            ...prevState,
+            idea: res,
+          };
+        });
+      }
+    });
+  };
 
   handleVote = async (type, ideaId) => {
     let updatedIdea;
@@ -96,7 +126,17 @@ class FeedContainer extends React.Component {
         <EmptyFeed message="No ideas to show." />
       );
 
-    return feedMarkup;
+    return (
+      <React.Fragment>
+        {feedMarkup}
+        <CommentDialog
+          open={this.state.commentOpen}
+          handleCommentClose={this.handleCommentClose}
+          idea={this.state.idea}
+          handleCommentDelete={this.handleCommentDelete}
+        />
+      </React.Fragment>
+    );
   }
 }
 
