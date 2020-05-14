@@ -4,6 +4,10 @@ import {
   SET_USER,
   SET_CONFIRMED,
   TOGGLE_DARKMODE,
+  UPVOTE_IDEA,
+  REMOVE_UPVOTE,
+  DOWNVOTE_IDEA,
+  REMOVE_DOWNVOTE,
 } from "../types";
 
 const initialState = {
@@ -31,6 +35,48 @@ export default function (state = initialState, action) {
       return { ...state, isAuthenticated: true, isConfirmed: true };
     case TOGGLE_DARKMODE:
       return { ...state, prefersDarkmode: action.payload };
+    case UPVOTE_IDEA:
+      return {
+        ...state,
+        upvotes: [
+          ...state.upvotes,
+          {
+            ideaId: action.payload.id,
+            userId: state.id,
+          },
+        ],
+        downvotes: state.downvotes.filter(
+          (downvote) => downvote.ideaId !== action.payload.id
+        ),
+      };
+    case REMOVE_UPVOTE:
+      return {
+        ...state,
+        upvotes: state.upvotes.filter(
+          (upvote) => upvote.ideaId !== action.payload.id
+        ),
+      };
+    case DOWNVOTE_IDEA:
+      return {
+        ...state,
+        downvotes: [
+          ...state.downvotes,
+          {
+            ideaId: action.payload.id,
+            userId: state.id,
+          },
+        ],
+        upvotes: state.upvotes.filter(
+          (upvote) => upvote.ideaId !== action.payload.id
+        ),
+      };
+    case REMOVE_DOWNVOTE:
+      return {
+        ...state,
+        downvotes: state.downvotes.filter(
+          (downvote) => downvote.ideaId !== action.payload.id
+        ),
+      };
     default:
       return state;
   }
