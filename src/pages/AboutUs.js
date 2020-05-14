@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 const AboutUs = (props) => {
   const classes = useStyles();
   return (
-    <FullPageLayout containerType="wideContainer">
+    <FullPageLayout containerType="wideContainer" paperBackground={true}>
       <Typography variant="h4" className={classes.heading}>
         About Us
       </Typography>

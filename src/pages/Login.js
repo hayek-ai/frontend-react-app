@@ -67,7 +67,7 @@ const Login = (props) => {
   };
 
   return (
-    <FullPageLayout containerType="narrowContainer">
+    <FullPageLayout containerType="narrowContainer" paperBackground={true}>
       <TextField
         id="emailOrUsername"
         name="emailOrUsername"

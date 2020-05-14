@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const PrivacyPolicy = (props) => {
   const classes = useStyles();
   return (
-    <FullPageLayout containerType="wideContainer">
+    <FullPageLayout containerType="wideContainer" paperBackground={true}>
       <Typography variant="h4" className={classes.heading}>
         Privacy Policy
       </Typography>

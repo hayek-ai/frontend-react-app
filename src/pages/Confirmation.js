@@ -64,7 +64,7 @@ const Confirmation = (props) => {
   };
 
   return (
-    <FullPageLayout containerType="narrowContainer">
+    <FullPageLayout containerType="narrowContainer" paperBackground={true}>
       <WithLoading loading={loading}>
         <Typography variant="body1" style={{ padding: 10 }}>
           We sent you a code
