@@ -21,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: theme.palette.primary.main,
   },
-  closedWarning: {
-    color: theme.palette.text.secondary,
-    textAlign: "center",
-  },
 }));
 
 const IdeaCardHeader = ({ idea }) => {
