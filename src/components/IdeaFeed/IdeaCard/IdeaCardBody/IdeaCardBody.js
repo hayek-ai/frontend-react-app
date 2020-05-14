@@ -23,7 +23,7 @@ export const IdeaCardBody = ({ children, idea }) => {
       <Typography variant="h6">{`${idea.companyName} (${idea.symbol})`}</Typography>
       <Typography variant="subtitle1">
         {`${capitalizeFirstLetter(idea.positionType)} 
-        | Target:${formatNumber(idea.priceTarget, 0, true, false)} 
+        | Target: ${formatNumber(idea.priceTarget, 0, true, false)} 
         | Implied Return: ${formatNumber(impliedReturn, 1, false, true)}`}
       </Typography>
       <Typography variant="body2" color="textSecondary">

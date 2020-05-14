@@ -16,8 +16,7 @@ export const formatNumber = (x, significantFigures, dollars, percentage) => {
   return `${dollars ? "$" : ""}${x
     .toFixed(significantFigures)
     .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-    ${percentage ? "%" : ""}`;
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}${percentage ? "%" : ""}`;
 };
 
 export const capitalizeFirstLetter = (string) => {
