@@ -30,6 +30,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUs from "./pages/AboutUs";
 import Help from "./pages/Help";
 import Feed from "./pages/Feed";
+import Report from "./pages/Report";
 
 function App(props) {
   const { prefersDarkmode, isAuthenticated, username } = props;
@@ -73,6 +74,7 @@ function App(props) {
               <Route path="/about" component={AboutUs} />
               <Route path="/confirm" component={Confirmation} />
               <PrivateRoute path="/feed" component={Feed} />
+              <PrivateRoute path="/report/:ideaId" component={Report} />
               <CustomRoute
                 path="/"
                 exact

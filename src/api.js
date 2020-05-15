@@ -27,6 +27,13 @@ export const getIdea = (ideaId) => {
     .catch((err) => console.log(err));
 };
 
+export const getReport = (ideaId) => {
+  return axios
+    .get(`/idea/${ideaId}/download`)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+};
+
 // deletes comment and returns updated idea
 export const deleteComment = (commentId) => {
   return axios

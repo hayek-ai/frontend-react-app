@@ -4,22 +4,29 @@ export const getNumberWithOrdinal = (n) => {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 };
 
-// n = number to be formatted || sigFigs is int | 'dollars' & 'percentage' are bools
-export const formatNumber = (n, significantFigures, dollars, percentage) => {
+// n = number to be formatted || sigFigs is int | type = 'dollars', 'percentage', or 'ratio'
+export const formatNumber = (n, sigFigs, type) => {
   n = parseFloat(n);
   if (isNaN(n)) {
     return "n/a";
   }
-  if (percentage) {
+  if (type === "percentage") {
     n = n * 100;
   }
-  return `${dollars ? "$" : ""}${n
-    .toFixed(significantFigures)
+  const isNegative = n < 0;
+  n = Math.abs(n);
+  return `${isNegative ? "-" : ""}${type === "dollars" ? "$" : ""}${n
+    .toFixed(sigFigs)
     .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}${percentage ? "%" : ""}`;
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}${type === "percentage" ? "%" : ""}${
+    type === "ratio" ? "x" : ""
+  }`;
 };
 
 export const capitalizeFirstLetter = (string) => {
+  if (string === undefined) {
+    return "";
+  }
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
