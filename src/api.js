@@ -13,9 +13,15 @@ export const getIdea = (ideaId) => {
     .get(`/idea/${ideaId}`)
     .then((res) => {
       // sort comments before returning idea
-      res.data.comments.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
+      res.data.comments.sort((a, b) => {
+        if (a.createdAt < b.createdAt) {
+          return 1;
+        } else if (a.createdAt > b.createdAt) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
       return res.data;
     })
     .catch((err) => console.log(err));
@@ -27,9 +33,15 @@ export const deleteComment = (commentId) => {
     .delete(`/comment/${commentId}`)
     .then((res) => {
       // sort comments before returning idea
-      res.data.idea.comments.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
+      res.data.idea.comments.sort((a, b) => {
+        if (a.createdAt < b.createdAt) {
+          return 1;
+        } else if (a.createdAt > b.createdAt) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
       return res.data.idea;
     })
     .catch((err) => err.response.data);
