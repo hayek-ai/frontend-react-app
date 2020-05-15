@@ -88,16 +88,26 @@ const FinancialSnapShot = ({ idea }) => {
     <div>
       <div style={{ padding: 10 }}>
         <Typography variant="h5">{`${idea.companyName} (${idea.symbol})`}</Typography>
-        <Typography
-          variant="body1"
-          style={{ marginTop: "5px" }}
-        >{`${capitalizeFirstLetter(idea.positionType)} 
-        Target: ${formatNumber(idea.priceTarget, 0, "dollars")} 
-        (Implied Return: ${formatNumber(
-          impliedReturn,
-          1,
-          "percentage"
-        )})`}</Typography>
+        <div
+          style={{
+            marginTop: "10px",
+            display: "flex",
+            flexWrap: "wrap",
+          }}
+        >
+          <Typography variant="body1" style={{ marginRight: "20px" }}>
+            <span style={{ fontWeight: 700 }}>
+              {`${capitalizeFirstLetter(idea.positionType)} Target: `}
+            </span>
+
+            {`${formatNumber(idea.priceTarget, 0, "dollars")}`}
+          </Typography>
+          <Typography variant="body1">
+            <span style={{ fontWeight: 700 }}>Implied Return: </span>
+            {` ${formatNumber(impliedReturn, 1, "percentage")}`}
+          </Typography>
+        </div>
+
         <div
           style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
         >

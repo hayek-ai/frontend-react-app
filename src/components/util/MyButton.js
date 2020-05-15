@@ -14,8 +14,10 @@ const MyButton = ({ children, onClick, tip, btnClassName, tipClassName }) => (
 );
 
 MyButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  tip: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  tip: PropTypes.string,
+  btnClassName: PropTypes.string,
+  tipClassName: PropTypes.string,
 };
 
 export default MyButton;

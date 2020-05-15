@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import { convertUTCDateToLocalDate } from "../../util/utils";
 
 // Redux
 import { connect } from "react-redux";
@@ -21,12 +22,11 @@ import MyButton from "../util/MyButton";
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: 0,
-    margin: "5px",
     borderRadius: 0,
     textAlign: "left",
   },
   header: {
-    padding: 16,
+    padding: "10px",
     paddingBottom: 0,
   },
   link: {
@@ -35,15 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CommentCard = ({ comment, userId, handleCommentDelete }) => {
+const CommentCard = ({ comment, userId, handleDelete }) => {
   const classes = useStyles();
-
   const actionIcon =
     userId === comment.user.id ? (
-      <MyButton
-        tip="Delete Comment"
-        onClick={() => handleCommentDelete(comment.id)}
-      >
+      <MyButton tip="Delete Comment" onClick={() => handleDelete(comment.id)}>
         <DeleteIcon />
       </MyButton>
     ) : null;
@@ -66,9 +62,9 @@ const CommentCard = ({ comment, userId, handleCommentDelete }) => {
             {comment.user.username}
           </Typography>
         }
-        subheader={`${dayjs(new Date(comment.createdAt)).format(
-          "h:mm a, MMM DD YYYY"
-        )}`}
+        subheader={`${dayjs(
+          convertUTCDateToLocalDate(new Date(comment.createdAt))
+        ).format("h:mm a, MMM DD YYYY")}`}
       />
       <CardContent>
         {body.map((block, index) => (
@@ -82,7 +78,7 @@ const CommentCard = ({ comment, userId, handleCommentDelete }) => {
 CommentCard.propTypes = {
   comment: PropTypes.object.isRequired,
   userId: PropTypes.number.isRequired,
-  handleCommentDelete: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

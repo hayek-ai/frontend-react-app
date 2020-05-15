@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "copy-to-clipboard": "^3.3.1",
     "dayjs": "^1.8.26",
+    "is-hotkey": "^0.1.6",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -20,7 +21,9 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "slate": "^0.58.1"
+    "slate": "^0.58.1",
+    "slate-history": "^0.58.1",
+    "slate-react": "^0.58.1"
   },
   "scripts": {
     "start": "react-scripts start",

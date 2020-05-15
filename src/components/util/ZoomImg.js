@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ZoomImg = ({ src, alt, style }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(false);
 
   return (
     <React.Fragment>
