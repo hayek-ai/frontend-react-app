@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     marginTop: 10,
   },
+  reportContainer: {
+    maxWidth: 800,
+    margin: "auto",
+  },
 }));
 
 const FullPageLayout = ({ children, containerType, paperBackground }) => {

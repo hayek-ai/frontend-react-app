@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+
 import { formatNumber, capitalizeFirstLetter } from "../../../../util/utils";
 import { Node } from "slate";
 
@@ -19,17 +21,22 @@ export const IdeaCardBody = ({ children, idea }) => {
     .substring(0, 150);
 
   return (
-    <CardContent style={{ paddingBottom: "5px" }}>
-      <Typography variant="h6">{`${idea.companyName} (${idea.symbol})`}</Typography>
-      <Typography variant="subtitle1">
-        {`${capitalizeFirstLetter(idea.positionType)} 
-        Target: ${formatNumber(idea.priceTarget, 0, true, false)} 
-        (Implied Return: ${formatNumber(impliedReturn, 1, false, true)})`}
-      </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {`${thesisSummary}...`}
-      </Typography>
-    </CardContent>
+    <Link to={`report/${idea.id}`} style={{ textDecoration: "none" }}>
+      <CardContent style={{ paddingBottom: "5px" }}>
+        <Typography
+          variant="h6"
+          color="textPrimary"
+        >{`${idea.companyName} (${idea.symbol})`}</Typography>
+        <Typography variant="subtitle1" color="textPrimary">
+          {`${capitalizeFirstLetter(idea.positionType)} 
+        Target: ${formatNumber(idea.priceTarget, 0, "dollars")} 
+        (Implied Return: ${formatNumber(impliedReturn, 1, "percentage")})`}
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          {`${thesisSummary}...`}
+        </Typography>
+      </CardContent>
+    </Link>
   );
 };
 
