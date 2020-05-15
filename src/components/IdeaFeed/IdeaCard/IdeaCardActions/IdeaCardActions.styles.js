@@ -8,6 +8,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "5px",
     paddingTop: 0,
   },
+  rightIcons: {
+    width: "55%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   iconBox: {
     textAlign: "center",
     color: theme.palette.text.secondary,
