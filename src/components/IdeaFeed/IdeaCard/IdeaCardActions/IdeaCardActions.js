@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import copy from "copy-to-clipboard";
 import PropTypes from "prop-types";
 import { getBaseUrl, abbreviateNumber } from "../../../../util/utils";
@@ -15,8 +16,7 @@ import ReplyIcon from "@material-ui/icons/Reply";
 
 import useStyles from "./IdeaCardActions.styles";
 
-const IdeaCardActions = (props) => {
-  const { idea, handleCommentOpen, handleVote } = props;
+const IdeaCardActions = ({ idea, handleVote }) => {
   const classes = useStyles();
   const [alertState, setAlertState] = useState({
     open: false,
@@ -39,20 +39,21 @@ const IdeaCardActions = (props) => {
           <VoteButton idea={idea} handleVote={handleVote} />
         </div>
         <div className={classes.rightIcons}>
-          <div className={classes.iconBox}>
-            <MyButton
-              onClick={() => handleCommentOpen(idea.id)}
-              tip="Comments"
-              btnClassName={classes.regButton}
-            >
-              <div className={classes.iconGroup}>
-                <ModeCommentIcon className={classes.icon} />
-                <span className={classes.iconText}>
-                  {abbreviateNumber(idea.numComments)}
-                </span>
-              </div>
-            </MyButton>
-          </div>
+          <Link
+            to={`/report/${idea.id}/comments`}
+            style={{ textDecoration: "none" }}
+          >
+            <div className={classes.iconBox}>
+              <MyButton tip="Comments" btnClassName={classes.regButton}>
+                <div className={classes.iconGroup}>
+                  <ModeCommentIcon className={classes.icon} />
+                  <span className={classes.iconText}>
+                    {abbreviateNumber(idea.numComments)}
+                  </span>
+                </div>
+              </MyButton>
+            </div>
+          </Link>
           <div className={classes.iconBox}>
             <MyButton
               tip="Share Idea"
@@ -79,6 +80,7 @@ const IdeaCardActions = (props) => {
 
 IdeaCardActions.propTypes = {
   idea: PropTypes.object.isRequired,
+  handleVote: PropTypes.func.isRequired,
 };
 
 export default IdeaCardActions;

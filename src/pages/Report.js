@@ -11,6 +11,7 @@ import WithLoading from "../components/util/WithLoading";
 import FullPageLayout from "../components/Layout/FullPageLayout";
 import FinancialSnapshot from "../components/Report/FinancialSnapshot";
 import Report from "../components/Report/Report";
+import CommentContainer from "../components/Comments/CommentContainer";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,12 +22,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ReportPage = (props) => {
   const classes = useStyles();
-  const { ideaId } = useParams();
+  const { ideaId, commentParam } = useParams();
   const [loading, setLoading] = useState(true);
   const [idea, setIdea] = useState({
     thesisSummary: [],
     fullReport: [],
     exhibits: [],
+    comments: [],
   });
 
   useEffect(() => {
@@ -42,11 +44,18 @@ const ReportPage = (props) => {
             fullReport: JSON.parse(idea.fullReport),
             exhibits: JSON.parse(idea.exhibits),
           });
+          if (commentParam === "comments") {
+            document.getElementById("comments").scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+              inline: "nearest",
+            });
+          }
         }
       });
     }
     return () => (isMounted = false);
-  }, [ideaId]);
+  }, [ideaId, commentParam]);
 
   return (
     <FullPageLayout containerType="reportContainer" paperBackground={false}>
@@ -60,6 +69,11 @@ const ReportPage = (props) => {
             fullReport={idea.fullReport}
             exhibits={idea.exhibits}
           />
+        </Paper>
+        <Paper variant="outlined" className={classes.container}>
+          <div id="comments">
+            <CommentContainer idea={idea} setIdea={setIdea} />
+          </div>
         </Paper>
       </WithLoading>
     </FullPageLayout>

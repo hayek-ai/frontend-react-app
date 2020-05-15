@@ -74,7 +74,10 @@ function App(props) {
               <Route path="/about" component={AboutUs} />
               <Route path="/confirm" component={Confirmation} />
               <PrivateRoute path="/feed" component={Feed} />
-              <PrivateRoute path="/report/:ideaId" component={Report} />
+              <PrivateRoute
+                path="/report/:ideaId/:commentParam?"
+                component={Report}
+              />
               <CustomRoute
                 path="/"
                 exact
