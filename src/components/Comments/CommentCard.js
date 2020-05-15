@@ -81,6 +81,8 @@ const CommentCard = ({ comment, userId, handleCommentDelete }) => {
 
 CommentCard.propTypes = {
   comment: PropTypes.object.isRequired,
+  userId: PropTypes.number.isRequired,
+  handleCommentDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
