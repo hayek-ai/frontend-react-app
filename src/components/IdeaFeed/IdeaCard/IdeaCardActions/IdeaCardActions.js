@@ -38,31 +38,33 @@ const IdeaCardActions = (props) => {
         <div className={classes.iconBox}>
           <VoteButton idea={idea} handleVote={handleVote} />
         </div>
-        <div className={classes.iconBox}>
-          <MyButton
-            onClick={() => handleCommentOpen(idea.id)}
-            tip="Comments"
-            btnClassName={classes.regButton}
-          >
-            <div className={classes.iconGroup}>
-              <ModeCommentIcon className={classes.icon} />
-              <span className={classes.iconText}>
-                {abbreviateNumber(idea.numComments)}
-              </span>
-            </div>
-          </MyButton>
-        </div>
-        <div className={classes.iconBox}>
-          <MyButton
-            tip="Share Idea"
-            onClick={handleIdeaLinkCopy}
-            btnClassName={classes.regButton}
-          >
-            <div className={classes.iconGroup}>
-              <ReplyIcon className={classes.icon} />
-              <span className={classes.iconText}>share</span>
-            </div>
-          </MyButton>
+        <div className={classes.rightIcons}>
+          <div className={classes.iconBox}>
+            <MyButton
+              onClick={() => handleCommentOpen(idea.id)}
+              tip="Comments"
+              btnClassName={classes.regButton}
+            >
+              <div className={classes.iconGroup}>
+                <ModeCommentIcon className={classes.icon} />
+                <span className={classes.iconText}>
+                  {abbreviateNumber(idea.numComments)}
+                </span>
+              </div>
+            </MyButton>
+          </div>
+          <div className={classes.iconBox}>
+            <MyButton
+              tip="Share Idea"
+              onClick={handleIdeaLinkCopy}
+              btnClassName={classes.regButton}
+            >
+              <div className={classes.iconGroup}>
+                <ReplyIcon className={classes.icon} />
+                <span className={classes.iconText}>share</span>
+              </div>
+            </MyButton>
+          </div>
         </div>
       </CardActions>
       <AlertModal
