@@ -47,7 +47,7 @@ const ReportPage = (props) => {
           if (commentParam === "comments") {
             document.getElementById("comments").scrollIntoView({
               behavior: "smooth",
-              block: "center",
+              block: "start",
               inline: "nearest",
             });
           }
@@ -70,10 +70,9 @@ const ReportPage = (props) => {
             exhibits={idea.exhibits}
           />
         </Paper>
+        <div id="comments" />
         <Paper variant="outlined" className={classes.container}>
-          <div id="comments">
-            <CommentContainer idea={idea} setIdea={setIdea} />
-          </div>
+          <CommentContainer idea={idea} setIdea={setIdea} />
         </Paper>
       </WithLoading>
     </FullPageLayout>
