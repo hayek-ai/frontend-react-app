@@ -7,6 +7,8 @@ import {
   REMOVE_UPVOTE,
   DOWNVOTE_IDEA,
   REMOVE_DOWNVOTE,
+  FOLLOW_ANALYST,
+  UNFOLLOW_ANALYST,
 } from "../types";
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
   upvotes: [],
   downvotes: [],
   bookmarks: [],
+  following: [],
 };
 
 export default function (state = initialState, action) {
@@ -74,6 +77,25 @@ export default function (state = initialState, action) {
           (downvote) => downvote.ideaId !== action.payload.id
         ),
       };
+    case FOLLOW_ANALYST:
+      return {
+        ...state,
+        following: [
+          ...state.following,
+          {
+            id: action.payload.id,
+            username: action.payload.id,
+          },
+        ],
+      };
+    case UNFOLLOW_ANALYST:
+      return {
+        ...state,
+        following: state.following.filter(
+          (analyst) => analyst.id !== action.payload.id
+        ),
+      };
+
     default:
       return state;
   }
