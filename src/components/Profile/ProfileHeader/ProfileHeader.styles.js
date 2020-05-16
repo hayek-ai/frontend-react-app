@@ -1,7 +1,44 @@
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    padding: 20,
+    textAlign: "left",
+  },
+  heading: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  title: {
+    ...theme.typography.h5,
+    wordBreak: "break-all",
+    padding: "10px 0",
+  },
+  profileEditButton: {
+    fontSize: "12px",
+    width: "40px",
+    height: "30px",
+    margin: 0,
+    padding: "5px",
+  },
+  profileImageWrapper: {
+    textAlign: "center",
+    position: "relative",
+  },
   profileImage: {
+    width: "75px",
+    height: "75px",
+    objectFit: "cover",
+    borderRadius: "50%",
+  },
+  uploadImageWrapper: {
+    position: "relative",
+    margin: "20px 0 50px",
+    textAlign: "center",
+  },
+  uploadImage: {
     width: 125,
     height: 125,
     objectFit: "cover",
@@ -13,4 +50,12 @@ const useStyles = makeStyles((theme) => ({
     left: "70%",
     color: theme.palette.text.secondary,
   },
+  bioTextField: {
+    padding: "20px",
+  },
+  dialogButton: {
+    width: "100px",
+  },
 }));
+
+export default useStyles;

@@ -68,44 +68,46 @@ const Login = (props) => {
 
   return (
     <FullPageLayout containerType="narrowContainer" paperBackground={true}>
-      <TextField
-        id="emailOrUsername"
-        name="emailOrUsername"
-        type="text"
-        label="Email or Username"
-        helperText={state.errors.username}
-        error={state.errors.username ? true : false}
-        value={state.username}
-        onChange={handleChange}
-        style={{ margin: "10px 0" }}
-        fullWidth
-      />
-      <TextField
-        id="password"
-        name="password"
-        type="password"
-        label="Password"
-        helperText={state.errors.password}
-        error={state.errors.password ? true : false}
-        value={state.password}
-        onChange={handleChange}
-        style={{ margin: "10px 0" }}
-        fullWidth
-      />
-      {state.errors.general && (
-        <Typography variant="subtitle1" className={classes.generalError}>
-          {state.errors.general}
-        </Typography>
-      )}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSubmit}
-        style={{ width: "100%", margin: "30px 0" }}
-        disabled={loading}
-      >
-        Log in
-      </Button>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          id="emailOrUsername"
+          name="emailOrUsername"
+          type="text"
+          label="Email or Username"
+          helperText={state.errors.username}
+          error={state.errors.username ? true : false}
+          value={state.username}
+          onChange={handleChange}
+          style={{ margin: "10px 0" }}
+          fullWidth
+        />
+        <TextField
+          id="password"
+          name="password"
+          type="password"
+          label="Password"
+          helperText={state.errors.password}
+          error={state.errors.password ? true : false}
+          value={state.password}
+          onChange={handleChange}
+          style={{ margin: "10px 0" }}
+          fullWidth
+        />
+        {state.errors.general && (
+          <Typography variant="subtitle1" className={classes.generalError}>
+            {state.errors.general}
+          </Typography>
+        )}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ width: "100%", margin: "30px 0" }}
+          disabled={loading}
+        >
+          Log in
+        </Button>
+      </form>
       <div style={{ padding: 10 }}>
         <Link to="/recover-password" className={classes.link}>
           <Typography variant="body1" color="primary">

@@ -31,6 +31,7 @@ import AboutUs from "./pages/AboutUs";
 import Help from "./pages/Help";
 import Feed from "./pages/Feed";
 import Report from "./pages/Report";
+import Profile from "./pages/Profile";
 
 function App(props) {
   const { prefersDarkmode, isAuthenticated, username } = props;
@@ -74,6 +75,11 @@ function App(props) {
               <Route path="/about" component={AboutUs} />
               <Route path="/confirm" component={Confirmation} />
               <PrivateRoute path="/feed" component={Feed} />
+              <PrivateRoute
+                path="/profile/:username/:panel?"
+                exact
+                component={Profile}
+              />
               <PrivateRoute
                 path="/report/:ideaId/:commentParam?"
                 component={Report}

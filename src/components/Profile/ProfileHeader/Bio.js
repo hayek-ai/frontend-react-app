@@ -52,4 +52,4 @@ Bio.propTypes = {
   bio: PropTypes.string,
 };
 
-export default bio;
+export default Bio;
