@@ -2,7 +2,6 @@ import {
   SET_UNAUTHENTICATED,
   SET_USER,
   SET_CONFIRMED,
-  TOGGLE_DARKMODE,
   UPVOTE_IDEA,
   REMOVE_UPVOTE,
   DOWNVOTE_IDEA,
@@ -68,20 +67,6 @@ export const getUserData = () => (dispatch) => {
     .catch(() => dispatch({ type: SET_UNAUTHENTICATED }));
 };
 
-export const toggleDarkmode = (prefersDarkmode, userId) => (dispatch) => {
-  axios
-    .put(`/user/${userId}`, {
-      prefersDarkmode: !prefersDarkmode,
-    })
-    .then(() =>
-      dispatch({
-        type: TOGGLE_DARKMODE,
-        payload: !prefersDarkmode,
-      })
-    )
-    .catch((err) => console.log(err.response.data.errors));
-};
-
 const setAuthorizationHeader = (token) => {
   const accessToken = `Bearer ${token}`;
   localStorage.setItem("accessToken", accessToken);
@@ -138,4 +123,19 @@ export const removeDownvote = (ideaId) => (dispatch) => {
       return res.data.idea;
     })
     .catch((err) => console.log(err.response.data.errors));
+};
+
+export const updateUser = (formData) => (dispatch) => {
+  const token = localStorage.accessToken;
+  const decodedToken = jwtDecode(token);
+
+  return axios
+    .put(`/user/${decodedToken.identity}`, formData)
+    .then((res) => {
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => err.response.data.errors);
 };

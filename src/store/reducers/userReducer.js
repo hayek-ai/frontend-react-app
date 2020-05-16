@@ -3,7 +3,6 @@ import {
   SET_UNAUTHENTICATED,
   SET_USER,
   SET_CONFIRMED,
-  TOGGLE_DARKMODE,
   UPVOTE_IDEA,
   REMOVE_UPVOTE,
   DOWNVOTE_IDEA,
@@ -33,8 +32,6 @@ export default function (state = initialState, action) {
       return { ...action.payload, isAuthenticated: true };
     case SET_CONFIRMED:
       return { ...state, isAuthenticated: true, isConfirmed: true };
-    case TOGGLE_DARKMODE:
-      return { ...state, prefersDarkmode: action.payload };
     case UPVOTE_IDEA:
       return {
         ...state,

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 // Redux
 import { connect } from "react-redux";
-import { logoutUser, toggleDarkmode } from "../../store/actions/userActions";
+import { logoutUser, updateUser } from "../../store/actions/userActions";
 
 // Mui stuff
 import Drawer from "@material-ui/core/Drawer";
@@ -12,6 +12,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import Switch from "@material-ui/core/Switch";
 
 // Icons
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
@@ -26,15 +27,17 @@ import Brightness3Icon from "@material-ui/icons/Brightness3";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const SideDrawer = (props) => {
-  const { user, open, setOpen, toggleDarkmode, logoutUser } = props;
+  const { user, open, setOpen, updateUser, logoutUser } = props;
 
   const handleListItemClick = (text) => {
     setOpen(false);
     if (text === "Logout") {
       logoutUser();
     }
-    if (text === "Toggle Dark Mode") {
-      toggleDarkmode(user.prefersDarkmode, user.id);
+    if (text === "Dark Mode") {
+      const formData = new FormData();
+      formData.append("prefersDarkmode", !user.prefersDarkmode);
+      updateUser(formData);
     }
   };
 
@@ -64,30 +67,30 @@ const SideDrawer = (props) => {
       { text: "Account", icon: <SettingsIcon />, link: "/account" },
       { text: "About Us", icon: <GroupIcon />, link: "/about" },
       { text: "Help", icon: <HelpIcon />, link: "/help" },
-      { text: "Toggle Dark Mode", icon: <Brightness3Icon /> },
+      { text: "Dark Mode", icon: <Brightness3Icon /> },
       { text: "Logout", icon: <ExitToAppIcon /> },
     ];
   }
-  const list = (
-    <List>
-      {items.map((item) => (
-        <ListItem
-          key={item.text}
-          button
-          component={item.link ? Link : null}
-          to={item.link}
-          onClick={() => handleListItemClick(item.text)}
-        >
-          <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.text} />
-        </ListItem>
-      ))}
-    </List>
-  );
 
   return (
     <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
-      {list}
+      <List>
+        {items.map((item) => (
+          <ListItem
+            key={item.text}
+            button
+            component={item.link ? Link : null}
+            to={item.link}
+            onClick={() => handleListItemClick(item.text)}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+            {item.text === "Dark Mode" ? (
+              <Switch color="primary" checked={user.prefersDarkmode} />
+            ) : null}
+          </ListItem>
+        ))}
+      </List>
     </Drawer>
   );
 };
@@ -96,7 +99,7 @@ SideDrawer.propTypes = {
   user: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  toggleDarkmode: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
 };
 
@@ -104,6 +107,6 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapActionsToProps = { logoutUser, toggleDarkmode };
+const mapActionsToProps = { logoutUser, updateUser };
 
 export default connect(mapStateToProps, mapActionsToProps)(SideDrawer);
