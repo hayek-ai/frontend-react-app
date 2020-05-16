@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 // Redux stuff
 import { connect } from "react-redux";
-import { updateUser } from "../../../../store/actions/userActions";
+import { updateUser } from "../../../store/actions/userActions";
 
 // Mui stuff
 import Button from "@material-ui/core/Button";
@@ -15,8 +15,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Tooltip from "@material-ui/core/Tooltip";
 
 // Helper Components
-import ImageUploadPreview from "../ImageUploadPreview";
-import useStyles from "../ProfileHeader.styles";
+import ImageUploadPreview from "./ImageUploadPreview";
+import useStyles from "./ProfileHeader.styles";
 
 const MAX_BIO_CHARACTERS = 1000;
 

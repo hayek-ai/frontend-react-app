@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { getProfile } from "../store/actions/profileActions";
 
 // Components
-import UserHeader from "../components/Profile/ProfileHeader/UserHeader/UserHeader";
+import ProfileHeader from "../components/Profile/ProfileHeader/ProfileHeader";
 import WithLoading from "../components/util/WithLoading";
 import FullPageLayout from "../components/Layout/FullPageLayout";
 
@@ -38,7 +38,7 @@ const Profile = (props) => {
   return (
     <FullPageLayout containerType="feedContainer" paperBackground={false}>
       <WithLoading loading={loading}>
-        {isAnalyst ? null : <UserHeader />}
+        <ProfileHeader />
       </WithLoading>
     </FullPageLayout>
   );

@@ -56,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
   dialogButton: {
     width: "100px",
   },
+  ratingContainer: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "5px",
+  },
 }));
 
 export default useStyles;

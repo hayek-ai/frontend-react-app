@@ -8,6 +8,8 @@ export const UPVOTE_IDEA = "UPVOTE_IDEA";
 export const REMOVE_UPVOTE = "REMOVE_UPVOTE";
 export const DOWNVOTE_IDEA = "DOWNVOTE_IDEA";
 export const REMOVE_DOWNVOTE = "REMOVE_DOWNVOTE";
+export const FOLLOW_ANALYST = "FOLLOW_ANALYST";
+export const UNFOLLOW_ANALYST = "UNFOLLOW_ANALYST";
 
 // Profile reducer types
 export const SET_PROFILE = "SET_PROFILE";
