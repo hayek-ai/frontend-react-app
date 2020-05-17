@@ -3,8 +3,9 @@ import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: 20,
+    padding: "20px",
     textAlign: "left",
+    borderRadius: 0,
   },
   heading: {
     display: "flex",

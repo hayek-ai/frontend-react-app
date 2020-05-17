@@ -8,7 +8,6 @@ import {
   REMOVE_DOWNVOTE,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
-  SET_PROFILE,
 } from "../types";
 
 import axios from "../../util/axios";
@@ -151,10 +150,6 @@ export const followAnalyst = (analystId) => (dispatch) => {
         type: FOLLOW_ANALYST,
         payload: res.data.analyst,
       });
-      dispatch({
-        type: SET_PROFILE,
-        payload: res.data.analyst,
-      });
     })
     .catch((err) => console.log(err.response.data.errors));
 };
@@ -165,10 +160,6 @@ export const unfollowAnalyst = (analystId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: UNFOLLOW_ANALYST,
-        payload: res.data.analyst,
-      });
-      dispatch({
-        type: SET_PROFILE,
         payload: res.data.analyst,
       });
     })
