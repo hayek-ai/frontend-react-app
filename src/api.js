@@ -12,8 +12,6 @@ export const getIdea = (ideaId) => {
   return axios
     .get(`/idea/${ideaId}`)
     .then((res) => {
-      // sort comments before returning idea
-      res.data.comments.sort(commentSortCallback);
       return res.data;
     })
     .catch((err) => console.log(err));
