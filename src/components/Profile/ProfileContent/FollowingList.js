@@ -27,8 +27,8 @@ import EmptyFeed from "../../util/EmptyFeed";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    borderRadius: 0,
     marginTop: 10,
+    borderRadius: 0,
   },
   link: {
     textDecoration: "none",
