@@ -8,6 +8,9 @@ import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
+// Components
+import ScenarioTable from "./ScenarioTable";
+
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
@@ -16,12 +19,11 @@ const useStyles = makeStyles((theme) => ({
   metric: {
     display: "flex",
     justifyContent: "space-between",
-    marginTop: "5px",
+    padding: "6px 24px 6px 16px",
     width: "250px",
   },
   metricContainer: {
-    borderTop: "1px solid gray",
-    marginTop: "5px",
+    borderTop: `1px solid ${theme.palette.divider}`,
     display: "flex",
     justifyContent: "space-between",
     flexWrap: "wrap",
@@ -29,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
   keyMetricsContainer: {
     dispaly: "flex",
     flexDirection: "column",
-    margin: "10px 10px 20px",
+    border: `1px solid ${theme.palette.divider}`,
+    marginTop: "15px",
   },
 }));
 
@@ -87,27 +90,9 @@ const FinancialSnapShot = ({ idea }) => {
   return (
     <div>
       <div style={{ padding: 10 }}>
-        <Typography variant="h5">{`${idea.companyName} (${idea.symbol})`}</Typography>
-        <div
-          style={{
-            marginTop: "10px",
-            display: "flex",
-            flexWrap: "wrap",
-          }}
-        >
-          <Typography variant="body1" style={{ marginRight: "20px" }}>
-            <span style={{ fontWeight: 700 }}>
-              {`${capitalizeFirstLetter(idea.positionType)} Target: `}
-            </span>
-
-            {`${formatNumber(idea.priceTarget, 0, "dollars")}`}
-          </Typography>
-          <Typography variant="body1">
-            <span style={{ fontWeight: 700 }}>Implied Return: </span>
-            {` ${formatNumber(impliedReturn, 1, "percentage")}`}
-          </Typography>
-        </div>
-
+        <Typography variant="h5">{`${capitalizeFirstLetter(
+          idea.positionType
+        )} ${idea.companyName} (${idea.symbol})`}</Typography>
         <div
           style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
         >
@@ -121,20 +106,27 @@ const FinancialSnapShot = ({ idea }) => {
             {analystUsername}
           </Typography>
         </div>
-      </div>
-      <div className={classes.keyMetricsContainer}>
-        <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-          Key Metrics
-        </Typography>
-        <div className={classes.metricContainer}>
-          {keyMetrics.map((metric, index) => (
-            <div key={index} className={classes.metric}>
-              <Typography variant="body1">{metric.label}</Typography>
-              <Typography variant="body1">{metric.value}</Typography>
-            </div>
-          ))}
+        <div style={{ marginTop: "20px" }}>
+          <ScenarioTable idea={idea} />
+        </div>
+        <div className={classes.keyMetricsContainer}>
+          <Typography
+            variant="body1"
+            style={{ fontWeight: 700, padding: "10px" }}
+          >
+            Key Metrics
+          </Typography>
+          <div className={classes.metricContainer}>
+            {keyMetrics.map((metric, index) => (
+              <div key={index} className={classes.metric}>
+                <Typography variant="body2">{metric.label}</Typography>
+                <Typography variant="body2">{metric.value}</Typography>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
       <div style={{ margin: 10 }}>
         <Typography variant="subtitle2">
           {`For more in-depth financial analysis and charting, we recommend Koyfin (it's free).  Check out ${idea.companyName}'s financial highlights `}

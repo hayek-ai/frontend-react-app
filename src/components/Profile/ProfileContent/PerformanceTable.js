@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { fomatNumber, getNumberWithOrdinal } from "../../../../util/utils";
+import { formatNumber, getNumberWithOrdinal } from "../../../../util/utils";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/core/styles";
