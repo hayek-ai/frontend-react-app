@@ -1,6 +1,5 @@
 import axios from "./util/axios";
 
-/************** IDEAS **************/
 export const getIdeaFeed = (feedType, queryString) => {
   return axios
     .get(`/ideas/${feedType}?${queryString}`)
@@ -47,6 +46,27 @@ export const deleteComment = (commentId) => {
       return res.data.idea;
     })
     .catch((err) => err.response.data);
+};
+
+export const fetchStockInfo = ({ symbol, withChart }) => {
+  if (withChart) {
+    axios
+      .get(`/stock/${symbol}?withChart=true`)
+      .then((res) => res.data)
+      .catch((err) => console.log(err));
+  } else {
+    return axios
+      .get(`/stock/${symbol}`)
+      .then((res) => res.data)
+      .catch((err) => console.log(err));
+  }
+};
+
+export const searchAutocomplete = (query) => {
+  return axios
+    .get(`/autosearch?q=${query}`)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
 };
 
 function commentSortCallback(a, b) {

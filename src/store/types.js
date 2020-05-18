@@ -17,3 +17,4 @@ export const SET_BOOKMARKS = "SET_BOOKMARKS";
 export const SET_REVIEWS = "SET_REVIEWS";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const DELETE_REVIEW = "DELETE_REVIEW";
+export const ADD_IDEA = "ADD_IDEA";

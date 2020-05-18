@@ -6,6 +6,7 @@ import {
   SET_REVIEWS,
   ADD_REVIEW,
   DELETE_REVIEW,
+  ADD_IDEA,
 } from "../types";
 
 const initialState = {
@@ -45,6 +46,11 @@ export default function (state = initialState, action) {
         reviewStarTotal: state.reviewStarTotal - deletedReview.stars,
         numReviews: state.numReviews - 1,
         reviews: state.reviews.filter((review) => review.id !== action.payload),
+      };
+    case ADD_IDEA:
+      return {
+        ...state,
+        ideas: [action.payload, ...state.ideas],
       };
     default:
       return state;
