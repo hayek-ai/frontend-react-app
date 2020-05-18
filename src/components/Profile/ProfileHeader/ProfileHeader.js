@@ -16,6 +16,7 @@ import Bio from "./Bio";
 import WithLoading from "../../util/WithLoading";
 import useStyles from "./ProfileHeader.styles";
 import FollowActions from "./FollowActions";
+import NewIdeaDialog from "../../Report/NewIdeaDialog/NewIdeaDialog";
 
 const ProfileHeader = ({ profile, user }) => {
   const classes = useStyles();
@@ -70,6 +71,7 @@ const ProfileHeader = ({ profile, user }) => {
           </React.Fragment>
         )}
         <Bio bio={profile.isOwn ? user.bio : profile.bio} />
+        {profile.isOwn && profile.isAnalyst && <NewIdeaDialog />}
       </WithLoading>
     </Paper>
   );

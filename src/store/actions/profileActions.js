@@ -4,6 +4,7 @@ import {
   SET_REVIEWS,
   ADD_REVIEW,
   DELETE_REVIEW,
+  ADD_IDEA,
 } from "../types";
 
 import axios from "../../util/axios";
@@ -72,4 +73,16 @@ export const deleteReview = (reviewId) => (dispatch) => {
       })
     )
     .catch((err) => console.log(err));
+};
+
+export const uploadIdea = (formData) => (dispatch) => {
+  return axios
+    .post("/new-idea", formData)
+    .then((res) => {
+      dispatch({
+        type: ADD_IDEA,
+        payload: res.data,
+      });
+    })
+    .catch((err) => err.response.data);
 };
