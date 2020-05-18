@@ -29,19 +29,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialCommentState = [
+  {
+    type: "paragraph",
+    children: [
+      {
+        text: "",
+      },
+    ],
+  },
+];
+
 const CommentContainer = ({ idea, setIdea }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-  const [newComment, setNewComment] = useState([
-    {
-      type: "paragraph",
-      children: [
-        {
-          text: "",
-        },
-      ],
-    },
-  ]);
+  const [newComment, setNewComment] = useState(initialCommentState);
 
   const handleDelete = async (commentId) => {
     setLoading(true);
@@ -65,6 +67,7 @@ const CommentContainer = ({ idea, setIdea }) => {
         comments: [...newIdea.comments],
         numComments: newIdea.numComments,
       }));
+      setNewComment(initialCommentState);
     });
   };
 
