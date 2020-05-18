@@ -1,4 +1,10 @@
-import { SET_PROFILE, SET_BOOKMARKS } from "../types";
+import {
+  SET_PROFILE,
+  SET_BOOKMARKS,
+  SET_REVIEWS,
+  ADD_REVIEW,
+  DELETE_REVIEW,
+} from "../types";
 
 import axios from "../../util/axios";
 import jwtDecode from "jwt-decode";
@@ -29,4 +35,41 @@ export const setProfileBookmarks = (username) => (dispatch) => {
       });
     })
     .catch((err) => err.response.data);
+};
+
+export const setProfileReviews = (analystId) => (dispatch) => {
+  return axios
+    .get(`/analyst/${analystId}/reviews`)
+    .then((res) => {
+      dispatch({
+        type: SET_REVIEWS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+// reviewData = {title, body, stars}
+export const postReview = (analystId, reviewData) => (dispatch) => {
+  return axios
+    .post(`/analyst/${analystId}/review`, reviewData)
+    .then((res) => {
+      dispatch({
+        type: ADD_REVIEW,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteReview = (reviewId) => (dispatch) => {
+  return axios
+    .delete(`/review/${reviewId}`)
+    .then(() =>
+      dispatch({
+        type: DELETE_REVIEW,
+        payload: reviewId,
+      })
+    )
+    .catch((err) => console.log(err));
 };

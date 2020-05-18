@@ -76,13 +76,6 @@ const FinancialSnapShot = ({ idea }) => {
       value: formatNumber(idea.putCallRatio, 1, "ratio"),
     },
   ];
-  let impliedReturn = 0;
-  if (idea.positionType) {
-    impliedReturn =
-      idea.positionType.toLowerCase() === "long"
-        ? idea.priceTarget / idea.entryPrice - 1
-        : 1 - idea.priceTarget / idea.entryPrice;
-  }
 
   const analystUsername = idea.analyst ? idea.analyst.username : null;
   const analystImageUrl = idea.analyst ? idea.analyst.imageUrl : null;
@@ -119,7 +112,9 @@ const FinancialSnapShot = ({ idea }) => {
           <div className={classes.metricContainer}>
             {keyMetrics.map((metric, index) => (
               <div key={index} className={classes.metric}>
-                <Typography variant="body2">{metric.label}</Typography>
+                <Typography variant="body2" style={{ fontWeight: 700 }}>
+                  {metric.label}
+                </Typography>
                 <Typography variant="body2">{metric.value}</Typography>
               </div>
             ))}

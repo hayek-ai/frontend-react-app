@@ -41,7 +41,7 @@ const UserContent = (props) => {
     let mounted = true;
     const index = panel ? key.indexOf(panel) : 0;
     setPanelIndex(index);
-    if (profile.username && index == 0) {
+    if (profile.username && index === 0) {
       setLoading(true);
       setProfileBookmarks(profile.username).then(() => {
         if (mounted) {

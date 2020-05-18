@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatNumber, getNumberWithOrdinal } from "../../../../util/utils";
+import { formatNumber, getNumberWithOrdinal } from "../../../util/utils";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,15 +12,29 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  tableContainer: {
+    border: `1px solid ${theme.palette.divider}`,
+    marginTop: "10px",
+  },
   table: {
     minWidth: 340,
   },
-});
+  columnTitle: {
+    fontWeight: 700,
+  },
+  titleRow: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+  },
+}));
 
 function createData(name, metric, ranking) {
   return { name, metric, ranking };
 }
+
+const PaperMarkup = (props) => (
+  <Paper elevation={0} {...props} style={{ borderRadius: 0 }} />
+);
 
 const PerformanceTable = ({ analyst }) => {
   const classes = useStyles();
@@ -48,33 +62,49 @@ const PerformanceTable = ({ analyst }) => {
     ),
     createData(
       "Number of Ideas",
-      formatNumber(analyst.numIdeas, 1),
+      formatNumber(analyst.numIdeas, 0),
       formatNumber(analyst.numIdeasRank, 1, "percentage")
     ),
   ];
   return (
-    <TableContainer component={Paper} style={{ marginTop: 10 }}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell> Analyst Stats</TableCell>
-            <TableCell align="center">Metric</TableCell>
-            <TableCell align="center">Percentile Ranking</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
+    <div className={classes.tableContainer}>
+      <TableContainer component={PaperMarkup}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow className={classes.titleRow}>
+              <TableCell className={classes.columnTitle}>
+                Analyst Stats
               </TableCell>
-              <TableCell align="center">{row.metric}</TableCell>
-              <TableCell align="center">{row.ranking}</TableCell>
+              <TableCell className={classes.columnTitle} align="center">
+                Metric
+              </TableCell>
+              <TableCell className={classes.columnTitle} align="center">
+                Percentile Ranking
+              </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  style={{ fontWeight: 700, border: "none" }}
+                >
+                  {row.name}
+                </TableCell>
+                <TableCell style={{ border: "none" }} align="center">
+                  {row.metric}
+                </TableCell>
+                <TableCell style={{ border: "none" }} align="center">
+                  {row.ranking}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 

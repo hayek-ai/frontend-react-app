@@ -9,6 +9,7 @@ import { setProfile } from "../store/actions/profileActions";
 // Components
 import ProfileHeader from "../components/Profile/ProfileHeader/ProfileHeader";
 import UserContent from "../components/Profile/ProfileContent/UserContent";
+import AnalystContent from "../components/Profile/ProfileContent/AnalystContent";
 import WithLoading from "../components/util/WithLoading";
 import FullPageLayout from "../components/Layout/FullPageLayout";
 
@@ -40,7 +41,11 @@ const Profile = (props) => {
     <FullPageLayout containerType="feedContainer" paperBackground={false}>
       <WithLoading loading={loading}>
         <ProfileHeader />
-        {isAnalyst ? null : <UserContent panel={panel} {...props} />}
+        {isAnalyst ? (
+          <AnalystContent panel={panel} {...props} />
+        ) : (
+          <UserContent panel={panel} {...props} />
+        )}
       </WithLoading>
     </FullPageLayout>
   );
