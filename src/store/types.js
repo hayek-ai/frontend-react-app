@@ -14,3 +14,6 @@ export const UNFOLLOW_ANALYST = "UNFOLLOW_ANALYST";
 // Profile reducer types
 export const SET_PROFILE = "SET_PROFILE";
 export const SET_BOOKMARKS = "SET_BOOKMARKS";
+export const SET_REVIEWS = "SET_REVIEWS";
+export const ADD_REVIEW = "ADD_REVIEW";
+export const DELETE_REVIEW = "DELETE_REVIEW";

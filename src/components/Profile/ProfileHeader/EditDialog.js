@@ -29,7 +29,8 @@ const EditDialog = ({ user, updateUser, setLoading }) => {
   const [open, setOpen] = useState(false);
 
   const handleBioChange = (event) => {
-    if (event.target.value.length > MAX_BIO_CHARACTERS) {
+    const bioLength = event.target.value.length;
+    if (bioLength > MAX_BIO_CHARACTERS) {
       setErrors({
         bio: `Bio cannot be more than ${MAX_BIO_CHARACTERS} characters.`,
       });
@@ -37,9 +38,7 @@ const EditDialog = ({ user, updateUser, setLoading }) => {
       setErrors({});
     }
     setBio(event.target.value);
-    setHelperText(
-      `${event.target.value.length}/${MAX_BIO_CHARACTERS} characters`
-    );
+    setHelperText(`${bioLength}/${MAX_BIO_CHARACTERS} characters`);
   };
 
   const handleSubmit = (event) => {

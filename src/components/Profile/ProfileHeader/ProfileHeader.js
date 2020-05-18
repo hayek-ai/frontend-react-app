@@ -31,29 +31,6 @@ const ProfileHeader = ({ profile, user }) => {
     }
   };
 
-  const RatingAndFollowCount = () => (
-    <React.Fragment>
-      <div className={classes.ratingContainer}>
-        <Rating
-          value={parseFloat(profile.reviewStarTotal / profile.numReviews)}
-          readOnly
-          precision={0.1}
-          size="small"
-          style={{ marginRight: "6px" }}
-        />
-        <Typography variant="body2">
-          {abbreviateNumber(profile.numReviews)}
-        </Typography>
-      </div>
-      <Typography
-        variant="subtitle2"
-        style={{ fontWeight: 700 }}
-      >{`${abbreviateNumber(profile.numFollowers)} Follower${
-        profile.numFollowers === 1 ? "" : "s"
-      }`}</Typography>
-    </React.Fragment>
-  );
-
   return (
     <Paper variant="outlined" className={classes.root}>
       <WithLoading loading={loading}>
@@ -70,7 +47,28 @@ const ProfileHeader = ({ profile, user }) => {
           <TopRightComponent />
         </div>
         <Typography className={classes.title}>{profile.username}</Typography>
-        {profile.isAnalyst && <RatingAndFollowCount />}
+        {profile.isAnalyst && (
+          <React.Fragment>
+            <div className={classes.ratingContainer}>
+              <Rating
+                value={parseFloat(profile.reviewStarTotal / profile.numReviews)}
+                readOnly
+                precision={0.1}
+                size="small"
+                style={{ marginRight: "6px" }}
+              />
+              <Typography variant="body2">
+                {abbreviateNumber(profile.numReviews)}
+              </Typography>
+            </div>
+            <Typography
+              variant="subtitle2"
+              style={{ fontWeight: 700 }}
+            >{`${abbreviateNumber(profile.numFollowers)} Follower${
+              profile.numFollowers === 1 ? "" : "s"
+            }`}</Typography>
+          </React.Fragment>
+        )}
         <Bio bio={profile.isOwn ? user.bio : profile.bio} />
       </WithLoading>
     </Paper>
