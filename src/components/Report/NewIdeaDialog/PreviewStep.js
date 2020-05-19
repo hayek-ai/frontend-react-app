@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatNumber } from "../../../util/utils";
+import { formatNumber, capitalizeFirstLetter } from "../../../util/utils";
 import { calcImpliedReturn } from "./helperFunctions";
 
 // Mui stuff
@@ -13,23 +13,25 @@ import ScenarioTable from "../ScenarioTable";
 const PreviewStep = ({ previewState }) => {
   let currentPrice, target, impliedReturn;
   if (
-    previewState.latestPrice &&
-    previewState.latestPrice &&
+    previewState.lastPrice &&
+    previewState.lastPrice &&
     previewState.priceTarget &&
     previewState.positionType
   ) {
-    currentPrice = formatNumber(previewState.latestPrice, 2, "dollars");
+    currentPrice = formatNumber(previewState.lastPrice, 2, "dollars");
     target = formatNumber(previewState.priceTarget, 2, "dollars");
     impliedReturn = calcImpliedReturn(
       previewState.positionType,
       parseFloat(previewState.priceTarget),
-      previewState.latestPrice
+      previewState.lastPrice
     );
     impliedReturn = formatNumber(impliedReturn, 2, "percentage");
   }
   return (
     <React.Fragment>
-      <Typography variant="h5">{`${previewState.companyName} (${previewState.symbol})`}</Typography>
+      <Typography variant="h5">{`${capitalizeFirstLetter(
+        previewState.positionType
+      )} ${previewState.companyName} (${previewState.symbol})`}</Typography>
       <Typography
         style={{ marginBottom: 20 }}
         color="primary"

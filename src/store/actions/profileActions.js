@@ -83,6 +83,7 @@ export const uploadIdea = (formData) => (dispatch) => {
         type: ADD_IDEA,
         payload: res.data,
       });
+      return res.data;
     })
     .catch((err) => err.response.data);
 };

@@ -96,10 +96,18 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
           variant="h5"
           style={{ marginBottom: "10px" }}
         >
-          {`Price Target: ${formatNumber(ideaState.priceTarget, 2, "dollars")}`}
+          {`12-Month Price Target: ${formatNumber(
+            ideaState.priceTarget,
+            2,
+            "dollars"
+          )}`}
         </Typography>
         {ideaState.errors.priceTarget && (
-          <Typography variant="body1" className={classes.errorMessage}>
+          <Typography
+            variant="body1"
+            className={classes.errorMessage}
+            style={{ marginBottom: "10px" }}
+          >
             {ideaState.errors.priceTarget}
           </Typography>
         )}

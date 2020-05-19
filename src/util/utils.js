@@ -24,7 +24,7 @@ export const formatNumber = (n, sigFigs, type) => {
 };
 
 export const capitalizeFirstLetter = (string) => {
-  if (string === undefined) {
+  if (string == null) {
     return "";
   }
   return string.charAt(0).toUpperCase() + string.slice(1);
