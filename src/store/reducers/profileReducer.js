@@ -17,7 +17,12 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_PROFILE:
-      return { ...state, ...action.payload };
+      const sorted_ideas = [...action.payload.ideas].sort(ideaSortCallback);
+      return {
+        ...state,
+        ...action.payload,
+        ideas: sorted_ideas,
+      };
     case SET_BOOKMARKS:
       return { ...state, bookmarkedIdeas: [...action.payload] };
     case FOLLOW_ANALYST:
@@ -54,5 +59,15 @@ export default function (state = initialState, action) {
       };
     default:
       return state;
+  }
+}
+
+function ideaSortCallback(a, b) {
+  if (a.createdAt < b.createdAt) {
+    return 1;
+  } else if (a.createdAt > b.createdAt) {
+    return -1;
+  } else {
+    return 0;
   }
 }

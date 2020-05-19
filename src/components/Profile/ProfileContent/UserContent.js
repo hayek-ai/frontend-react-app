@@ -39,7 +39,7 @@ const UserContent = (props) => {
 
   useEffect(() => {
     let mounted = true;
-    const index = panel ? key.indexOf(panel) : 0;
+    const index = panel && key.indexOf(panel) !== -1 ? key.indexOf(panel) : 0;
     setPanelIndex(index);
     if (profile.username && index === 0) {
       setLoading(true);

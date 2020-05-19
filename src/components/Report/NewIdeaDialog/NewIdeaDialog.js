@@ -92,7 +92,7 @@ const steps = [
 const NewIdeaDialog = ({ uploadIdea }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState({ all: false, step: false });
+  const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [ideaState, setIdeaState] = useState(initialIdeaState);
   const [thesisSummary, setThesisSummary] = useState(thesisSummaryInitialState);
@@ -146,7 +146,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
         );
       case 4:
         return (
-          <WithLoading loading={loading.step}>
+          <WithLoading loading={loading}>
             <PreviewStep
               previewState={previewState}
               handleSubmit={handleSubmit}
@@ -189,10 +189,9 @@ const NewIdeaDialog = ({ uploadIdea }) => {
   const handlePreview = () => {
     const errors = verifyIdeaData(ideaState);
     if (isEmpty(errors)) {
-      setActiveStep(4);
-      setLoading({ all: false, step: true });
+      setLoading(true);
       fetchStockInfo(ideaState.symbol, false).then((info) => {
-        setLoading({ all: false, step: false });
+        setLoading(false);
         if (info.errors) {
           setActiveStep(0);
           setAlertState({
@@ -221,7 +220,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
             companyName: info.companyName,
             exchange: info.exchange,
             sector: info.sector,
-            latestPrice: info.latestPrice,
+            lastPrice: parseFloat(info.latestPrice),
             bullProbability: parseFloat(ideaState.bullProbability) / 100,
             baseProbability: parseFloat(ideaState.baseProbability) / 100,
             bearProbability: parseFloat(ideaState.bearProbability) / 100,
@@ -229,6 +228,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
             fullReport: fullReport,
             selectedExhibits: selectedExhibits,
           });
+          setActiveStep(4);
         }
       });
     } else {
@@ -240,68 +240,113 @@ const NewIdeaDialog = ({ uploadIdea }) => {
     }
   };
 
-  const handleSubmit = () => {
-    setLoading({ all: true, step: false });
-    setOpen(false);
-    setLoading({ all: false, step: false });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("symbol", previewState.symbol);
+    formData.append("entryPrice", previewState.lastPrice);
+    formData.append("positionType", previewState.positionType);
+    formData.append("bullTarget", previewState.bullTarget);
+    formData.append("bullProbability", previewState.bullProbability);
+    formData.append("baseTarget", previewState.baseTarget);
+    formData.append("baseProbability", previewState.baseProbability);
+    formData.append("bearTarget", previewState.bearTarget);
+    formData.append("bearProbability", previewState.bearProbability);
+    formData.append(
+      "thesisSummary",
+      JSON.stringify(previewState.thesisSummary)
+    );
+    formData.append("fullReport", JSON.stringify(previewState.fullReport));
+    const exhibits = previewState.selectedExhibits;
+    const exhibitTitleMap = {};
+    for (let i = 0; i < exhibits.length; i++) {
+      formData.append("exhibits", exhibits[i].file);
+      exhibitTitleMap[exhibits[i].file.name] = exhibits[i].title;
+    }
+    formData.append("exhibitTitleMap", JSON.stringify(exhibitTitleMap));
+    setPreviewState(initialPreviewState);
+    setLoading(true);
+    uploadIdea(formData).then((res) => {
+      setLoading(false);
+      if (res.errors) {
+        setAlertState({
+          open: true,
+          message: "Oops, something went wrong.  Please try again.",
+          color: "error",
+        });
+      } else {
+        // position opened successfully
+        // restore to initial state and show success message
+        setOpen(false);
+        setActiveStep(0);
+        setIdeaState(initialIdeaState);
+        setThesisSummary(thesisSummaryInitialState);
+        setFullReport(fullReportInitialState);
+        setSelectedExhibits([]);
+        setPreviewState(initialPreviewState);
+        setAlertState({
+          open: true,
+          message: "Position opened successfully!",
+          color: null,
+        });
+      }
+    });
   };
 
   return (
-    <WithLoading loading={loading.all}>
-      <div className={classes.root}>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => setOpen(true)}
-          style={{ width: "175px", height: "50px" }}
-        >
-          Add New Idea
-        </Button>
-        <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
-          <DialogTitle>Open a New Position</DialogTitle>
-          <DialogContent className={classes.content}>
-            <div style={{ width: "100%" }}>
-              <Stepper
-                style={{ padding: "24px 0" }}
-                activeStep={activeStep}
-                alternativeLabel
-              >
-                {steps.map((label) => (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              {getStepContent(activeStep)}
-            </div>
-          </DialogContent>
-          <DialogActions className={classes.dialogActions}>
-            <div>
-              <Button
-                className={classes.dialogButton}
-                onClick={() => setOpen(false)}
-                variant="outlined"
-                color="primary"
-              >
-                Cancel
-              </Button>
-            </div>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack}>
-                Back
-              </Button>
-              {getNextButton(activeStep)}
-            </div>
-          </DialogActions>
-        </Dialog>
-        <AlertModal
-          open={alertState.open}
-          onClose={() => setAlertState({ open: false, message: "" })}
-          message={alertState.message}
-          color={alertState.color}
-        />
-      </div>
-    </WithLoading>
+    <div className={classes.root}>
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => setOpen(true)}
+        style={{ width: "175px", height: "50px" }}
+      >
+        Add New Idea
+      </Button>
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
+        <DialogTitle>Open a New Position</DialogTitle>
+        <DialogContent className={classes.content}>
+          <div style={{ width: "100%" }}>
+            <Stepper
+              style={{ padding: "24px 0" }}
+              activeStep={activeStep}
+              alternativeLabel
+            >
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            {getStepContent(activeStep)}
+          </div>
+        </DialogContent>
+        <DialogActions className={classes.dialogActions}>
+          <div>
+            <Button
+              className={classes.dialogButton}
+              onClick={() => setOpen(false)}
+              variant="outlined"
+              color="primary"
+            >
+              Cancel
+            </Button>
+          </div>
+          <div>
+            <Button disabled={activeStep === 0} onClick={handleBack}>
+              Back
+            </Button>
+            {getNextButton(activeStep)}
+          </div>
+        </DialogActions>
+      </Dialog>
+      <AlertModal
+        open={alertState.open}
+        onClose={() => setAlertState({ open: false, message: "" })}
+        message={alertState.message}
+        color={alertState.color}
+      />
+    </div>
   );
 };
 

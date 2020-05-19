@@ -21,7 +21,7 @@ export const IdeaCardBody = ({ children, idea }) => {
     .substring(0, 150);
 
   return (
-    <Link to={`report/${idea.id}`} style={{ textDecoration: "none" }}>
+    <Link to={`/report/${idea.id}`} style={{ textDecoration: "none" }}>
       <CardContent style={{ paddingBottom: "5px" }}>
         <Typography
           variant="h6"
