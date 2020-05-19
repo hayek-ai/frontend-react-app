@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { fetchStockInfo } from "../../../util/utils";
+import { fetchStockInfo } from "../../../api";
 import {
   calcImpliedReturn,
   isEmpty,
-  verifyIdeaInputs,
+  verifyIdeaData,
   thesisSummaryInitialState,
-  fullReportIntiialState,
+  fullReportInitialState,
 } from "./helperFunctions";
 
 // Redux stuff
@@ -23,10 +23,13 @@ import Button from "@material-ui/core/Button";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Typography from "@material-ui/core/Typography";
 
 // Components
 import IdeaDataForm from "./IdeaDataForm";
+import ThesisSummaryStep from "./ThesisSummaryStep";
+import FullReportStep from "./FullReportStep";
+import ExhibitUploadContainer from "./ExhibitUploadContainer";
+import PreviewStep from "./PreviewStep";
 import WithLoading from "../../util/WithLoading";
 import AlertModal from "../../util/AlertModal";
 
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const initialIdeaState = {
   symbol: "",
-  positionType: "Long",
+  positionType: "long",
   priceTarget: "",
   bullTarget: "",
   bullProbability: "",
@@ -59,9 +62,28 @@ const initialIdeaState = {
   errors: {},
 };
 
+const initialPreviewState = {
+  symbol: null,
+  positionType: null,
+  priceTarget: null,
+  bullTarget: "",
+  bullProbability: "",
+  baseTarget: "",
+  baseProbability: "",
+  bearTarget: "",
+  bearProbability: "",
+  companyName: null,
+  exchange: null,
+  sector: null,
+  latestPrice: null,
+  thesisSummary: thesisSummaryInitialState,
+  fullReport: fullReportInitialState,
+  selectedExhibits: [],
+};
+
 const steps = [
   "Idea Details",
-  "Investment Overview",
+  "Thesis Summary",
   "Full Report",
   "Exhibits",
   "Preview Idea",
@@ -70,9 +92,13 @@ const steps = [
 const NewIdeaDialog = ({ uploadIdea }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({ all: false, step: false });
   const [activeStep, setActiveStep] = useState(0);
   const [ideaState, setIdeaState] = useState(initialIdeaState);
+  const [thesisSummary, setThesisSummary] = useState(thesisSummaryInitialState);
+  const [fullReport, setFullReport] = useState(fullReportInitialState);
+  const [selectedExhibits, setSelectedExhibits] = useState([]);
+  const [previewState, setPreviewState] = useState(initialPreviewState);
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -94,13 +120,40 @@ const NewIdeaDialog = ({ uploadIdea }) => {
           <IdeaDataForm ideaState={ideaState} setIdeaState={setIdeaState} />
         );
       case 1:
-        return <div>Thesis Summary</div>;
+        return (
+          <div style={{ margin: "10px 0" }}>
+            <ThesisSummaryStep
+              thesisSummary={thesisSummary}
+              setThesisSummary={setThesisSummary}
+            />
+          </div>
+        );
       case 2:
-        return <div>Full Report</div>;
+        return (
+          <div style={{ margin: "10px 0" }}>
+            <FullReportStep
+              fullReport={fullReport}
+              setFullReport={setFullReport}
+            />
+          </div>
+        );
       case 3:
-        return <div>Exhibit Upload</div>;
+        return (
+          <ExhibitUploadContainer
+            selectedExhibits={selectedExhibits}
+            setSelectedExhibits={setSelectedExhibits}
+          />
+        );
       case 4:
-        return <div>Idea Preview</div>;
+        return (
+          <WithLoading loading={loading.step}>
+            <PreviewStep
+              previewState={previewState}
+              handleSubmit={handleSubmit}
+              handleCancel={() => setPreviewState(initialPreviewState)}
+            />
+          </WithLoading>
+        );
       default:
         return "Oops, something went wrong";
     }
@@ -134,15 +187,67 @@ const NewIdeaDialog = ({ uploadIdea }) => {
   };
 
   const handlePreview = () => {
-    console.log("Handle Preview");
+    const errors = verifyIdeaData(ideaState);
+    if (isEmpty(errors)) {
+      setActiveStep(4);
+      setLoading({ all: false, step: true });
+      fetchStockInfo(ideaState.symbol, false).then((info) => {
+        setLoading({ all: false, step: false });
+        if (info.errors) {
+          setActiveStep(0);
+          setAlertState({
+            open: true,
+            message: info.errors[0].detail,
+            color: "error",
+          });
+        } else if (
+          calcImpliedReturn(
+            ideaState.positionType,
+            ideaState.priceTarget,
+            info.latestPrice
+          ) < 0
+        ) {
+          setActiveStep(0);
+          setAlertState({
+            open: true,
+            message:
+              "Implied return cannot be negative. Please change your price target or your position type.",
+            color: "error",
+          });
+        } else {
+          setPreviewState({
+            ...ideaState,
+            symbol: info.symbol,
+            companyName: info.companyName,
+            exchange: info.exchange,
+            sector: info.sector,
+            latestPrice: info.latestPrice,
+            bullProbability: parseFloat(ideaState.bullProbability) / 100,
+            baseProbability: parseFloat(ideaState.baseProbability) / 100,
+            bearProbability: parseFloat(ideaState.bearProbability) / 100,
+            thesisSummary: thesisSummary,
+            fullReport: fullReport,
+            selectedExhibits: selectedExhibits,
+          });
+        }
+      });
+    } else {
+      setIdeaState((prevState) => ({
+        ...prevState,
+        errors: errors,
+      }));
+      setActiveStep(0);
+    }
   };
 
   const handleSubmit = () => {
-    console.log("Handle Submit");
+    setLoading({ all: true, step: false });
+    setOpen(false);
+    setLoading({ all: false, step: false });
   };
 
   return (
-    <WithLoading loading={loading}>
+    <WithLoading loading={loading.all}>
       <div className={classes.root}>
         <Button
           color="primary"
