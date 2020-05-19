@@ -10,34 +10,51 @@ export const isEmpty = (obj) => {
   return true;
 };
 
-export const verifyIdeaInputs = (state) => {
+export const verifyIdeaData = (state) => {
   const errors = {};
-  if (state.symbol === null || state.symbol === "") {
+  const bullTarget = parseFloat(state.bullTarget);
+  const bullProbability = parseFloat(state.bullProbability);
+  const baseTarget = parseFloat(state.baseTarget);
+  const baseProbability = parseFloat(state.baseProbability);
+  const bearTarget = parseFloat(state.bearTarget);
+  const bearProbability = parseFloat(state.bearProbability);
+
+  if (state.symbol === "") {
     errors.symbol = "Cannot be blank";
   }
   if (
-    state.positionType.toLowerCase() !== "long" &&
-    state.positionType.toLowerCase() !== "short"
+    isNaN(bullTarget) ||
+    isNaN(bullProbability) ||
+    isNaN(baseTarget) ||
+    isNaN(baseProbability) ||
+    isNaN(bearTarget) ||
+    isNaN(bearProbability)
   ) {
-    errors.positionType = "Invalid position type";
+    errors.priceTarget = "Invalid Scenario Inputs";
   }
-  if (state.bullTarget === null || state.bullTarget === "") {
-    errors.bullTarget = "Cannot be blank";
+  if (
+    bullTarget < 0 ||
+    bullProbability < 0 ||
+    baseTarget < 0 ||
+    baseProbability < 0 ||
+    bearTarget < 0 ||
+    bearProbability < 0
+  ) {
+    errors.priceTarget = "Scenario inputs cannot be negative";
   }
-  if (state.bullProbability === null || state.bullProbability === "") {
-    errors.bullProbability = "Cannot be blank";
+  if (bullProbability + baseProbability + bearProbability !== 100) {
+    errors.priceTarget = "Scenario probabilities must add up to 100%";
   }
-  if (state.baseTarget === null || state.baseTarget === "") {
-    errors.baseTarget = "Cannot be blank";
+  if (bullTarget < baseTarget || bullTarget < bearTarget) {
+    errors.priceTarget =
+      "Bull target must be greater than base and bear targets.";
   }
-  if (state.baseProbability === null || state.baseProbability === "") {
-    errors.baseProbability = "Cannot be blank";
+  if (bearTarget > baseTarget) {
+    errors.priceTarget = "Bear target must be less than base target";
   }
-  if (state.bearTarget === null || state.bearTarget === "") {
-    errors.bearTarget = "Cannot be blank";
-  }
-  if (state.bearProbability === null || state.bearProbability === "") {
-    errors.bearProbability = "Cannot be blank";
+  if (baseProbability < bullProbability || baseProbability < bearProbability) {
+    errors.priceTarget =
+      "Base case must be most likely scenario (highest probability).";
   }
   return errors;
 };
@@ -48,7 +65,6 @@ export const thesisSummaryInitialState = [
     children: [
       {
         text: "",
-        italic: true,
       },
     ],
   },
@@ -64,7 +80,6 @@ export const fullReportInitialState = [
     children: [
       {
         text: "",
-        italic: true,
       },
     ],
   },
@@ -77,7 +92,6 @@ export const fullReportInitialState = [
     children: [
       {
         text: "",
-        italic: true,
       },
     ],
   },
@@ -90,7 +104,6 @@ export const fullReportInitialState = [
     children: [
       {
         text: "",
-        italic: true,
       },
     ],
   },

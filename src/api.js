@@ -48,7 +48,7 @@ export const deleteComment = (commentId) => {
     .catch((err) => err.response.data);
 };
 
-export const fetchStockInfo = ({ symbol, withChart }) => {
+export const fetchStockInfo = (symbol, withChart) => {
   if (withChart) {
     axios
       .get(`/stock/${symbol}?withChart=true`)
