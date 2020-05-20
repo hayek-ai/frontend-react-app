@@ -6,6 +6,7 @@ import { abbreviateNumber } from "../../../util/utils";
 import { connect } from "react-redux";
 
 // Mui stuff
+import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Rating from "@material-ui/lab/Rating";
@@ -15,8 +16,8 @@ import EditDialog from "./EditDialog";
 import Bio from "./Bio";
 import WithLoading from "../../util/WithLoading";
 import useStyles from "./ProfileHeader.styles";
-import FollowActions from "./FollowActions";
 import NewIdeaDialog from "../../Report/NewIdeaDialog/NewIdeaDialog";
+import FollowButton from "../../util/FollowButton";
 
 const ProfileHeader = ({ profile, user }) => {
   const classes = useStyles();
@@ -26,7 +27,11 @@ const ProfileHeader = ({ profile, user }) => {
     if (profile.isOwn) {
       return <EditDialog setLoading={setLoading} user={user} />;
     } else if (profile.isAnalyst) {
-      return <FollowActions analyst={profile} />;
+      return (
+        <div style={{ height: "30px" }}>
+          <FollowButton analyst={profile} />
+        </div>
+      );
     } else {
       return null;
     }
@@ -37,11 +42,10 @@ const ProfileHeader = ({ profile, user }) => {
       <WithLoading loading={loading}>
         <div className={classes.heading}>
           <div className={classes.imageWrapper}>
-            <img
+            <Avatar
               src={`${
                 profile.isOwn ? user.imageUrl : profile.imageUrl
               }?t=${new Date().getTime()}`}
-              alt="profile"
               className={classes.profileImage}
             />
           </div>

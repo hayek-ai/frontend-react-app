@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { formatNumber, capitalizeFirstLetter } from "../../util/utils";
+import dayjs from "dayjs";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/styles";
@@ -86,6 +87,9 @@ const FinancialSnapShot = ({ idea }) => {
         <Typography variant="h5">{`${capitalizeFirstLetter(
           idea.positionType
         )} ${idea.companyName} (${idea.symbol})`}</Typography>
+        <Typography variant="subtitle2" color="textSecondary">
+          {dayjs(new Date(idea.createdAt)).format("MMM DD, YYYY")}
+        </Typography>
         <div
           style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
         >

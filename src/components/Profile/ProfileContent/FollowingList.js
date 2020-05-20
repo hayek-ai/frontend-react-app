@@ -4,10 +4,6 @@ import { Link } from "react-router-dom";
 
 // Redux stuff
 import { connect } from "react-redux";
-import {
-  followAnalyst,
-  unfollowAnalyst,
-} from "../../../store/actions/userActions";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,11 +14,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import CheckIcon from "@material-ui/icons/Check";
 
 // Components
 import EmptyFeed from "../../util/EmptyFeed";
+import FollowButton from "../../util/FollowButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FollowingList = (props) => {
-  const { user, profile, followAnalyst, unfollowAnalyst } = props;
+  const { user, profile } = props;
   const classes = useStyles();
 
   const following = profile.id === user.id ? user.following : profile.following;
@@ -58,7 +53,7 @@ const FollowingList = (props) => {
         <React.Fragment key={index}>
           <ListItem style={{ padding: "10px" }}>
             <ListItemAvatar>
-              <Avatar alt="analyst avatar" src={analyst.imageUrl} />
+              <Avatar src={analyst.imageUrl} />
             </ListItemAvatar>
             <ListItemText
               primary={
@@ -70,25 +65,7 @@ const FollowingList = (props) => {
                 </Link>
               }
             />
-            {user.following.some(
-              (followedAnalyst) => followedAnalyst.id === analyst.id
-            ) ? (
-              <Button
-                color="primary"
-                startIcon={<CheckIcon />}
-                onClick={() => unfollowAnalyst(analyst.id)}
-              >
-                Following
-              </Button>
-            ) : (
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => followAnalyst(analyst.id)}
-              >
-                Follow
-              </Button>
-            )}
+            {<FollowButton analyst={analyst} />}
           </ListItem>
           {index !== followingLength - 1 && <Divider />}
         </React.Fragment>
@@ -114,9 +91,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapActionsToProps = {
-  followAnalyst,
-  unfollowAnalyst,
-};
-
-export default connect(mapStateToProps, mapActionsToProps)(FollowingList);
+export default connect(mapStateToProps)(FollowingList);

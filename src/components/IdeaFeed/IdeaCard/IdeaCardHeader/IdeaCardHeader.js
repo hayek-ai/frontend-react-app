@@ -29,7 +29,7 @@ const IdeaCardHeader = ({ idea }) => {
   return (
     <CardHeader
       className={classes.header}
-      avatar={<Avatar alt="analyst avatar" src={idea.analyst.imageUrl} />}
+      avatar={<Avatar src={idea.analyst.imageUrl} />}
       action={<IdeaCardMenu />}
       title={
         <Typography

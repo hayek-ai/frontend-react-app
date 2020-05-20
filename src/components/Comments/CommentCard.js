@@ -50,7 +50,7 @@ const CommentCard = ({ comment, userId, handleDelete }) => {
     <Card elevation={0} className={classes.root}>
       <CardHeader
         className={classes.header}
-        avatar={<Avatar alt="user avatar" src={comment.user.imageUrl} />}
+        avatar={<Avatar src={comment.user.imageUrl} />}
         action={actionIcon}
         title={
           <Typography

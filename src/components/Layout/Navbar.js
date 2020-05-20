@@ -10,9 +10,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import IconButton from "@material-ui/core/IconButton";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MenuIcon from "@material-ui/icons/Menu";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -69,13 +67,7 @@ const Navbar = (props) => {
                 <Typography className={classes.navTitle}>hayek.ai</Typography>
               </div>
             </Link>
-            <div style={{ marginLeft: "auto" }}>
-              <Tooltip title="Notifications">
-                <IconButton edge="start" color="primary">
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
-            </div>
+            <div style={{ width: "48px", marginLeft: "auto" }}></div>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

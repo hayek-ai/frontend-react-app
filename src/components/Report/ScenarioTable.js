@@ -76,7 +76,7 @@ const ScenarioTable = ({ idea }) => {
   return (
     <div className={classes.tableContainer}>
       <Typography variant="body1" className={classes.title}>
-        {`Price Target Breakdown (${formatNumber(
+        {`12-Month Price Target Breakdown (${formatNumber(
           idea.priceTarget,
           2,
           "dollars"
