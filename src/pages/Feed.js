@@ -10,23 +10,72 @@ import Tab from "@material-ui/core/Tab";
 import FullPageLayout from "../components/Layout/FullPageLayout";
 import WithLoading from "../components/util/WithLoading";
 import FeedContainer from "../components/IdeaFeed/FeedContainer";
+import TabPanel from "../components/util/TabPanel";
+import SearchContainer from "../components/Search/SearchContainer";
+import FilterSelect from "../components/Search/FilterSelect";
 
 const Feed = (props) => {
   const [panelIndex, setPanelIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [feed, setFeed] = useState([]);
+  const [sortFilter, setSortFilter] = useState({
+    key: "sort",
+    index: 0,
+    value: "sort=top",
+  });
+  const [positionTypeFilter, setPositionTypeFilter] = useState({
+    key: "positionType",
+    index: 0,
+  });
+
+  const [timePeriodFilter, setTimePeriodFilter] = useState({
+    key: "timePeriod",
+    index: 0,
+  });
+  const [sectorFilter, setSectorFilter] = useState({
+    key: "sector",
+    index: 0,
+  });
+  const [marketCapFilter, setMarketCapFilter] = useState({
+    key: "marketCap",
+    index: 0,
+  });
 
   useEffect(() => {
     let mounted = true;
-    getIdeaFeed("following").then((ideas) => {
-      if (mounted) {
-        setFeed([...ideas]);
-        setLoading(false);
-      }
-    });
+    const filters = [
+      sortFilter,
+      positionTypeFilter,
+      timePeriodFilter,
+      sectorFilter,
+      marketCapFilter,
+    ].filter((filter) => (filter.value ? true : false));
+
+    const queryString = filters.map((filter) => filter.value).join("&");
+    if (panelIndex === 0) {
+      getIdeaFeed("following").then((ideas) => {
+        if (mounted) {
+          setFeed([...ideas]);
+          setLoading(false);
+        }
+      });
+    } else {
+      getIdeaFeed("discover", queryString).then((ideas) => {
+        if (mounted) {
+          setFeed([...ideas]);
+          setLoading(false);
+        }
+      });
+    }
 
     return () => (mounted = false);
-  }, []);
+  }, [
+    sortFilter,
+    positionTypeFilter,
+    timePeriodFilter,
+    sectorFilter,
+    marketCapFilter,
+  ]);
 
   const handleChange = async (event, newPanelIndex) => {
     setPanelIndex(newPanelIndex);
@@ -36,7 +85,7 @@ const Feed = (props) => {
       setFeed([...ideas]);
       setLoading(false);
     } else {
-      const ideas = await getIdeaFeed("discover");
+      const ideas = await getIdeaFeed("discover", "sort=top");
       setFeed([...ideas]);
       setLoading(false);
     }
@@ -56,9 +105,32 @@ const Feed = (props) => {
           <Tab label="Discover" />
         </Tabs>
       </AppBar>
-      <WithLoading loading={loading}>
-        <FeedContainer ideaFeed={feed} history={props.history} />
-      </WithLoading>
+      <TabPanel value={panelIndex} index={0}>
+        <WithLoading loading={loading}>
+          <FeedContainer ideaFeed={feed} history={props.history} />
+        </WithLoading>
+      </TabPanel>
+      <TabPanel value={panelIndex} index={1}>
+        <SearchContainer {...props}>
+          <FilterSelect filter={sortFilter} setFilter={setSortFilter} />
+          <FilterSelect
+            filter={positionTypeFilter}
+            setFilter={setPositionTypeFilter}
+          />
+          <FilterSelect
+            filter={timePeriodFilter}
+            setFilter={setTimePeriodFilter}
+          />
+          <FilterSelect filter={sectorFilter} setFilter={setSectorFilter} />
+          <FilterSelect
+            filter={marketCapFilter}
+            setFilter={setMarketCapFilter}
+          />
+        </SearchContainer>
+        <WithLoading loading={loading}>
+          <FeedContainer ideaFeed={feed} history={props.history} />
+        </WithLoading>
+      </TabPanel>
     </FullPageLayout>
   );
 };

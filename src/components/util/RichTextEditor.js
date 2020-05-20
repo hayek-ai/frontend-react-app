@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
-import { LightenDarkenColor } from "../../util/utils";
 
 // Slate stuff
 import { Editable, withReact, useSlate, Slate } from "slate-react";
@@ -41,11 +40,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     padding: "5px 0 0",
     borderBottom: `1px solid ${theme.palette.divider}`,
-    backgroundColor: `${
-      theme.palette.type === "dark"
-        ? LightenDarkenColor(theme.palette.background.default, 12)
-        : theme.palette.background.default
-    }`,
+    backgroundColor: theme.palette.texturedBackground.main,
     borderTopLeftRadius: "5px",
     borderTopRightRadius: "5px",
   },

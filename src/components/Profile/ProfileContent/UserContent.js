@@ -16,7 +16,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import RssFeedIcon from "@material-ui/icons/RssFeed";
 
 // Components
-import TabPanel from "./TabPanel";
+import TabPanel from "../../util/TabPanel";
 import FeedContainer from "../../IdeaFeed/FeedContainer";
 import FollowingList from "./FollowingList";
 import WithLoading from "../../util/WithLoading";
