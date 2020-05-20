@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     borderTopRightRadius: "5px",
   },
   textField: {
-    padding: 10,
+    padding: "10px",
     paddingTop: 0,
     maxHeight: "500px",
     overflowY: "scroll",
