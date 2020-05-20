@@ -84,7 +84,7 @@ export default function (state = initialState, action) {
           ...state.following,
           {
             id: action.payload.id,
-            username: action.payload.id,
+            username: action.payload.username,
           },
         ],
       };
