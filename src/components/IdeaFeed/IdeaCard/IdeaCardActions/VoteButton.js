@@ -9,8 +9,7 @@ import MyButton from "../../../util/MyButton";
 
 import useStyles from "./IdeaCardActions.styles";
 
-const GREEN = "#129D58";
-const RED = "#D23F31";
+import { STOCK_GREEN, STOCK_RED } from "../../../../util/theme";
 
 const VoteButton = ({ user, idea, handleVote }) => {
   const classes = useStyles();
@@ -58,11 +57,11 @@ const VoteButton = ({ user, idea, handleVote }) => {
           onClick={removeUpvote}
           btnClassName={classes.smallButton}
         >
-          <ArrowUpwardIcon style={{ color: `${GREEN}` }} />
+          <ArrowUpwardIcon style={{ color: `${STOCK_GREEN}` }} />
         </MyButton>
         <span
           className={classes.iconText}
-          style={{ margin: 0, padding: "5px", color: `${GREEN}` }}
+          style={{ margin: 0, padding: "5px", color: `${STOCK_GREEN}` }}
         >
           {abbreviateNumber(idea.score)}
         </span>
@@ -87,7 +86,7 @@ const VoteButton = ({ user, idea, handleVote }) => {
         </MyButton>
         <span
           className={classes.iconText}
-          style={{ margin: 0, padding: "5px", color: `${RED}` }}
+          style={{ margin: 0, padding: "5px", color: `${STOCK_RED}` }}
         >
           {abbreviateNumber(idea.score)}
         </span>
@@ -96,7 +95,7 @@ const VoteButton = ({ user, idea, handleVote }) => {
           onClick={removeDownvote}
           btnClassName={classes.smallButton}
         >
-          <ArrowDownwardIcon style={{ color: `${RED}` }} />
+          <ArrowDownwardIcon style={{ color: `${STOCK_RED}` }} />
         </MyButton>
       </div>
     );

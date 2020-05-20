@@ -41,9 +41,10 @@ export const abbreviateNumber = (n) => {
   if (isNaN(n)) {
     return "n/a";
   }
+  if (n < 1e3) return n;
+
   const isNegative = n < 0;
   n = Math.abs(n);
-  if (n < 1e3) return n;
   if (n >= 1e3 && n < 1e6) {
     n = (n / 1e3).toFixed(1) + "K";
   }

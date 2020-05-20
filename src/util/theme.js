@@ -1,5 +1,8 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
+export const STOCK_GREEN = "#129D58";
+export const STOCK_RED = "#D23F31";
+
 export const primary = "#0288D1";
 export const primaryLight = "#349fda";
 export const primaryDark = "#015f92";
@@ -14,6 +17,9 @@ export const darkSecondaryText = "#C1C1C1";
 export const darkBackground = "#303030";
 export const darkPaper = "#424242";
 
+export const texturedLight = "#F6F7F8";
+export const texturedDark = "#303030";
+
 // dark is a boolean
 export const theme = (dark) =>
   createMuiTheme({
@@ -24,6 +30,9 @@ export const theme = (dark) =>
         main: `${primary}`,
         dark: `${primaryDark}`,
       },
+      texturedBackground: {
+        main: `${dark ? texturedDark : texturedLight}`,
+      },
     },
     text: {
       primary: `${dark ? darkPrimaryText : lightPrimaryText}`,
@@ -33,7 +42,7 @@ export const theme = (dark) =>
       default: `${dark ? darkBackground : lightBackground}`,
       paper: `${dark ? darkPaper : lightPaper}`,
     },
-    typograph: {
+    typography: {
       fontFamily: "'Muli', sans-serif",
     },
   });

@@ -23,7 +23,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import RssFeedIcon from "@material-ui/icons/RssFeed";
 
 // Components
-import TabPanel from "./TabPanel";
+import TabPanel from "../../util/TabPanel";
 import PerformanceTable from "./PerformanceTable";
 import PositionTable from "./PositionTable";
 import ReviewContainer from "../../Reviews/ReviewContainer";
