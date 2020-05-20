@@ -52,6 +52,8 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     padding: 10,
     paddingTop: 0,
+    maxHeight: "500px",
+    overflowY: "scroll",
   },
 }));
 
