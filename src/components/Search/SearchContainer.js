@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,7 +13,7 @@ import Searchbar from "./Searchbar";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "20px",
+    padding: "10px",
     borderRadius: 0,
     marginTop: "10px",
   },
@@ -23,16 +24,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchContainer = ({ children, ...props }) => {
+const SearchContainer = ({ searchbar, children, ...props }) => {
   const classes = useStyles();
 
   return (
     <Paper variant="outlined" className={classes.root}>
-      <Searchbar {...props} />
+      {searchbar ? <Searchbar {...props} /> : null}
       <GridList className={classes.gridList}>
         {children.map((child, index) => (
           <GridListTile
-            style={{ padding: "15px 4px", height: "none", width: "none" }}
+            style={{ padding: "10px 4px", height: "none", width: "none" }}
             key={index}
           >
             {child}
@@ -41,6 +42,10 @@ const SearchContainer = ({ children, ...props }) => {
       </GridList>
     </Paper>
   );
+};
+
+SearchContainer.propTypes = {
+  searchbar: PropTypes.bool.isRequired,
 };
 
 export default SearchContainer;

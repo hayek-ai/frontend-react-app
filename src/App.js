@@ -32,6 +32,7 @@ import Help from "./pages/Help";
 import Feed from "./pages/Feed";
 import Report from "./pages/Report";
 import Profile from "./pages/Profile";
+import SearchResults from "./pages/SearchResults";
 
 function App(props) {
   const { prefersDarkmode, isAuthenticated, username } = props;
@@ -84,6 +85,7 @@ function App(props) {
                 path="/report/:ideaId/:commentParam?"
                 component={Report}
               />
+              <PrivateRoute path="/ideas/:symbol" component={SearchResults} />
               <CustomRoute
                 path="/"
                 exact

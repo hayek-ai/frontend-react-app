@@ -11,6 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 // Components
 import ScenarioTable from "./ScenarioTable";
+import FollowButton from "../util/FollowButton";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -102,6 +103,11 @@ const FinancialSnapShot = ({ idea }) => {
           >
             {analystUsername}
           </Typography>
+          {idea.analyst && (
+            <div style={{ marginLeft: "20px" }}>
+              <FollowButton analyst={idea.analyst} />
+            </div>
+          )}
         </div>
         <div style={{ marginTop: "20px" }}>
           <ScenarioTable idea={idea} />
