@@ -55,7 +55,6 @@ const Feed = (props) => {
     if (panelIndex === 0) {
       getIdeaFeed("following", queryString).then((ideas) => {
         if (mounted) {
-          console.log(ideas);
           setFeed([...ideas]);
           setLoading(false);
         }

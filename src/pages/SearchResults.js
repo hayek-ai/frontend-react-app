@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getIdeaFeed } from "../api";
 
-// Mui stuff
-import Typography from "@material-ui/core/Typography";
-
 // Components
 import FullPageLayout from "../components/Layout/FullPageLayout";
 import WithLoading from "../components/util/WithLoading";
@@ -49,7 +46,7 @@ const SearchResults = (props) => {
       }
     });
     return () => (mounted = false);
-  }, [sortFilter, positionTypeFilter, timePeriodFilter]);
+  }, [sortFilter, positionTypeFilter, timePeriodFilter, symbol]);
 
   return (
     <FullPageLayout containerType="feedContainer" paperBackground={false}>

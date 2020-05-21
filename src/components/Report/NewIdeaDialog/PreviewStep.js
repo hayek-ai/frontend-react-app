@@ -33,8 +33,7 @@ const PreviewStep = ({ previewState }) => {
         previewState.positionType
       )} ${previewState.companyName} (${previewState.symbol})`}</Typography>
       <Typography
-        style={{ marginBottom: 20 }}
-        color="primary"
+        style={{ margin: "10px", fontWeight: 700 }}
         variant="subtitle1"
       >
         Are you sure you want to submit this idea? Once it is submitted, it

@@ -12,6 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
+// Components
+import IdeaTerms from "./IdeaTerms";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -117,7 +120,7 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
           outcomes for a given stock. Please enter your "Bull Case" (highest),
           "Bear Case" (lowest), and "Base Case" (most likely) price level
           scenarios, along with your estimate of their respective probabilities.
-          Your utlimate price target will be the weighted average of these
+          Your ultimate price target will be the weighted average of these
           scenarios. Probabilities must add up to 100%.
         </Typography>
       </div>
@@ -244,6 +247,7 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
           />
         </div>
       </div>
+      <IdeaTerms ideaState={ideaState} setIdeaState={setIdeaState} />
     </div>
   );
 };
