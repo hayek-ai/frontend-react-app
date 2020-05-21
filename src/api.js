@@ -50,7 +50,7 @@ export const deleteComment = (commentId) => {
 
 export const fetchStockInfo = (symbol, withChart) => {
   if (withChart) {
-    axios
+    return axios
       .get(`/stock/${symbol}?withChart=true`)
       .then((res) => res.data)
       .catch((err) => console.log(err));
