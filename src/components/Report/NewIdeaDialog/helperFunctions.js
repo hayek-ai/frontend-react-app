@@ -22,6 +22,9 @@ export const verifyIdeaData = (state) => {
   if (state.symbol === "") {
     errors.symbol = "Cannot be blank";
   }
+  if (state.agreedToTerms === false) {
+    errors.agreedToTerms = "Must agree to terms and conditions to submit.";
+  }
   if (
     isNaN(bullTarget) ||
     isNaN(bullProbability) ||

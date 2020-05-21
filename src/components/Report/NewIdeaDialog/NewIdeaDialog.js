@@ -59,6 +59,7 @@ const initialIdeaState = {
   baseProbability: "",
   bearTarget: "",
   bearProbability: "",
+  agreedToTerms: false,
   errors: {},
 };
 
@@ -72,6 +73,7 @@ const initialPreviewState = {
   baseProbability: "",
   bearTarget: "",
   bearProbability: "",
+  agreedToTerms: false,
   companyName: null,
   exchange: null,
   sector: null,
@@ -252,6 +254,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
     formData.append("baseProbability", previewState.baseProbability);
     formData.append("bearTarget", previewState.bearTarget);
     formData.append("bearProbability", previewState.bearProbability);
+    formData.append("agreedToTerms", previewState.agreedToTerms);
     formData.append(
       "thesisSummary",
       JSON.stringify(previewState.thesisSummary)
@@ -271,9 +274,10 @@ const NewIdeaDialog = ({ uploadIdea }) => {
       if (res.errors) {
         setAlertState({
           open: true,
-          message: "Oops, something went wrong.  Please try again.",
+          message: res.errors[0]["detail"],
           color: "error",
         });
+        setActiveStep(0);
       } else {
         // position opened successfully
         // restore to initial state and show success message

@@ -17,6 +17,7 @@ const styles = (theme) => ({
     width: "100%",
     backgroundColor: theme.palette.texturedBackground.main,
     borderRadius: "4px",
+    margin: "10px 0",
   },
 });
 
