@@ -20,8 +20,8 @@ const Feed = (props) => {
   const [feed, setFeed] = useState([]);
   const [sortFilter, setSortFilter] = useState({
     key: "sort",
-    index: 0,
-    value: "sort=top",
+    index: 1,
+    value: "sort=latest",
   });
   const [positionTypeFilter, setPositionTypeFilter] = useState({
     key: "positionType",
@@ -53,7 +53,7 @@ const Feed = (props) => {
 
     const queryString = filters.map((filter) => filter.value).join("&");
     if (panelIndex === 0) {
-      getIdeaFeed("following").then((ideas) => {
+      getIdeaFeed("following", queryString).then((ideas) => {
         if (mounted) {
           setFeed([...ideas]);
           setLoading(false);
@@ -75,28 +75,15 @@ const Feed = (props) => {
     timePeriodFilter,
     sectorFilter,
     marketCapFilter,
+    panelIndex,
   ]);
-
-  const handleChange = async (event, newPanelIndex) => {
-    setPanelIndex(newPanelIndex);
-    setLoading(true);
-    if (newPanelIndex === 0) {
-      const ideas = await getIdeaFeed("following");
-      setFeed([...ideas]);
-      setLoading(false);
-    } else {
-      const ideas = await getIdeaFeed("discover", "sort=top");
-      setFeed([...ideas]);
-      setLoading(false);
-    }
-  };
 
   return (
     <FullPageLayout containerType="feedContainer" paperBackground={false}>
       <AppBar variant="outlined" position="static" color="inherit">
         <Tabs
           value={panelIndex}
-          onChange={handleChange}
+          onChange={(event, newPanelIndex) => setPanelIndex(newPanelIndex)}
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
@@ -106,12 +93,28 @@ const Feed = (props) => {
         </Tabs>
       </AppBar>
       <TabPanel value={panelIndex} index={0}>
+        <SearchContainer {...props} searchbar={false}>
+          <FilterSelect filter={sortFilter} setFilter={setSortFilter} />
+          <FilterSelect
+            filter={positionTypeFilter}
+            setFilter={setPositionTypeFilter}
+          />
+          <FilterSelect
+            filter={timePeriodFilter}
+            setFilter={setTimePeriodFilter}
+          />
+          <FilterSelect filter={sectorFilter} setFilter={setSectorFilter} />
+          <FilterSelect
+            filter={marketCapFilter}
+            setFilter={setMarketCapFilter}
+          />
+        </SearchContainer>
         <WithLoading loading={loading}>
           <FeedContainer ideaFeed={feed} history={props.history} />
         </WithLoading>
       </TabPanel>
       <TabPanel value={panelIndex} index={1}>
-        <SearchContainer {...props}>
+        <SearchContainer {...props} searchbar={true}>
           <FilterSelect filter={sortFilter} setFilter={setSortFilter} />
           <FilterSelect
             filter={positionTypeFilter}

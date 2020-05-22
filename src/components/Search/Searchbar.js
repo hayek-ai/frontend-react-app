@@ -2,6 +2,7 @@ import React from "react";
 import { searchAutocomplete } from "../../api";
 
 // Mui stuff
+import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -10,6 +11,15 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
+const styles = (theme) => ({
+  searchbar: {
+    width: "100%",
+    backgroundColor: theme.palette.texturedBackground.main,
+    borderRadius: "4px",
+    margin: "10px 0",
+  },
+});
 
 class Searchbar extends React.Component {
   _isMounted = false;
@@ -110,7 +120,7 @@ class Searchbar extends React.Component {
       <React.Fragment>
         <Autocomplete
           open={this.state.open}
-          style={{ width: "100%" }}
+          className={this.props.classes.searchbar}
           onChange={(event, value) => this.handleOptionSelect(value)}
           onOpen={() => this.setState({ open: true })}
           onClose={() => this.setState({ open: false })}
@@ -158,4 +168,4 @@ class Searchbar extends React.Component {
   }
 }
 
-export default Searchbar;
+export default withStyles(styles)(Searchbar);

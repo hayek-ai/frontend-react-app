@@ -33,13 +33,11 @@ const SearchResultsHeader = ({ symbol }) => {
   const [loading, setLoading] = useState(false);
   const [stockInfo, setStockInfo] = useState({});
 
-  const isGreen = stockInfo.companyInfo.changePercent > 0;
-
   useEffect(() => {
     let isMounted = true;
     if (symbol !== undefined) {
       setLoading(true);
-      fetchStockInfo(symbo, true).then((stockInfo) => {
+      fetchStockInfo(symbol, true).then((stockInfo) => {
         if (stockInfo.companyInfo.exchange === "New York Stock Exchange") {
           stockInfo.companyInfo.exchange = "NYSE";
         }
@@ -63,13 +61,23 @@ const SearchResultsHeader = ({ symbol }) => {
             <Typography
               align="center"
               variant="subtitle1"
-              style={{ color: `${isGreen ? STOCK_GREEN : STOCK_RED}` }}
+              style={{
+                color: `${
+                  stockInfo.companyInfo.changePercent > 0
+                    ? STOCK_GREEN
+                    : STOCK_RED
+                }`,
+              }}
             >
               {`${formatNumber(
                 stockInfo.companyInfo.latestPrice,
                 2,
                 "dollars"
-              )} (${(stockInfo.companyInfo.changePercent, 1, "percentage")})`}
+              )} (${formatNumber(
+                stockInfo.companyInfo.changePercent,
+                1,
+                "percentage"
+              )})`}
             </Typography>
             <Typography align="center" variant="subtitle2">
               {`${stockInfo.companyInfo.exchange}: ${symbol.toUpperCase()}`}
@@ -77,10 +85,7 @@ const SearchResultsHeader = ({ symbol }) => {
               {`Sector: ${stockInfo.companyInfo.sector}`}
             </Typography>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <PriceChart
-                chartInfo={stockInfo.chartInfo}
-                color={isGreen ? "green" : "red"}
-              />
+              <PriceChart chartInfo={stockInfo.chartInfo} />
             </div>
           </React.Fragment>
         )}

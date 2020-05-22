@@ -18,7 +18,11 @@ import FullPageLayout from "../components/Layout/FullPageLayout";
 
 const Confirmation = (props) => {
   const [loading, setLoading] = useState(false);
-  const [resendAlert, setResendAlert] = useState(false);
+  const [alertState, setAlertState] = useState({
+    open: false,
+    message: "",
+    color: null,
+  });
   const [state, setState] = useState({
     verificationCode: "",
     errors: {},
@@ -36,8 +40,20 @@ const Confirmation = (props) => {
     axios
       .post("/resend-confirmation")
       .then((res) => {
-        setResendAlert(true);
         setLoading(false);
+        if (res.errors) {
+          setAlertState({
+            open: true,
+            message: res.errors[0]["detail"],
+            color: "error",
+          });
+        } else {
+          setAlertState({
+            open: true,
+            message: res.data.message,
+            color: null,
+          });
+        }
       })
       .catch((err) => setLoading(false));
   };
@@ -67,7 +83,7 @@ const Confirmation = (props) => {
     <FullPageLayout containerType="narrowContainer" paperBackground={true}>
       <WithLoading loading={loading}>
         <Typography variant="body1" style={{ padding: 10 }}>
-          We sent you a code
+          We sent you a code. Please check your email.
         </Typography>
         <TextField
           id="verificationCode"
@@ -100,9 +116,10 @@ const Confirmation = (props) => {
         </div>
       </WithLoading>
       <AlertModal
-        open={resendAlert}
-        onClose={() => setResendAlert(false)}
-        message="We sent you another confirmation code!"
+        open={alertState.open}
+        onClose={() => setAlertState({ open: false, message: "" })}
+        message={alertState.message}
+        color={alertState.color}
       />
     </FullPageLayout>
   );

@@ -12,6 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
+// Components
+import IdeaTerms from "./IdeaTerms";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -118,6 +121,15 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
         </FormControl>
 
       </div>
+          <Typography variant="body5" color="textSecondary" style={{ textAlign: "center", margin: "15px 0px" }}>
+        Scenario analysis is a useful tool to arrive at a price target and
+        gives investors important information about the potential range of
+        outcomes for a given stock. Please enter your "Bull Case" (highest),
+        "Bear Case" (lowest), and "Base Case" (most likely) price level
+        scenarios, along with your estimate of their respective probabilities.
+        Your utlimate price target will be the weighted average of these
+        scenarios. Probabilities must add up to 100%.
+        </Typography>
 
       <div style={{ margin: "10px 0px" }}>
 
@@ -266,15 +278,7 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
           />
         </div>
       </div>
-      <Typography variant="body5" color="textSecondary" style={{ textAlign: "center", margin: "15px 0px" }}>
-        Scenario analysis is a useful tool to arrive at a price target and
-        gives investors important information about the potential range of
-        outcomes for a given stock. Please enter your "Bull Case" (highest),
-        "Bear Case" (lowest), and "Base Case" (most likely) price level
-        scenarios, along with your estimate of their respective probabilities.
-        Your utlimate price target will be the weighted average of these
-        scenarios. Probabilities must add up to 100%.
-        </Typography>
+      <IdeaTerms ideaState={ideaState} setIdeaState={setIdeaState} />
     </div>
   );
 };

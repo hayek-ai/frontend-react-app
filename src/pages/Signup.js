@@ -88,51 +88,53 @@ const Signup = (props) => {
       <Typography variant="body1">
         Getting started with hayek is free and takes less than a minute.
       </Typography>
-      <TextField
-        id="username"
-        name="username"
-        type="text"
-        label="Username"
-        helperText={state.errors.username}
-        error={state.errors.username ? true : false}
-        value={state.username}
-        onChange={handleChange}
-        style={{ margin: "10px 0" }}
-        fullWidth
-      />
-      <TextField
-        id="email"
-        name="email"
-        type="text"
-        label="Email"
-        helperText={state.errors.email}
-        error={state.errors.email ? true : false}
-        value={state.email}
-        onChange={handleChange}
-        style={{ margin: "10px 0" }}
-        fullWidth
-      />
-      <TextField
-        id="password"
-        name="password"
-        type="password"
-        label="Password"
-        helperText={state.errors.password}
-        error={state.errors.password ? true : false}
-        value={state.password}
-        onChange={handleChange}
-        style={{ margin: "10px 0" }}
-        fullWidth
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSubmit}
-        style={{ width: "100%", margin: "30px 0 20px" }}
-        disabled={loading}
-      >
-        Sign up
-      </Button>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          id="username"
+          name="username"
+          type="text"
+          label="Username"
+          helperText={state.errors.username}
+          error={state.errors.username ? true : false}
+          value={state.username}
+          onChange={handleChange}
+          style={{ margin: "10px 0" }}
+          fullWidth
+        />
+        <TextField
+          id="email"
+          name="email"
+          type="text"
+          label="Email"
+          helperText={state.errors.email}
+          error={state.errors.email ? true : false}
+          value={state.email}
+          onChange={handleChange}
+          style={{ margin: "10px 0" }}
+          fullWidth
+        />
+        <TextField
+          id="password"
+          name="password"
+          type="password"
+          label="Password"
+          helperText={state.errors.password}
+          error={state.errors.password ? true : false}
+          value={state.password}
+          onChange={handleChange}
+          style={{ margin: "10px 0" }}
+          fullWidth
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ width: "100%", margin: "30px 0 20px" }}
+          disabled={loading}
+        >
+          Sign up
+        </Button>
+      </form>
       <div>
         <Typography variant="subtitle2">
           By signing up, you are agreeing to our{" "}
