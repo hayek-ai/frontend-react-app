@@ -10,6 +10,8 @@ export const DOWNVOTE_IDEA = "DOWNVOTE_IDEA";
 export const REMOVE_DOWNVOTE = "REMOVE_DOWNVOTE";
 export const FOLLOW_ANALYST = "FOLLOW_ANALYST";
 export const UNFOLLOW_ANALYST = "UNFOLLOW_ANALYST";
+export const BOOKMARK_IDEA = "BOOKMARK_IDEA";
+export const REMOVE_BOOKMARK = "REMOVE_BOOKMARK";
 
 // Profile reducer types
 export const SET_PROFILE = "SET_PROFILE";
@@ -18,3 +20,4 @@ export const SET_REVIEWS = "SET_REVIEWS";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const ADD_IDEA = "ADD_IDEA";
+export const CLOSE_IDEA = "CLOSE_IDEA";

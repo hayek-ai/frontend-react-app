@@ -64,6 +64,21 @@ export const abbreviateNumber = (n) => {
   return `${isNegative ? "-" : ""}${n}`;
 };
 
+export const priceReturn = (positionType, entry, exit, sigFigs) => {
+  entry = parseFloat(entry);
+  exit = parseFloat(exit);
+  if (isNaN(entry) || isNaN(exit) || positionType == null) {
+    return "n/a";
+  }
+  positionType = positionType.toLowerCase();
+  if (positionType !== "long" && positionType !== "short") {
+    return "n/a";
+  }
+  const priceReturn =
+    positionType === "long" ? exit / entry - 1 : 1 - exit / entry;
+  return formatNumber(priceReturn, sigFigs, "percentage");
+};
+
 export const LightenDarkenColor = (col, amt) => {
   var usePound = false;
   if (col[0] === "#") {

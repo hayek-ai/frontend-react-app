@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
 
 const options = {
   sort: [
-    { value: "top", text: "Top" },
     { value: "latest", text: "Newest" },
+    { value: "top", text: "Top" },
   ],
   positionType: [
     { value: null, text: "Long & Short" },

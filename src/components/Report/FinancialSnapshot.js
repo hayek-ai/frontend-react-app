@@ -1,7 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { formatNumber, capitalizeFirstLetter } from "../../util/utils";
+import {
+  formatNumber,
+  capitalizeFirstLetter,
+  priceReturn,
+} from "../../util/utils";
 import dayjs from "dayjs";
 
 // Mui stuff
@@ -12,6 +16,8 @@ import Avatar from "@material-ui/core/Avatar";
 // Components
 import ScenarioTable from "./ScenarioTable";
 import FollowButton from "../util/FollowButton";
+
+import { STOCK_GREEN, STOCK_RED } from "../../util/theme";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -43,7 +49,8 @@ const FinancialSnapShot = ({ idea }) => {
   const keyMetrics = [
     {
       label: "Last price",
-      value: formatNumber(idea.lastPrice, 2, "dollars"),
+      // use latestPrice (from IEX quote) - lastPrice stale (esp. if idea is closed)
+      value: formatNumber(idea.latestPrice, 2, "dollars"),
     },
     {
       label: "52-wk high",
@@ -81,6 +88,12 @@ const FinancialSnapShot = ({ idea }) => {
 
   const analystUsername = idea.analyst ? idea.analyst.username : null;
   const analystImageUrl = idea.analyst ? idea.analyst.imageUrl : null;
+  const ideaReturn = priceReturn(
+    idea.positionType,
+    idea.entryPrice,
+    idea.lastPrice,
+    2
+  );
 
   return (
     <div>
@@ -88,9 +101,38 @@ const FinancialSnapShot = ({ idea }) => {
         <Typography variant="h5">{`${capitalizeFirstLetter(
           idea.positionType
         )} ${idea.companyName} (${idea.symbol})`}</Typography>
-        <Typography variant="subtitle2" color="textSecondary">
-          {dayjs(new Date(idea.createdAt)).format("MMM DD, YYYY")}
+        <Typography
+          variant="subtitle2"
+          color="textSecondary"
+          style={{ marginTop: "10px" }}
+        >
+          {`Entry Price of ${formatNumber(
+            idea.entryPrice,
+            2,
+            "dollars"
+          )} on ${dayjs(new Date(idea.createdAt)).format("MMM DD, YYYY")}`}
         </Typography>
+        {idea.closedDate && (
+          <div style={{ marginTop: "10px" }}>
+            <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+              {`This position was closed on ${dayjs(
+                new Date(idea.createdAt)
+              ).format("MMM DD, YYYY")} at an exit price of ${formatNumber(
+                idea.lastPrice,
+                2,
+                "dollars"
+              )} with a return of `}
+              <span
+                style={{
+                  color: `${
+                    parseFloat(ideaReturn) > 0 ? STOCK_GREEN : STOCK_RED
+                  }`,
+                }}
+              >{`${ideaReturn}`}</span>
+            </Typography>
+          </div>
+        )}
+
         <div
           style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
         >

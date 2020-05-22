@@ -238,6 +238,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
             exchange: info.exchange,
             sector: info.sector,
             lastPrice: parseFloat(info.latestPrice),
+            entryPrice: parseFloat(info.latestPrice),
             bullProbability: parseFloat(ideaState.bullProbability) / 100,
             baseProbability: parseFloat(ideaState.baseProbability) / 100,
             bearProbability: parseFloat(ideaState.bearProbability) / 100,
@@ -261,7 +262,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("symbol", previewState.symbol);
-    formData.append("entryPrice", previewState.lastPrice);
+    formData.append("entryPrice", previewState.entryPrice);
     formData.append("positionType", previewState.positionType);
     formData.append("bullTarget", previewState.bullTarget);
     formData.append("bullProbability", previewState.bullProbability);

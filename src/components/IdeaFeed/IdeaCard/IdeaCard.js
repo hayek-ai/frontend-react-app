@@ -7,7 +7,6 @@ const styles = {
   root: {
     margin: "10px auto",
     padding: 0,
-    borderRadius: 0,
     textAlign: "left",
   },
 };

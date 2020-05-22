@@ -5,7 +5,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "20px",
     textAlign: "left",
-    borderRadius: 0,
   },
   heading: {
     display: "flex",
@@ -40,15 +39,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   uploadImage: {
-    width: 125,
-    height: 125,
-    objectFit: "cover",
-    borderRadius: "50%",
+    width: "125px",
+    height: "125px",
   },
   imageEditButton: {
-    position: "absolute",
-    top: "80%",
-    left: "70%",
     color: theme.palette.text.secondary,
   },
   bioTextField: {

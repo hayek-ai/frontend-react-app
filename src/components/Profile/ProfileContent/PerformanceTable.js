@@ -47,8 +47,8 @@ const PerformanceTable = ({ analyst }) => {
     ),
     createData(
       "Brier Score",
-      formatNumber(analyst.avgReturn, 2),
-      formatNumber(analyst.avgReturnRank, 1, "percentage")
+      formatNumber(analyst.brierScore, 2),
+      formatNumber(analyst.brierScorePecentile, 1, "percentage")
     ),
     createData(
       "Average Return",
