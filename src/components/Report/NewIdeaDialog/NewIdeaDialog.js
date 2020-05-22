@@ -167,19 +167,34 @@ const NewIdeaDialog = ({ uploadIdea }) => {
       case 1:
       case 2:
         return (
-          <Button variant="contained" color="primary" onClick={handleNext}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            size="small"
+          >
             Next
           </Button>
         );
       case 3:
         return (
-          <Button variant="contained" color="primary" onClick={handlePreview}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handlePreview}
+            size="small"
+          >
             Preview
           </Button>
         );
       case 4:
         return (
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            size="small"
+          >
             Submit Idea
           </Button>
         );
@@ -332,12 +347,17 @@ const NewIdeaDialog = ({ uploadIdea }) => {
               onClick={() => setOpen(false)}
               variant="outlined"
               color="primary"
+              size="small"
             >
               Cancel
             </Button>
           </div>
           <div>
-            <Button disabled={activeStep === 0} onClick={handleBack}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              size="small"
+            >
               Back
             </Button>
             {getNextButton(activeStep)}
