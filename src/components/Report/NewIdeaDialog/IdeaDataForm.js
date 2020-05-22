@@ -20,23 +20,41 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   textField: {
-    margin: "10px 10px 0 0",
-    width: "110px",
+    align: "center",
+    margin: "10px 10px 20px 10px",
+    width: "150px"
   },
   scenarioBox: {
-    margin: "10px auto",
+    justifyContent: "space-around",
+    '@media (max-width:600px)': {
+      display: "flex",
+      justifyContent: "space-around",
+    }
   },
   scenarioInputs: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
     flexWrap: "wrap",
+    '@media (max-width:600px)': {
+      display:"flex",
+      flex: "0 50%",
+      justifyContent: "space-around",
+    }
+  },
+  typeInputs: {
+    display: "flex",
+    alignItems: "start",
+    justifyContent: "center",
+    flexWrap: "wrap",
+
   },
   errorMessage: {
     color: theme.palette.error.main,
-    marginTop: 10,
+    margin:0,
     textAlign: "center",
   },
+
 }));
 
 const IdeaDataForm = ({ ideaState, setIdeaState }) => {
@@ -62,41 +80,53 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
 
   return (
     <div className={classes.root}>
-      <TextField
-        id="symbol"
-        name="symbol"
-        type="text"
-        label="Symbol"
-        helperText={ideaState.errors.symbol}
-        error={ideaState.errors.symbol ? true : false}
-        value={ideaState.symbol}
-        onChange={handleChange}
-        className={classes.textField}
-      />
-      <FormControl style={{ marginTop: "30px" }}>
-        <InputLabel shrink id="positionType">
-          Position Type
-        </InputLabel>
-        <Select
-          id="positionType"
-          name="positionType"
-          label="Position Type"
-          value={ideaState.positionType}
+      <div className={classes.typeInputs}>
+        <TextField
+          id="symbol"
+          name="symbol"
+          type="text"
+          label="Symbol"
+          variant="outlined"
+          placeholder="Enter Symbol"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          helperText={ideaState.errors.symbol}
+          error={ideaState.errors.symbol ? true : false}
+          value={ideaState.symbol}
           onChange={handleChange}
           className={classes.textField}
-        >
-          <MenuItem value="long">Long</MenuItem>
-          <MenuItem value="short">Short</MenuItem>
-        </Select>
-      </FormControl>
+        />
+        <FormControl className={classes.textField} variant="outlined">
+          <InputLabel
+            shrink id="positionType"
+          >
+            Position Type
+        </InputLabel >
+          <Select
+            id="positionType"
+            name="positionType"
+            label="Position Type"
+            color="textSecondary"
+            value={ideaState.positionType}
+            onChange={handleChange}
+          >
+            {/* <MenuItem value="N/A" selected={true}>N/A</MenuItem> */}
+            <MenuItem value="long" >Long</MenuItem>
+            <MenuItem value="short">Short</MenuItem>
+          </Select>
+        </FormControl>
 
-      <div style={{ margin: "20px 0 10px" }}>
+      </div>
+
+      <div style={{ margin: "10px 0px" }}>
+
         <Typography
           align="center"
-          variant="h5"
-          style={{ marginBottom: "10px" }}
+          variant="h6"
+          color="textSecondary"
         >
-          {`12-Month Price Target: ${formatNumber(
+          {` 12-Month Price Target: ${formatNumber(
             ideaState.priceTarget,
             2,
             "dollars"
@@ -111,21 +141,12 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
             {ideaState.errors.priceTarget}
           </Typography>
         )}
-        <Typography variant="body1" color="textSecondary">
-          Scenario analysis is a useful tool to arrive at a price target and
-          gives investors important information about the potential range of
-          outcomes for a given stock. Please enter your "Bull Case" (highest),
-          "Bear Case" (lowest), and "Base Case" (most likely) price level
-          scenarios, along with your estimate of their respective probabilities.
-          Your utlimate price target will be the weighted average of these
-          scenarios. Probabilities must add up to 100%.
-        </Typography>
       </div>
       <div className={classes.scenarioBox}>
-        <Typography align="center" variant="body1">
-          Bull Case
-        </Typography>
         <div className={classes.scenarioInputs}>
+          <Typography style={{ minWidth: "105px" }} variant="h6">
+            Bull Case:
+          </Typography>
           <TextField
             label="Target"
             name="bullTarget"
@@ -163,10 +184,10 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
         </div>
       </div>
       <div className={classes.scenarioBox}>
-        <Typography align="center" variant="body1">
-          Base Case
-        </Typography>
         <div className={classes.scenarioInputs}>
+          <Typography variant="h6">
+            Base Case:
+        </Typography>
           <TextField
             label="Target"
             name="baseTarget"
@@ -204,10 +225,11 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
         </div>
       </div>
       <div className={classes.scenarioBox}>
-        <Typography align="center" variant="body1">
-          Bear Case
-        </Typography>
+
         <div className={classes.scenarioInputs}>
+          <Typography variant="h6">
+            Bear Case:
+        </Typography>
           <TextField
             label="Target"
             name="bearTarget"
@@ -244,6 +266,15 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
           />
         </div>
       </div>
+      <Typography variant="body5" color="textSecondary" style={{ textAlign: "center", margin: "15px 0px" }}>
+        Scenario analysis is a useful tool to arrive at a price target and
+        gives investors important information about the potential range of
+        outcomes for a given stock. Please enter your "Bull Case" (highest),
+        "Bear Case" (lowest), and "Base Case" (most likely) price level
+        scenarios, along with your estimate of their respective probabilities.
+        Your utlimate price target will be the weighted average of these
+        scenarios. Probabilities must add up to 100%.
+        </Typography>
     </div>
   );
 };
