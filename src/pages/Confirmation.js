@@ -83,7 +83,7 @@ const Confirmation = (props) => {
     <FullPageLayout containerType="narrowContainer" paperBackground={true}>
       <WithLoading loading={loading}>
         <Typography variant="body1" style={{ padding: 10 }}>
-          We sent you a code
+          We sent you a code. Please check your email.
         </Typography>
         <TextField
           id="verificationCode"
