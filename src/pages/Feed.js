@@ -20,7 +20,7 @@ const Feed = (props) => {
   const [feed, setFeed] = useState([]);
   const [sortFilter, setSortFilter] = useState({
     key: "sort",
-    index: 1,
+    index: 0,
     value: "sort=latest",
   });
   const [positionTypeFilter, setPositionTypeFilter] = useState({

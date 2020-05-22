@@ -6,6 +6,8 @@ import {
   REMOVE_UPVOTE,
   DOWNVOTE_IDEA,
   REMOVE_DOWNVOTE,
+  BOOKMARK_IDEA,
+  REMOVE_BOOKMARK,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
 } from "../types";
@@ -23,7 +25,7 @@ export const signupUser = (newUserData) => (dispatch) => {
         payload: res.data.user,
       });
     })
-    .catch((err) => err.response.data.errors);
+    .catch((err) => console.log(err));
 };
 
 export const loginUser = (userData) => (dispatch) => {
@@ -36,7 +38,7 @@ export const loginUser = (userData) => (dispatch) => {
         payload: res.data.user,
       });
     })
-    .catch((err) => err.response.data.errors);
+    .catch((err) => console.log(err));
 };
 
 export const confirmUser = (verificationCode) => (dispatch) => {
@@ -45,7 +47,7 @@ export const confirmUser = (verificationCode) => (dispatch) => {
     .then(() => {
       dispatch({ type: SET_CONFIRMED });
     })
-    .catch((err) => err.response.data.errors);
+    .catch((err) => console.log(err));
 };
 
 export const logoutUser = () => (dispatch) => {
@@ -85,7 +87,7 @@ export const upvoteIdea = (ideaId) => (dispatch) => {
       });
       return res.data.idea;
     })
-    .catch((err) => console.log(err.response.data.errors));
+    .catch((err) => console.log(err));
 };
 
 export const removeUpvote = (ideaId) => (dispatch) => {
@@ -98,7 +100,7 @@ export const removeUpvote = (ideaId) => (dispatch) => {
       });
       return res.data.idea;
     })
-    .catch((err) => console.log(err.response.data.errors));
+    .catch((err) => console.log(err));
 };
 
 export const downvoteIdea = (ideaId) => (dispatch) => {
@@ -111,7 +113,7 @@ export const downvoteIdea = (ideaId) => (dispatch) => {
       });
       return res.data.idea;
     })
-    .catch((err) => console.log(err.response.data.errors));
+    .catch((err) => console.log(err));
 };
 
 export const removeDownvote = (ideaId) => (dispatch) => {
@@ -124,7 +126,33 @@ export const removeDownvote = (ideaId) => (dispatch) => {
       });
       return res.data.idea;
     })
-    .catch((err) => console.log(err.response.data.errors));
+    .catch((err) => console.log(err));
+};
+
+export const bookmarkIdea = (ideaId) => (dispatch) => {
+  return axios
+    .post(`/idea/${ideaId}/bookmark`)
+    .then((res) => {
+      dispatch({
+        type: BOOKMARK_IDEA,
+        payload: res.data.idea,
+      });
+      return res.data.idea;
+    })
+    .catch((err) => console.log(err));
+};
+
+export const removeBookmark = (ideaId) => (dispatch) => {
+  return axios
+    .post(`/idea/${ideaId}/bookmark`)
+    .then((res) => {
+      dispatch({
+        type: REMOVE_BOOKMARK,
+        payload: res.data.idea,
+      });
+      return res.data.idea;
+    })
+    .catch((err) => console.log(err));
 };
 
 export const updateUser = (formData) => (dispatch) => {

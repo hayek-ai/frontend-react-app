@@ -7,6 +7,7 @@ import {
   ADD_REVIEW,
   DELETE_REVIEW,
   ADD_IDEA,
+  CLOSE_IDEA,
 } from "../types";
 
 const initialState = {
@@ -24,7 +25,8 @@ export default function (state = initialState, action) {
         ideas: sorted_ideas,
       };
     case SET_BOOKMARKS:
-      return { ...state, bookmarkedIdeas: [...action.payload] };
+      let sorted_bookmarks = [...action.payload].sort(ideaSortCallback);
+      return { ...state, bookmarkedIdeas: sorted_bookmarks };
     case FOLLOW_ANALYST:
       return action.payload.id === state.id
         ? { ...state, ...action.payload }
@@ -56,6 +58,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ideas: [action.payload, ...state.ideas],
+      };
+    case CLOSE_IDEA:
+      const filteredIdeas = state.ideas.filter(
+        (idea) => idea.id !== action.payload.id
+      );
+      filteredIdeas.push(action.payload);
+      return {
+        ...state,
+        ideas: filteredIdeas.sort(ideaSortCallback),
       };
     default:
       return state;

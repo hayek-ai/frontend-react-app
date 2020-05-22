@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     marginTop: 10,
-    borderRadius: 0,
   },
   link: {
     textDecoration: "none",

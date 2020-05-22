@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
-import { formatNumber } from "../../../util/utils";
+import { formatNumber, priceReturn } from "../../../util/utils";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,6 +12,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+
+import { STOCK_GREEN, STOCK_RED } from "../../../util/theme";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -73,7 +75,7 @@ const PositionTable = ({ ideas }) => {
       formatNumber(idea.lastPrice, 2, "dollars"),
       formatNumber(idea.priceTarget, 2, "dollars"),
       calcTimePeriod(idea.createdAt, idea.closedDate),
-      formatNumber(idea.performance, 2, "percentage")
+      priceReturn(idea.positionType, idea.entryPrice, idea.lastPrice, 2)
     );
   });
 
@@ -119,7 +121,16 @@ const PositionTable = ({ ideas }) => {
                 <TableCell align="center">{row.lastPrice}</TableCell>
                 <TableCell align="center">{row.priceTarget}</TableCell>
                 <TableCell align="center">{row.timePeriod}</TableCell>
-                <TableCell align="center">{row.performance}</TableCell>
+                <TableCell
+                  align="center"
+                  style={{
+                    color: `${
+                      parseFloat(row.performance) >= 0 ? STOCK_GREEN : STOCK_RED
+                    }`,
+                  }}
+                >
+                  {row.performance}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

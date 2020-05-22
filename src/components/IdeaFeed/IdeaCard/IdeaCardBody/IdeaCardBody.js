@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { formatNumber, capitalizeFirstLetter } from "../../../../util/utils";
+import {
+  formatNumber,
+  capitalizeFirstLetter,
+  priceReturn,
+} from "../../../../util/utils";
 import { Node } from "slate";
 
 // Mui stuff
@@ -10,11 +14,6 @@ import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 
 export const IdeaCardBody = ({ children, idea }) => {
-  const impliedReturn =
-    idea.positionType.toLowerCase() === "long"
-      ? idea.priceTarget / idea.entryPrice - 1
-      : 1 - idea.priceTarget / idea.entryPrice;
-
   const thesisSummary = JSON.parse(idea.thesisSummary)
     .map((n) => Node.string(n))
     .join("\n")
@@ -30,7 +29,12 @@ export const IdeaCardBody = ({ children, idea }) => {
         <Typography variant="subtitle1" color="textPrimary">
           {`${capitalizeFirstLetter(idea.positionType)} 
         Target: ${formatNumber(idea.priceTarget, 0, "dollars")} 
-        (Implied Return: ${formatNumber(impliedReturn, 1, "percentage")})`}
+        (Implied Return: ${priceReturn(
+          idea.positionType,
+          idea.entryPrice,
+          idea.priceTarget,
+          1
+        )})`}
         </Typography>
         <Typography variant="body2" color="textSecondary">
           {`${thesisSummary}...`}

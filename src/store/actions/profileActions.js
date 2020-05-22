@@ -5,6 +5,7 @@ import {
   ADD_REVIEW,
   DELETE_REVIEW,
   ADD_IDEA,
+  CLOSE_IDEA,
 } from "../types";
 
 import axios from "../../util/axios";
@@ -86,4 +87,17 @@ export const uploadIdea = (formData) => (dispatch) => {
       return res.data;
     })
     .catch((err) => err.response.data);
+};
+
+export const closeIdea = (ideaId) => (dispatch) => {
+  return axios
+    .put(`/idea/${ideaId}`, { closedDate: new Date().toUTCString() })
+    .then((res) => {
+      dispatch({
+        type: CLOSE_IDEA,
+        payload: res.data,
+      });
+      return res.data;
+    })
+    .catch((err) => console.log(err));
 };

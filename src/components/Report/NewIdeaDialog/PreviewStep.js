@@ -46,7 +46,7 @@ const PreviewStep = ({ previewState }) => {
         <br />
         {`PositionType: ${previewState.positionType}`}
         <br />
-        {`Current Price: ${currentPrice}`}
+        {`Entry Price: ${currentPrice}`}
         <br />
         {`Price Target: ${target}`}
         <br />

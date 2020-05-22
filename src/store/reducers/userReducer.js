@@ -7,6 +7,8 @@ import {
   REMOVE_UPVOTE,
   DOWNVOTE_IDEA,
   REMOVE_DOWNVOTE,
+  BOOKMARK_IDEA,
+  REMOVE_BOOKMARK,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
 } from "../types";
@@ -75,6 +77,24 @@ export default function (state = initialState, action) {
         ...state,
         downvotes: state.downvotes.filter(
           (downvote) => downvote.ideaId !== action.payload.id
+        ),
+      };
+    case BOOKMARK_IDEA:
+      return {
+        ...state,
+        bookmarks: [
+          ...state.bookmarks,
+          {
+            ideaId: action.payload.id,
+            userId: state.id,
+          },
+        ],
+      };
+    case REMOVE_BOOKMARK:
+      return {
+        ...state,
+        bookmarks: state.bookmarks.filter(
+          (bookmark) => bookmark.ideaId !== action.payload.id
         ),
       };
     case FOLLOW_ANALYST:

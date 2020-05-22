@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatNumber } from "../../util/utils";
+import { formatNumber, priceReturn } from "../../util/utils";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,16 +35,6 @@ function createData(name, target, probability, impliedReturn) {
   return { name, target, probability, impliedReturn };
 }
 
-function impliedReturn(positionType, entry, target) {
-  if (positionType) {
-    if (positionType.toLowerCase() === "long") {
-      return formatNumber(target / entry - 1, 1, "percentage");
-    } else {
-      return formatNumber(1 - target / entry, 1, "percentage");
-    }
-  }
-}
-
 const PaperMarkup = (props) => (
   <Paper elevation={0} {...props} style={{ borderRadius: 0 }} />
 );
@@ -57,19 +47,19 @@ const ScenarioTable = ({ idea }) => {
       "Bull Case",
       formatNumber(idea.bullTarget, 2, "dollars"),
       formatNumber(idea.bullProbability, 1, "percentage"),
-      impliedReturn(idea.positionType, idea.lastPrice, idea.bullTarget)
+      priceReturn(idea.positionType, idea.entryPrice, idea.bullTarget, 1)
     ),
     createData(
       "Base Case",
       formatNumber(idea.baseTarget, 2, "dollars"),
       formatNumber(idea.baseProbability, 1, "percentage"),
-      impliedReturn(idea.positionType, idea.lastPrice, idea.baseTarget)
+      priceReturn(idea.positionType, idea.entryPrice, idea.baseTarget, 1)
     ),
     createData(
       "Bear Case",
       formatNumber(idea.bearTarget, 2, "dollars"),
       formatNumber(idea.bearProbability, 1, "percentage"),
-      impliedReturn(idea.positionType, idea.lastPrice, idea.bearTarget)
+      priceReturn(idea.positionType, idea.entryPrice, idea.bearTarget, 1)
     ),
   ];
 

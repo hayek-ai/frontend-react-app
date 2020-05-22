@@ -106,7 +106,6 @@ const IdeaDataForm = ({ ideaState, setIdeaState }) => {
             id="positionType"
             name="positionType"
             label="Position Type"
-            color="textSecondary"
             value={ideaState.positionType}
             onChange={handleChange}
           >

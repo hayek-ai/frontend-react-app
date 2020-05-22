@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // Mui stuff
+import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import PublishIcon from "@material-ui/icons/Publish";
@@ -21,7 +22,14 @@ const ImageUploadPreview = ({ defaultUrl, setSelectedFile }) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-end",
+        margin: "auto",
+      }}
+    >
       <input
         id="contained-button-file"
         style={{ display: "none" }}
@@ -29,7 +37,7 @@ const ImageUploadPreview = ({ defaultUrl, setSelectedFile }) => {
         type="file"
         onChange={handleChange}
       />
-      <img className={classes.uploadImage} src={fileUrl} alt="preview" />
+      <Avatar className={classes.uploadImage} src={fileUrl} />
       <label htmlFor="contained-button-file">
         <Tooltip title="Upload a new profile picture" placement="top">
           <IconButton className={classes.imageEditButton} component="span">
