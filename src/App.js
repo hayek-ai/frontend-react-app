@@ -33,6 +33,7 @@ import Feed from "./pages/Feed";
 import Report from "./pages/Report";
 import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
+import Leaderboard from "./pages/Leaderboard";
 
 function App(props) {
   const { prefersDarkmode, isAuthenticated, username } = props;
@@ -76,6 +77,7 @@ function App(props) {
               <Route path="/about" component={AboutUs} />
               <Route path="/confirm" component={Confirmation} />
               <PrivateRoute path="/feed" component={Feed} />
+              <PrivateRoute path="/leaderboard" component={Leaderboard} />
               <PrivateRoute
                 path="/profile/:username/:panel?"
                 exact

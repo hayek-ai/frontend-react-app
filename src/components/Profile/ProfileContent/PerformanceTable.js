@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(name, metric, ranking) {
-  return { name, metric, ranking };
+function createData(name, metric, percentile) {
+  return { name, metric, percentile };
 }
 
 const PaperMarkup = (props) => (
@@ -43,32 +43,32 @@ const PerformanceTable = ({ analyst }) => {
     createData(
       "Overall Ranking",
       getNumberWithOrdinal(analyst.analystRank),
-      formatNumber(analyst.analystRank, 1, "percentage")
+      formatNumber(analyst.analystRankPercentile, 1, "percentage")
     ),
     createData(
       "Brier Score",
       formatNumber(analyst.brierScore, 2),
-      formatNumber(analyst.brierScorePecentile, 1, "percentage")
+      formatNumber(analyst.brierScorePercentile, 1, "percentage")
     ),
     createData(
       "Average Return",
       formatNumber(analyst.avgReturn, 1, "percentage"),
-      formatNumber(analyst.avgReturnRank, 1, "percentage")
+      formatNumber(analyst.avgReturnPercentile, 1, "percentage")
     ),
     createData(
       "Success Rate",
       formatNumber(analyst.successRate, 1, "percentage"),
-      formatNumber(analyst.successRateRank, 1, "percentage")
+      formatNumber(analyst.successRatePercentile, 1, "percentage")
     ),
     createData(
       "Average Holding Period (days)",
       formatNumber(analyst.avgHoldingPeriod, 1),
-      formatNumber(analyst.avgHoldingPeriodRank, 1, "percentage")
+      formatNumber(analyst.avgHoldingPeriodPercentile, 1, "percentage")
     ),
     createData(
       "Number of Ideas",
       formatNumber(analyst.numIdeas, 0),
-      formatNumber(analyst.numIdeasRank, 1, "percentage")
+      formatNumber(analyst.numIdeasPercentile, 1, "percentage")
     ),
   ];
   return (
@@ -102,7 +102,7 @@ const PerformanceTable = ({ analyst }) => {
                   {row.metric}
                 </TableCell>
                 <TableCell style={{ border: "none" }} align="center">
-                  {row.ranking}
+                  {row.percentile}
                 </TableCell>
               </TableRow>
             ))}
