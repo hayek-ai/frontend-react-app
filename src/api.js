@@ -69,6 +69,18 @@ export const searchAutocomplete = (query) => {
     .catch((err) => console.log(err));
 };
 
+export const getLeaderboard = (queryString) => {
+  // =======PARAMS=======
+  // sortColumn: "analyst_rank", "success_rate", "avg_return", "num_ideas", "avg_holding_period", "num_followers"
+  // orderType: "desc" or "asc"
+  // page (int)
+  // pageSize (int)
+  return axios
+    .get(`/leaderboard?${queryString}`)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+};
+
 function commentSortCallback(a, b) {
   if (a.createdAt < b.createdAt) {
     return 1;

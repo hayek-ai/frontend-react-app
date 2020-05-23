@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { formatNumber } from "../../util/utils";
+import { formatNumber, getNumberWithOrdinal } from "../../util/utils";
 import { Link } from "react-router-dom";
 
 // Mui stuff
@@ -47,22 +47,22 @@ function stableSort(array, comparator) {
 function createData(
   username,
   analystRank,
+  brierScore,
   avgReturn,
   successRate,
   numIdeas,
-  numFollowers,
-  subscriptionCost,
-  avgHoldingPeriod
+  avgHoldingPeriod,
+  numFollowers
 ) {
   return {
     username,
     analystRank,
+    brierScore,
     avgReturn,
     successRate,
     numIdeas,
-    numSubscribers,
-    subscriptionCost,
     avgHoldingPeriod,
+    numFollowers,
   };
 }
 
@@ -118,17 +118,18 @@ const LeaderboardTable = ({ analysts }) => {
   const [orderBy, setOrderBy] = useState("analystRank");
 
   const rows = analysts.map((analyst) => {
-    return createData(
-      analyst.username,
-      analyst.analystRank,
-      analyst.avgReturn,
-      analyst.successRate,
-      analyst.numIdeas,
-      analyst.numFollowers,
-      analyst.numFollowers,
-      analyst.subscriptionCost,
-      analyst.avgHoldingPeriod
-    );
+    if (analyst.numIdeas > 0) {
+      return createData(
+        analyst.username,
+        analyst.analystRank,
+        analyst.brierScore,
+        analyst.avgReturn,
+        analyst.successRate,
+        analyst.numIdeas,
+        analyst.avgHoldingPeriod,
+        analyst.numFollowers
+      );
+    }
   });
 
   const handleRequestSort = (event, property) => {
@@ -146,11 +147,15 @@ const LeaderboardTable = ({ analysts }) => {
     setPage(0);
   };
 
+  const PaperMarkup = (props) => (
+    <Paper elevation={0} {...props} style={{ borderRadius: 0 }} />
+  );
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={PaperMarkup}>
       <Table stickyHeader className={classes.table}>
         <TableHeader
           classes={classes}
@@ -171,19 +176,27 @@ const LeaderboardTable = ({ analysts }) => {
                     {row.username}
                   </Link>
                 </TableCell>
-                <TableCell align="center">{row.analystRank}</TableCell>
                 <TableCell align="center">
-                  {percentageText(row.avgReturn)}
+                  {getNumberWithOrdinal(row.analystRank)}
                 </TableCell>
                 <TableCell align="center">
-                  {percentageText(row.successRate)}
+                  {formatNumber(row.brierScore, 2)}
                 </TableCell>
-                <TableCell align="center">{row.numIdeas}</TableCell>
-                <TableCell align="center">{row.numSubscribers}</TableCell>
                 <TableCell align="center">
-                  {toDollars(row.subscriptionCost)}
+                  {formatNumber(row.avgReturn, 1, "percentage")}
                 </TableCell>
-                <TableCell align="center">{row.avgHoldingPeriod}</TableCell>
+                <TableCell align="center">
+                  {formatNumber(row.successRate, 1, "percentage")}
+                </TableCell>
+                <TableCell align="center">
+                  {formatNumber(row.numIdeas, 0)}
+                </TableCell>
+                <TableCell align="center">
+                  {formatNumber(row.avgHoldingPeriod, 1)}
+                </TableCell>
+                <TableCell align="center">
+                  {formatNumber(row.numFollowers, 0)}
+                </TableCell>
               </TableRow>
             ))}
           {emptyRows > 0 && (
