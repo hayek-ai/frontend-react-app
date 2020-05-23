@@ -54,17 +54,13 @@ class Searchbar extends React.Component {
         this.setState({
           loading: false,
           options: optionList.map((item) => {
-            const type = item["1. symbol"] ? "Stock" : "Analyst";
-            const matchScore = item["9. matchScore"]
-              ? parseFloat(item["9. matchScore"])
-              : 100;
-            const name = item["1. symbol"]
-              ? `${item["2. name"]} (${item["1. symbol"]})`
+            const type = item.symbol ? "Stock" : "Analyst";
+            const name = item.symbol
+              ? `${item.companyName} (${item.symbol})`
               : item.username;
-            const value = item["1. symbol"] ? item["1. symbol"] : item.username;
+            const value = item.symbol ? item.symbol : item.username;
             return {
               type: type,
-              matchScore: matchScore,
               name: name,
               value: value,
             };
@@ -97,7 +93,7 @@ class Searchbar extends React.Component {
         if (response !== undefined && response.analysts.length > 0) {
           this.props.history.push(`/profile/${response.analysts[0].username}`);
         } else if (response !== undefined && response.stocks.length > 0) {
-          this.props.history.push(`/ideas/${response.stocks[0]["1. symbol"]}`);
+          this.props.history.push(`/ideas/${response.stocks[0].symbol}`);
         } else {
           this.setState({
             open: false,
