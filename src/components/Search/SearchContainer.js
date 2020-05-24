@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     padding: "10px",
-    borderRadius: 0,
     marginTop: "10px",
   },
   gridList: {

@@ -28,6 +28,7 @@ import Confirmation from "./pages/Confirmation";
 import TermsOfUse from "./pages/TermsOfUse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUs from "./pages/AboutUs";
+import PasswordReset from "./pages/PasswordReset";
 import Help from "./pages/Help";
 import Feed from "./pages/Feed";
 import Report from "./pages/Report";
@@ -76,6 +77,10 @@ function App(props) {
               <Route path="/help" component={Help} />
               <Route path="/about" component={AboutUs} />
               <Route path="/confirm" component={Confirmation} />
+              <Route
+                path="/password-reset/:resetId"
+                component={PasswordReset}
+              />
               <PrivateRoute path="/feed" component={Feed} />
               <PrivateRoute path="/leaderboard" component={Leaderboard} />
               <PrivateRoute

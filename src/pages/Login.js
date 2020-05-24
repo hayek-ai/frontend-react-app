@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { sendPasswordResetLink } from "../api";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/styles";
@@ -14,6 +15,8 @@ import { loginUser } from "../store/actions/userActions";
 
 // Components
 import FullPageLayout from "../components/Layout/FullPageLayout";
+import ResetPassword from "../components/util/ResetPassword";
+import AlertModal from "../components/util/AlertModal";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -33,6 +36,11 @@ const Login = (props) => {
     emailOrUsername: "",
     password: "",
     errors: {},
+  });
+  const [alertState, setAlertState] = useState({
+    open: false,
+    message: "",
+    color: null,
   });
 
   const handleChange = (event) => [
@@ -64,6 +72,20 @@ const Login = (props) => {
       setLoading(false);
       props.history.push("/");
     }
+  };
+
+  const handleSendPasswordResetLink = async (email) => {
+    sendPasswordResetLink(email).then((res) => {
+      if (res.errors) {
+        setAlertState({
+          open: true,
+          message: res.errors[0].detail,
+          color: "error",
+        });
+      } else {
+        setAlertState({ open: true, message: res.message, color: null });
+      }
+    });
   };
 
   return (
@@ -109,11 +131,9 @@ const Login = (props) => {
         </Button>
       </form>
       <div style={{ padding: 10 }}>
-        <Link to="/recover-password" className={classes.link}>
-          <Typography variant="body1" color="primary">
-            Forgot password?
-          </Typography>
-        </Link>
+        <ResetPassword
+          handleSendPasswordResetLink={handleSendPasswordResetLink}
+        />
       </div>
       <div style={{ padding: 10 }}>
         <Typography variant="body1">
@@ -123,6 +143,12 @@ const Login = (props) => {
           </Link>
         </Typography>
       </div>
+      <AlertModal
+        open={alertState.open}
+        onClose={() => setAlertState({ open: false, message: "" })}
+        message={alertState.message}
+        color={alertState.color}
+      />
     </FullPageLayout>
   );
 };
