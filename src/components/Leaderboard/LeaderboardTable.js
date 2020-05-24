@@ -118,18 +118,16 @@ const LeaderboardTable = ({ analysts }) => {
   const [orderBy, setOrderBy] = useState("analystRank");
 
   const rows = analysts.map((analyst) => {
-    if (analyst.numIdeas > 0) {
-      return createData(
-        analyst.username,
-        analyst.analystRank,
-        analyst.brierScore,
-        analyst.avgReturn,
-        analyst.successRate,
-        analyst.numIdeas,
-        analyst.avgHoldingPeriod,
-        analyst.numFollowers
-      );
-    }
+    return createData(
+      analyst.username,
+      analyst.analystRank,
+      analyst.brierScore,
+      analyst.avgReturn,
+      analyst.successRate,
+      analyst.numIdeas,
+      analyst.avgHoldingPeriod,
+      analyst.numFollowers
+    );
   });
 
   const handleRequestSort = (event, property) => {

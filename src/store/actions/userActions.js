@@ -25,7 +25,7 @@ export const signupUser = (newUserData) => (dispatch) => {
         payload: res.data.user,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => err.response.data.errors);
 };
 
 export const loginUser = (userData) => (dispatch) => {
@@ -38,7 +38,7 @@ export const loginUser = (userData) => (dispatch) => {
         payload: res.data.user,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => err.response.data.errors);
 };
 
 export const confirmUser = (verificationCode) => (dispatch) => {

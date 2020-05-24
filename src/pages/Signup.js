@@ -125,6 +125,12 @@ const Signup = (props) => {
           style={{ margin: "10px 0" }}
           fullWidth
         />
+        {state.errors.general && (
+          <Typography variant="body2" color="error">
+            Oops, something went wrong. Please reach out to team@hayek.ai and
+            we'll help you fix this.
+          </Typography>
+        )}
         <Button
           type="submit"
           variant="contained"

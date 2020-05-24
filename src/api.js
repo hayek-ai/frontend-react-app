@@ -81,6 +81,20 @@ export const getLeaderboard = (queryString) => {
     .catch((err) => console.log(err));
 };
 
+export const sendPasswordResetLink = (email) => {
+  return axios
+    .post("/user/reset-password", { email: email })
+    .then((res) => res.data)
+    .catch((err) => err.response.data);
+};
+
+export const resetPassword = (resetId, password) => {
+  return axios
+    .post(`/user/reset-password/${resetId}`, { password: password })
+    .then((res) => res.data)
+    .catch((err) => err.response.data);
+};
+
 function commentSortCallback(a, b) {
   if (a.createdAt < b.createdAt) {
     return 1;

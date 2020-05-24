@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     padding: "20px",
-    borderRadius: 0,
   },
   pageTitle: {
     ...theme.typography.h5,
