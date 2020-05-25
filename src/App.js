@@ -25,6 +25,7 @@ import LandingPage from "./pages/LandingPage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Confirmation from "./pages/Confirmation";
+import Plan from "./pages/Plan";
 import TermsOfUse from "./pages/TermsOfUse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUs from "./pages/AboutUs";
@@ -35,6 +36,12 @@ import Report from "./pages/Report";
 import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import Leaderboard from "./pages/Leaderboard";
+
+// Stripe
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 function App(props) {
   const { prefersDarkmode, isAuthenticated, username } = props;
@@ -64,47 +71,50 @@ function App(props) {
   }, [username]);
 
   return (
-    <Router>
-      <ThemeProvider theme={theme(prefersDarkmode)}>
-        <CssBaseline />
-        <WithLoading loading={loading}>
-          <Layout>
-            <Switch>
-              <Route path="/signup" component={Signup} />
-              <Route path="/login" component={Login} />
-              <Route path="/terms-of-use" component={TermsOfUse} />
-              <Route path="/privacy-policy" component={PrivacyPolicy} />
-              <Route path="/help" component={Help} />
-              <Route path="/about" component={AboutUs} />
-              <Route path="/confirm" component={Confirmation} />
-              <Route
-                path="/password-reset/:resetId"
-                component={PasswordReset}
-              />
-              <PrivateRoute path="/feed" component={Feed} />
-              <PrivateRoute path="/leaderboard" component={Leaderboard} />
-              <PrivateRoute
-                path="/profile/:username/:panel?"
-                exact
-                component={Profile}
-              />
-              <PrivateRoute
-                path="/report/:ideaId/:commentParam?"
-                component={Report}
-              />
-              <PrivateRoute path="/ideas/:symbol" component={SearchResults} />
-              <CustomRoute
-                path="/"
-                exact
-                conditionToRenderComponent={!isAuthenticated}
-                component={LandingPage}
-                redirectPath={"/feed"}
-              />
-            </Switch>
-          </Layout>
-        </WithLoading>
-      </ThemeProvider>
-    </Router>
+    <Elements stripe={stripePromise}>
+      <Router>
+        <ThemeProvider theme={theme(prefersDarkmode)}>
+          <CssBaseline />
+          <WithLoading loading={loading}>
+            <Layout>
+              <Switch>
+                <Route path="/signup" component={Signup} />
+                <Route path="/login" component={Login} />
+                <Route path="/terms-of-use" component={TermsOfUse} />
+                <Route path="/privacy-policy" component={PrivacyPolicy} />
+                <Route path="/help" component={Help} />
+                <Route path="/about" component={AboutUs} />
+                <Route path="/confirm" component={Confirmation} />
+                <PrivateRoute path="/plan" component={Plan} />
+                <Route
+                  path="/password-reset/:resetId"
+                  component={PasswordReset}
+                />
+                <PrivateRoute path="/feed" component={Feed} />
+                <PrivateRoute path="/leaderboard" component={Leaderboard} />
+                <PrivateRoute
+                  path="/profile/:username/:panel?"
+                  exact
+                  component={Profile}
+                />
+                <PrivateRoute
+                  path="/report/:ideaId/:commentParam?"
+                  component={Report}
+                />
+                <PrivateRoute path="/ideas/:symbol" component={SearchResults} />
+                <CustomRoute
+                  path="/"
+                  exact
+                  conditionToRenderComponent={!isAuthenticated}
+                  component={LandingPage}
+                  redirectPath={"/feed"}
+                />
+              </Switch>
+            </Layout>
+          </WithLoading>
+        </ThemeProvider>
+      </Router>
+    </Elements>
   );
 }
 
