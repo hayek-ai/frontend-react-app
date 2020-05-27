@@ -1,3 +1,22 @@
+export function createPaymentMethod(cardElement, customerId, priceId) {
+    return stripe
+      .createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+      })
+      .then((result) => {
+        if (result.error) {
+          displayError(error);
+        } else {
+          createSubscription({
+            customerId: customerId,
+            paymentMethodId: result.paymentMethod.id,
+            priceId: priceId,
+          });
+        }
+      });
+  }
+
 export function createSubscription(customerId, paymentMethodId, priceId) {
   return (
     fetch("/create-subscription", {
