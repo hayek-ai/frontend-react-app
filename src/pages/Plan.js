@@ -8,7 +8,7 @@ import Radio from "@material-ui/core/Radio";
 
 // Components
 import FullPageLayout from "../components/Layout/FullPageLayout";
-import CardSection from "../components/Stripe/CardSection/CardSection";
+import CardForm from "../components/Stripe/CardForm";
 
 const useStyles = makeStyles((theme) => ({
   panelContainer: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   selected: {
-    border: "1px solid black",
+    border: `2px solid ${theme.palette.primary.main}`,
     borderRadius: "10px",
   },
 }));
@@ -58,22 +58,24 @@ const Plan = (props) => {
           }`}
           onClick={() => setSelectedPlan("free")}
         >
-          <Typography variant="h5" color="primary" gutterBottom>
-            Free
-          </Typography>
-          <Typography variant="h4" gutterBottom>
-            $0
-          </Typography>
-          <ul style={{ textAlign: "left" }}>
-            <li>
-              <Typography variant="body1">Ad supported</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                3 report downloads per day
-              </Typography>
-            </li>
-          </ul>
+          <div>
+            <Typography variant="h5" color="primary" gutterBottom>
+              Free
+            </Typography>
+            <Typography variant="h4" gutterBottom>
+              $0
+            </Typography>
+            <ul style={{ textAlign: "left", marginTop: "20px" }}>
+              <li>
+                <Typography variant="body1">Ad supported</Typography>
+              </li>
+              <li>
+                <Typography variant="body1">
+                  3 report downloads per day
+                </Typography>
+              </li>
+            </ul>
+          </div>
           <Radio
             color="primary"
             checked={selectedPlan === "free"}
@@ -87,25 +89,27 @@ const Plan = (props) => {
           }`}
           onClick={() => setSelectedPlan("pro")}
         >
-          <Typography variant="h5" color="primary" gutterBottom>
-            Pro
-          </Typography>
-          <Typography variant="h4" gutterBottom>
-            $5 / mo
-          </Typography>
-          <ul style={{ textAlign: "left" }}>
-            <li>
-              <Typography variant="body1">No ads</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Unlimited report downloads
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">Cancel at anytime</Typography>
-            </li>
-          </ul>
+          <div>
+            <Typography variant="h5" color="primary" gutterBottom>
+              Pro
+            </Typography>
+            <Typography variant="h4" gutterBottom>
+              $5 / mo
+            </Typography>
+            <ul style={{ textAlign: "left", marginTop: "20px" }}>
+              <li>
+                <Typography variant="body1">No ads</Typography>
+              </li>
+              <li>
+                <Typography variant="body1">
+                  Unlimited report downloads
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body1">Cancel at anytime</Typography>
+              </li>
+            </ul>
+          </div>
           <Radio
             color="primary"
             checked={selectedPlan === "pro"}
@@ -114,25 +118,17 @@ const Plan = (props) => {
           />
         </div>
       </div>
-      {selectedPlan === "pro" && (
-        <React.Fragment>
-          <CardSection />
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            style={{ marginTop: "15px" }}
-          >
-            Your card will be charged $5.00
-          </Typography>
-        </React.Fragment>
+      {selectedPlan === "pro" ? (
+        <CardForm />
+      ) : (
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ margin: "30px 0", width: "100%" }}
+        >
+          Get Started!
+        </Button>
       )}
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ margin: "30px 0", width: "100%" }}
-      >
-        Get Started!
-      </Button>
     </FullPageLayout>
   );
 };
