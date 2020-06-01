@@ -1,34 +1,31 @@
+import axios from "../../util/axios";
+
 export function createPaymentMethod(cardElement, customerId, priceId) {
-    return stripe
-      .createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-      })
-      .then((result) => {
-        if (result.error) {
-          displayError(error);
-        } else {
-          createSubscription({
-            customerId: customerId,
-            paymentMethodId: result.paymentMethod.id,
-            priceId: priceId,
-          });
-        }
-      });
-  }
+  return stripe
+    .createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    })
+    .then((result) => {
+      if (result.error) {
+        displayError(error);
+      } else {
+        createSubscription({
+          customerId: customerId,
+          paymentMethodId: result.paymentMethod.id,
+          priceId: priceId,
+        });
+      }
+    });
+}
 
 export function createSubscription(customerId, paymentMethodId, priceId) {
-  return (
+  return axios.post(
+    "/create-subscription",
     fetch("/create-subscription", {
-      method: "post",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        customerId: customerId,
-        paymentMethodId: paymentMethodId,
-        priceId: priceId,
-      }),
+      customerId: customerId,
+      paymentMethodId: paymentMethodId,
+      priceId: priceId,
     })
       .then((response) => {
         return response.json();
