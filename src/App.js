@@ -41,7 +41,8 @@ import Leaderboard from "./pages/Leaderboard";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
+// Stripe Publishable API Key
+const stripePromise = loadStripe("pk_test_4LbtzKtl5rs13X8YYiYQ8DMr00N5Vc3BKy");
 
 function App(props) {
   const { prefersDarkmode, isAuthenticated, username } = props;
