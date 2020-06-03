@@ -69,7 +69,7 @@ const Confirmation = (props) => {
         setLoading(false);
       } else {
         setLoading(false);
-        props.history.push("/");
+        props.history.push("/plan");
       }
     } else {
       setState((prevState) => ({
