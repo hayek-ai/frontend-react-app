@@ -119,7 +119,7 @@ const Plan = (props) => {
         </div>
       </div>
       {selectedPlan === "pro" ? (
-        <CardForm />
+        <CardForm {...props} />
       ) : (
         <Button
           variant="contained"
