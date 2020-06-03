@@ -12,6 +12,7 @@ export const FOLLOW_ANALYST = "FOLLOW_ANALYST";
 export const UNFOLLOW_ANALYST = "UNFOLLOW_ANALYST";
 export const BOOKMARK_IDEA = "BOOKMARK_IDEA";
 export const REMOVE_BOOKMARK = "REMOVE_BOOKMARK";
+export const ACTIVATE_HAYEK_PRO = "ACTIVATE_HAYEK_PRO";
 
 // Profile reducer types
 export const SET_PROFILE = "SET_PROFILE";

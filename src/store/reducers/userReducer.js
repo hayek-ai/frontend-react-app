@@ -11,6 +11,7 @@ import {
   REMOVE_BOOKMARK,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
+  ACTIVATE_HAYEK_PRO,
 } from "../types";
 
 const initialState = {
@@ -37,6 +38,8 @@ export default function (state = initialState, action) {
       return { ...action.payload, isAuthenticated: true };
     case SET_CONFIRMED:
       return { ...state, isAuthenticated: true, isConfirmed: true };
+    case ACTIVATE_HAYEK_PRO:
+      return { ...state, isProTier: true };
     case UPVOTE_IDEA:
       return {
         ...state,

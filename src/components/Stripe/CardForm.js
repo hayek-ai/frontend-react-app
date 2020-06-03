@@ -3,6 +3,10 @@ import axios from "../../util/axios";
 import useResponsiveFontSize from "../../util/useResponsiveFontSize";
 import classes from "./CardForm.module.css";
 
+// Redux
+import { connect } from "react-redux";
+import { activateHayekPro } from "../../store/actions/userActions";
+
 // Stripe
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
@@ -12,6 +16,7 @@ import Typography from "@material-ui/core/Typography";
 
 // Components
 import AlertModal from "../util/AlertModal";
+import WithLoading from "../util/WithLoading";
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -38,10 +43,11 @@ const useOptions = () => {
   return options;
 };
 
-const CardForm = (props) => {
+const CardForm = ({ activateHayekPro, ...props }) => {
   const stripe = useStripe();
   const elements = useElements();
   const options = useOptions();
+  const [loading, setLoading] = useState(false);
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -55,32 +61,61 @@ const CardForm = (props) => {
       return;
     }
 
+    // If a previous payment was attempted, get the lastest invoice
+    const latestInvoicePaymentIntentStatus = localStorage.getItem(
+      "latestInvoicePaymentIntentStatus"
+    );
+
+    const card = elements.getElement(CardElement);
+    if (latestInvoicePaymentIntentStatus === "requires_payment_method") {
+      const invoiceId = localStorage.getItem("latestInvoiceId");
+      const isPaymentRetry = true;
+      // create new payment method & retry payment on invoice with new payment method
+      createPaymentMethod({
+        card: card,
+        isPaymentRetry,
+        invoiceId,
+      });
+    } else {
+      // create new payment method & create subscription
+      createPaymentMethod({ card: card });
+    }
+  };
+
+  function createPaymentMethod({ card, isPaymentRetry, invoiceId }) {
+    setLoading(true);
     stripe
       .createPaymentMethod({
         type: "card",
-        card: elements.getElement(CardElement),
+        card: card,
       })
       .then((result) => {
+        setLoading(false);
         if (result.error) {
           throw result;
         } else {
-          createSubscription(result.paymentMethod.id);
+          if (isPaymentRetry) {
+            // Update the payment method and retry invoice payment
+            retryInvoiceWithNewPaymentMethod({
+              paymentMethodId: result.paymentMethod.id,
+              invoiceId: invoiceId,
+            });
+          } else {
+            // create the subscription
+            createSubscription(result.paymentMethod.id);
+          }
         }
       })
-      .catch((error) =>
-        setAlertState({
-          open: true,
-          message: error.error.message,
-          color: "error",
-        })
-      );
-  };
+      .catch(handleError);
+  }
 
   function createSubscription(paymentMethodId) {
+    setLoading(true);
     return (
       axios
         .post("/create-subscription", { paymentMethodId })
         .then((response) => {
+          setLoading(false);
           return response;
         })
         // if card is declined, display an error to the user
@@ -107,30 +142,43 @@ const CardForm = (props) => {
         .then(handlePaymentMethodRequired)
         // No more actions required.  Provision service to user
         .then(onSubscriptionComplete)
-        .catch((error) => {
-          let message = "Oops, something went wrong";
-          if (error.error) {
-            message = error.error.message;
-          } else if (error.response) {
-            message = error.response.data.errors[0].detail;
-          }
-          setAlertState({
-            open: true,
-            message: message,
-            color: "error",
-          });
-        })
+        .catch(handleError)
     );
   }
+  function handleError(error) {
+    setLoading(false);
+    let message = "Oops, something went wrong";
+    if (error.error) {
+      message = error.error.message;
+    } else if (error.response) {
+      message = error.response.data.errors[0].detail;
+    }
+    setAlertState({
+      open: true,
+      message: message,
+      color: "error",
+    });
+  }
 
-  function handleCustomerActionRequired({ subscription, paymentMethodId }) {
+  function handleCustomerActionRequired({
+    subscription,
+    paymentMethodId,
+    invoice,
+    isRetry,
+  }) {
     if (subscription && subscription.status === "active") {
       // subscription is active, no customer actions required.
       return { subscription, paymentMethodId };
     }
     // If it's a first payment attempt, the payment intent is on the subscription latest invoice.
-    let paymentIntent = subscription.latest_invoice.payment_intent;
-    if (paymentIntent.status === "requires_action") {
+    // If it's a retry, the payment intent will be on the invoice itself.
+    let paymentIntent = invoice
+      ? invoice.payment_intent
+      : subscription.latest_invoice.payment_intent;
+    if (
+      paymentIntent.status === "requires_action" ||
+      (isRetry === true && paymentIntent.status === "requires_payment_method")
+    ) {
       return stripe
         .confirmCardPayment(paymentIntent.client_secret, {
           payment_method: paymentMethodId,
@@ -149,10 +197,14 @@ const CardForm = (props) => {
               return {
                 subscription: subscription,
                 paymentMethodId: paymentMethodId,
+                invoice: invoice,
               };
             }
           }
         });
+    } else {
+      // No customer action needed
+      return { subscription, paymentMethodId };
     }
   }
 
@@ -161,6 +213,7 @@ const CardForm = (props) => {
     paymentMethodId,
     priceId,
   }) {
+    console.log(subscription.status);
     if (subscription.status === "active") {
       // subscription is active, no customer actions required.
       return { subscription, priceId, paymentMethodId };
@@ -168,11 +221,49 @@ const CardForm = (props) => {
       subscription.latest_invoice.payment_intent.status ===
       "requires_payment_method"
     ) {
+      // store the latest invoice ID and state of the retry
+      localStorage.setItem("latestInvoiceId", subscription.latest_invoice.id);
+      localStorage.setItem(
+        "latestInvoicePaymentIntentStatus",
+        subscription.latest_invoice.payment_intent.status
+      );
+      console.log(localStorage.getItem("latestInvoicePaymentIntentStatus"));
       const error = { error: { message: "Your card was declined." } };
       throw error;
     } else {
       return { subscription, priceId, paymentMethodId };
     }
+  }
+
+  function retryInvoiceWithNewPaymentMethod({ paymentMethodId, invoiceId }) {
+    setLoading(true);
+    return (
+      axios
+        .post("/retry-invoice", { paymentMethodId, invoiceId })
+        .then((response) => {
+          setLoading(false);
+          return response;
+        })
+        // if card is declined, display an error to the user
+        .then((result) => {
+          if (result.error) {
+            throw result;
+          }
+          return result.data;
+        })
+        // Normalize the result to contain the object returned
+        // by Stripe.  Add the additional details we need.
+        .then((result) => {
+          return {
+            invoice: result,
+            paymentMethodId: paymentMethodId,
+            isRetry: true,
+          };
+        })
+        .then(handleCustomerActionRequired)
+        .then(onSubscriptionComplete)
+        .catch(handleError)
+    );
   }
 
   function onSubscriptionComplete(result) {
@@ -185,6 +276,7 @@ const CardForm = (props) => {
 
   function handleAlertClose() {
     if (alertState.color === "success") {
+      activateHayekPro();
       props.history.push("/");
     } else {
       setAlertState({ open: false, message: "", color: null });
@@ -195,13 +287,16 @@ const CardForm = (props) => {
     <React.Fragment>
       <form onSubmit={handleSubmit}>
         <CardElement className={classes.StripeElement} options={options} />
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          style={{ marginTop: "15px" }}
-        >
-          Your card will be charged $5.00
-        </Typography>
+        <WithLoading loading={loading}>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            style={{ marginTop: "15px" }}
+          >
+            Your card will be charged $5.00
+          </Typography>
+        </WithLoading>
+
         <Button
           variant="contained"
           color="primary"
@@ -222,4 +317,4 @@ const CardForm = (props) => {
   );
 };
 
-export default CardForm;
+export default connect(null, { activateHayekPro })(CardForm);
