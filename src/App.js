@@ -45,7 +45,7 @@ import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe("pk_test_4LbtzKtl5rs13X8YYiYQ8DMr00N5Vc3BKy");
 
 function App(props) {
-  const { prefersDarkmode, isAuthenticated, username, isProTier } = props;
+  const { prefersDarkmode, isAuthenticated, username, proTierStatus } = props;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ function App(props) {
                 <Route path="/confirm" component={Confirmation} />
                 <CustomRoute
                   path="/plan"
-                  conditionToRenderComponent={!isProTier}
+                  conditionToRenderComponent={proTierStatus !== "succeeded"}
                   component={Plan}
                   redirectPath={"/feed"}
                 />
@@ -128,7 +128,7 @@ const mapStateToProps = (state) => ({
   prefersDarkmode: state.user.prefersDarkmode,
   isAuthenticated: state.user.isAuthenticated,
   username: state.user.username,
-  isProTier: state.user.isProTier,
+  proTierStatus: state.user.proTierStatus,
 });
 
 export default connect(mapStateToProps)(App);
