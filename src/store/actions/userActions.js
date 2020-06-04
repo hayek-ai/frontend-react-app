@@ -10,6 +10,7 @@ import {
   REMOVE_BOOKMARK,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
+  CANCEL_SUBSCRIPTION,
 } from "../types";
 
 import axios from "../../util/axios";
@@ -192,4 +193,16 @@ export const unfollowAnalyst = (analystId) => (dispatch) => {
       });
     })
     .catch((err) => console.log(err.response.data.errors));
+};
+
+export const cancelSubscription = () => (dispatch) => {
+  return axios
+    .post("/cancel-subscription")
+    .then((res) => {
+      dispatch({
+        type: CANCEL_SUBSCRIPTION,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
 };

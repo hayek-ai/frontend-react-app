@@ -12,6 +12,7 @@ export const FOLLOW_ANALYST = "FOLLOW_ANALYST";
 export const UNFOLLOW_ANALYST = "UNFOLLOW_ANALYST";
 export const BOOKMARK_IDEA = "BOOKMARK_IDEA";
 export const REMOVE_BOOKMARK = "REMOVE_BOOKMARK";
+export const CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION";
 
 // Profile reducer types
 export const SET_PROFILE = "SET_PROFILE";

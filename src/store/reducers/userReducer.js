@@ -11,6 +11,7 @@ import {
   REMOVE_BOOKMARK,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
+  CANCEL_SUBSCRIPTION,
 } from "../types";
 
 const initialState = {
@@ -114,6 +115,11 @@ export default function (state = initialState, action) {
         following: state.following.filter(
           (analyst) => analyst.id !== action.payload.id
         ),
+      };
+    case CANCEL_SUBSCRIPTION:
+      return {
+        ...state,
+        proTierStatus: "deleted",
       };
     default:
       return state;

@@ -36,6 +36,7 @@ import Report from "./pages/Report";
 import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import Leaderboard from "./pages/Leaderboard";
+import Account from "./pages/Account";
 
 // Stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -103,6 +104,7 @@ function App(props) {
                   exact
                   component={Profile}
                 />
+                <PrivateRoute path="/account" component={Account} />
                 <PrivateRoute
                   path="/report/:ideaId/:commentParam?"
                   component={Report}
