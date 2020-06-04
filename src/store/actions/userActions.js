@@ -10,7 +10,6 @@ import {
   REMOVE_BOOKMARK,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
-  ACTIVATE_HAYEK_PRO,
 } from "../types";
 
 import axios from "../../util/axios";
@@ -194,9 +193,3 @@ export const unfollowAnalyst = (analystId) => (dispatch) => {
     })
     .catch((err) => console.log(err.response.data.errors));
 };
-
-export const activateHayekPro = () => (dispatch) => [
-  dispatch({
-    type: ACTIVATE_HAYEK_PRO,
-  }),
-];

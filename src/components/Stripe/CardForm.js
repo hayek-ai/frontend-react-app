@@ -5,7 +5,7 @@ import classes from "./CardForm.module.css";
 
 // Redux
 import { connect } from "react-redux";
-import { activateHayekPro } from "../../store/actions/userActions";
+import { getUserData } from "../../store/actions/userActions";
 
 // Stripe
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
@@ -43,11 +43,12 @@ const useOptions = () => {
   return options;
 };
 
-const CardForm = ({ activateHayekPro, ...props }) => {
+const CardForm = ({ proTierStatus, getUserData, ...props }) => {
   const stripe = useStripe();
   const elements = useElements();
   const options = useOptions();
   const [loading, setLoading] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(proTierStatus);
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -61,20 +62,16 @@ const CardForm = ({ activateHayekPro, ...props }) => {
       return;
     }
 
-    // If a previous payment was attempted, get the lastest invoice
-    const latestInvoicePaymentIntentStatus = localStorage.getItem(
-      "latestInvoicePaymentIntentStatus"
-    );
-
     const card = elements.getElement(CardElement);
-    if (latestInvoicePaymentIntentStatus === "requires_payment_method") {
-      const invoiceId = localStorage.getItem("latestInvoiceId");
+    if (
+      paymentStatus === "requires_payment_method" ||
+      paymentStatus === "requires_action"
+    ) {
       const isPaymentRetry = true;
       // create new payment method & retry payment on invoice with new payment method
       createPaymentMethod({
         card: card,
         isPaymentRetry,
-        invoiceId,
       });
     } else {
       // create new payment method & create subscription
@@ -82,7 +79,7 @@ const CardForm = ({ activateHayekPro, ...props }) => {
     }
   };
 
-  function createPaymentMethod({ card, isPaymentRetry, invoiceId }) {
+  function createPaymentMethod({ card, isPaymentRetry }) {
     setLoading(true);
     stripe
       .createPaymentMethod({
@@ -98,7 +95,6 @@ const CardForm = ({ activateHayekPro, ...props }) => {
             // Update the payment method and retry invoice payment
             retryInvoiceWithNewPaymentMethod({
               paymentMethodId: result.paymentMethod.id,
-              invoiceId: invoiceId,
             });
           } else {
             // create the subscription
@@ -118,46 +114,48 @@ const CardForm = ({ activateHayekPro, ...props }) => {
           setLoading(false);
           return response;
         })
-        // if card is declined, display an error to the user
         .then((result) => {
           if (result.error) {
             throw result;
           }
-          return result.data;
-        })
-        // normalize the result to contain the object returned by Stripe
-        .then((result) => {
+          setPaymentStatus(result.data.latest_invoice.payment_intent.status);
           return {
-            subscription: result,
+            subscription: result.data,
             paymentMethodId: paymentMethodId,
           };
         })
-        // some payment methods require a customer to be on session
-        // to complete the payment process.  Check the status of the
-        // payment intent to handle these actions.
+        // some payment methods require a customer to be on session to complete the payment process.
         .then(handleCustomerActionRequired)
-        // If attaching this card to a Customer object succeeds,
-        // but attempts to charge the customer fail, you
-        // get a requires_payment_method error.
+        // If attaching this card to a Customer object succeeds, but attempts
+        // to charge the customer fail, you get a requires_payment_method error.
         .then(handlePaymentMethodRequired)
         // No more actions required.  Provision service to user
         .then(onSubscriptionComplete)
         .catch(handleError)
     );
   }
-  function handleError(error) {
-    setLoading(false);
-    let message = "Oops, something went wrong";
-    if (error.error) {
-      message = error.error.message;
-    } else if (error.response) {
-      message = error.response.data.errors[0].detail;
-    }
-    setAlertState({
-      open: true,
-      message: message,
-      color: "error",
-    });
+
+  function retryInvoiceWithNewPaymentMethod({ paymentMethodId }) {
+    setLoading(true);
+    return axios
+      .post("/retry-invoice", { paymentMethodId })
+      .then((response) => {
+        setLoading(false);
+        return response;
+      })
+      .then((result) => {
+        if (result.error) {
+          throw result;
+        }
+        return {
+          invoice: result.data,
+          paymentMethodId: paymentMethodId,
+          isRetry: true,
+        };
+      })
+      .then(handleCustomerActionRequired)
+      .then(onSubscriptionComplete)
+      .catch(handleError);
   }
 
   function handleCustomerActionRequired({
@@ -213,57 +211,15 @@ const CardForm = ({ activateHayekPro, ...props }) => {
     paymentMethodId,
     priceId,
   }) {
-    console.log(subscription.status);
     if (subscription.status === "active") {
       // subscription is active, no customer actions required.
       return { subscription, priceId, paymentMethodId };
-    } else if (
-      subscription.latest_invoice.payment_intent.status ===
-      "requires_payment_method"
-    ) {
-      // store the latest invoice ID and state of the retry
-      localStorage.setItem("latestInvoiceId", subscription.latest_invoice.id);
-      localStorage.setItem(
-        "latestInvoicePaymentIntentStatus",
-        subscription.latest_invoice.payment_intent.status
-      );
-      console.log(localStorage.getItem("latestInvoicePaymentIntentStatus"));
+    } else if (paymentStatus === "requires_payment_method") {
       const error = { error: { message: "Your card was declined." } };
       throw error;
     } else {
       return { subscription, priceId, paymentMethodId };
     }
-  }
-
-  function retryInvoiceWithNewPaymentMethod({ paymentMethodId, invoiceId }) {
-    setLoading(true);
-    return (
-      axios
-        .post("/retry-invoice", { paymentMethodId, invoiceId })
-        .then((response) => {
-          setLoading(false);
-          return response;
-        })
-        // if card is declined, display an error to the user
-        .then((result) => {
-          if (result.error) {
-            throw result;
-          }
-          return result.data;
-        })
-        // Normalize the result to contain the object returned
-        // by Stripe.  Add the additional details we need.
-        .then((result) => {
-          return {
-            invoice: result,
-            paymentMethodId: paymentMethodId,
-            isRetry: true,
-          };
-        })
-        .then(handleCustomerActionRequired)
-        .then(onSubscriptionComplete)
-        .catch(handleError)
-    );
   }
 
   function onSubscriptionComplete(result) {
@@ -276,11 +232,26 @@ const CardForm = ({ activateHayekPro, ...props }) => {
 
   function handleAlertClose() {
     if (alertState.color === "success") {
-      activateHayekPro();
+      getUserData();
       props.history.push("/");
     } else {
       setAlertState({ open: false, message: "", color: null });
     }
+  }
+
+  function handleError(error) {
+    setLoading(false);
+    let message = "Oops, something went wrong";
+    if (error.error) {
+      message = error.error.message;
+    } else if (error.response) {
+      message = error.response.data.errors[0].detail;
+    }
+    setAlertState({
+      open: true,
+      message: message,
+      color: "error",
+    });
   }
 
   return (
@@ -317,4 +288,8 @@ const CardForm = ({ activateHayekPro, ...props }) => {
   );
 };
 
-export default connect(null, { activateHayekPro })(CardForm);
+const mapStateToProps = (state) => ({
+  proTierStatus: state.user.proTierStatus,
+});
+
+export default connect(mapStateToProps, { getUserData })(CardForm);

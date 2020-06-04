@@ -11,7 +11,6 @@ import {
   REMOVE_BOOKMARK,
   FOLLOW_ANALYST,
   UNFOLLOW_ANALYST,
-  ACTIVATE_HAYEK_PRO,
 } from "../types";
 
 const initialState = {
@@ -19,7 +18,7 @@ const initialState = {
   prefersDarkmode: false,
   isConfirmed: false,
   isAnalyst: false,
-  isProTier: false,
+  proTierStatus: null,
   id: null,
   username: null,
   upvotes: [],
@@ -38,8 +37,6 @@ export default function (state = initialState, action) {
       return { ...action.payload, isAuthenticated: true };
     case SET_CONFIRMED:
       return { ...state, isAuthenticated: true, isConfirmed: true };
-    case ACTIVATE_HAYEK_PRO:
-      return { ...state, isProTier: true };
     case UPVOTE_IDEA:
       return {
         ...state,
@@ -118,7 +115,6 @@ export default function (state = initialState, action) {
           (analyst) => analyst.id !== action.payload.id
         ),
       };
-
     default:
       return state;
   }

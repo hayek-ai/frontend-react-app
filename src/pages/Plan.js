@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-between",
     padding: "5px",
-    height: "350px",
+    height: "375px",
     cursor: "pointer",
   },
   selected: {
@@ -104,6 +104,9 @@ const Plan = (props) => {
                 <Typography variant="body1">
                   Unlimited report downloads
                 </Typography>
+              </li>
+              <li>
+                <Typography variant="body1">Weekly newsletter</Typography>
               </li>
               <li>
                 <Typography variant="body1">Cancel at anytime</Typography>
