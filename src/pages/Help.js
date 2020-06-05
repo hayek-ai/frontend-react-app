@@ -24,9 +24,6 @@ const Help = () => {
         Send an email to team@hayek.ai and we’ll get back to you in less than 12
         hours.
       </Typography>
-      <Typography variant="body1" className={classes.paragraph}>
-        Or give the founders a call at (732) 977-3873 or (732) 887-7499{" "}
-      </Typography>
     </FullPageLayout>
   );
 };

@@ -71,7 +71,7 @@ const Plan = (props) => {
               </li>
               <li>
                 <Typography variant="body1">
-                  3 report downloads per day
+                  Access to reports on a 30-day time delay
                 </Typography>
               </li>
             </ul>

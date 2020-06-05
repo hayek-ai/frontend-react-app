@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Mui stuff
 import { makeStyles } from "@material-ui/styles";
@@ -12,7 +13,12 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px 0",
   },
   paragraph: {
+    ...theme.typography.body1,
     margin: "10px 0",
+  },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -28,18 +34,119 @@ const AboutUs = (props) => {
       </Typography>
       <Typography variant="body1" className={classes.paragraph}>
         Founded in May 2020, hayek.ai is an online marketplace for investment
-        research. By giving analyst a platform to establish a track record and
+        research. By giving analysts a platform to establish a track record and
         sell their research, we can offer investors unparalleled access to
         high-quality investment ideas.
       </Typography>
       <Typography variant="h5" color="primary" className={classes.heading}>
-        Careers
+        Join Us
       </Typography>
       <Typography variant="body1" className={classes.paragraph}>
         We are always looking for talented people to help us on our mission to
         democratize the field of investing and revolutionize the capital
         markets. If you want to join us, shoot us an email at team@hayek.ai.
       </Typography>
+      <Typography variant="h5" color="primary" className={classes.heading}>
+        How Hayek Works in 523 Words
+      </Typography>
+      <Typography
+        variant="body1"
+        style={{ fontStyle: "italic" }}
+        className={classes.paragraph}
+      >
+        "Good investment ideas are rare and valuable things, which must be
+        ferreted out assiduously." -{" "}
+        <span style={{ fontWeight: 700 }}>Seth Klarman</span>
+      </Typography>
+      <Typography variant="h6" className={classes.heading}>
+        Why do people use hayek.ai?
+      </Typography>
+      <Typography variant="body1" className={classes.paragraph}>
+        Hayek crowdsources thousands of investment ideas from pre-screened
+        analysts and uses an upvoting/downvoting system (like Reddit)—in
+        addition to performance tracking—to deliver the best ideas to your
+        newsfeed.
+      </Typography>
+      <Typography variant="body1" className={classes.paragraph}>
+        These are not recommendations to follow blindly. They simply help you
+        identify where the most attractive opportunities are likely to arise so
+        that you can avoid the often fruitless survey of thousands of companies.
+      </Typography>
+      <Typography variant="body1" className={classes.paragraph}>
+        The site is completely free for users who are ok with receiving reports
+        on a 30-day time delay. For real-time access, users can subscribe to
+        "Hayek Pro" for just $5 per month.
+      </Typography>
+      <Typography variant="h6" className={classes.heading}>
+        Who submits these ideas?
+      </Typography>
+      <Typography variant="body1" className={classes.paragraph}>
+        To become an analyst, users must apply by sending a sample equity
+        research report to team@hayek.ai. The report is reviewed by our research
+        team, and only the best applicants are granted analyst privileges. After
+        they are screened, analysts can post as many or as few reports as they
+        like. Our team monitors ongoing reports for quality, and analyst
+        privileges can be revoked if an analyst violates our{" "}
+        <Link to="/terms-of-use" className={classes.link}>
+          Terms of Use
+        </Link>
+        . This allows us to ensure a high level of quality that we believe will
+        benefit both sides of the platform in the long run.
+      </Typography>
+      <Typography variant="h6" className={classes.heading}>
+        Why do analysts submit ideas?
+      </Typography>
+      <Typography variant="body1" className={classes.paragraph}>
+        We believe there are six main reasons analysts publish ideas on Hayek:
+      </Typography>
+      <ol className={classes.paragraph}>
+        <li>
+          <span style={{ fontWeight: 700 }}>Industry Reputation.</span> Anyone
+          can establish a track record as one of the best analysts on the site
+          regardless of their professional or educational background. There's
+          also no downside given that accounts are pseudonymous—if your track
+          record is terrible, no one has to know it was you.
+        </li>
+        <li>
+          <span style={{ fontWeight: 700 }}>Financial Upside.</span> Great
+          investment ideas are tremendously valuable, and it's shocking that no
+          market really exists for them. If you're a retired healthcare
+          executive and have strong views on who the winners and losers in the
+          industry will be over the next 10 years, you can't really monetize
+          that knowledge. It's also nearly impossible to distribute a report
+          uncovering the next Valient-like fraud unless you have a platform like
+          Citron Research. Hayek solves this distribution problem and pays out
+          50% of our revenue to analysts by the percentage of downloads their
+          reports receive each month. So if an analyst amasses a massive
+          following or publishes a report that goes viral, they will be
+          compensated.
+        </li>
+        <li>
+          <span style={{ fontWeight: 700 }}>Marketing.</span> Hayek can give
+          analysts a platform to promote other products and services (i.e. hedge
+          funds, Twitter profiles, newsletters, YouTube channels, subscription
+          services, etc.).
+        </li>
+        <li>
+          <span style={{ fontWeight: 700 }}>Improve as an Analyst.</span> Humans
+          learn by doing and analyzing feedback. Hayek's performance metrics
+          give analysts clear, precise, and meaningful feedback. Well-written
+          notes also help analysts critically examine their thinking both before
+          and after they publish their ideas.
+        </li>
+        <li>
+          <span style={{ fontWeight: 700 }}>Teams.</span> Hayek groups the top
+          5% analysts in teams of three every quarter. The goal is to help them
+          grow their networks, stress-test ideas, and learn from other talented
+          analysts.
+        </li>
+        <li>
+          <span style={{ fontWeight: 700 }}>It's Fun.</span> Perhaps most
+          importantly, Hayek allows analysts to share their ideas with a
+          community of like-minded individuals and see how they stack up against
+          the best analysts on the site's leaderboard.
+        </li>
+      </ol>
       <Typography variant="h5" color="primary" className={classes.heading}>
         What We Believe
       </Typography>

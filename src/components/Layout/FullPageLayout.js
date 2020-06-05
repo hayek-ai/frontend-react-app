@@ -7,7 +7,7 @@ import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   background: {
-    height: "100vh",
+    minHeight: "100vh",
     borderRadius: 0,
   },
   narrowContainer: {
