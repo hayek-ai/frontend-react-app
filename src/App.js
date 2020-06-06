@@ -43,7 +43,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
 // Stripe Publishable API Key
-const stripePromise = loadStripe("testing");
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_API_KEY);
 
 function App(props) {
   const { prefersDarkmode, isAuthenticated, username, proTierStatus } = props;
