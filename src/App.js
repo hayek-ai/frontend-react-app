@@ -55,7 +55,9 @@ function App(props) {
     } else {
       const token = localStorage.accessToken;
       if (token) {
-        const decodedToken = jwtDecode(token);
+        const decodedToken = jwtDecode(token.replace("Bearer ", ""), {
+          header: true,
+        });
         if (decodedToken.exp * 1000 < Date.now()) {
           store.dispatch(logoutUser());
         } else {
