@@ -59,11 +59,7 @@ export const logoutUser = () => (dispatch) => {
 
 export const getUserData = () => (dispatch) => {
   const token = localStorage.accessToken;
-  const decodedToken =
-    token ||
-    jwtDecode(token.replace("Bearer ", ""), {
-      header: true,
-    });
+  const decodedToken = jwtDecode(token);
 
   return axios
     .get(`/user/${decodedToken.identity}`)
@@ -162,11 +158,7 @@ export const removeBookmark = (ideaId) => (dispatch) => {
 
 export const updateUser = (formData) => (dispatch) => {
   const token = localStorage.accessToken;
-  const decodedToken =
-    token ||
-    jwtDecode(token.replace("Bearer ", ""), {
-      header: true,
-    });
+  const decodedToken = jwtDecode(token);
 
   return axios
     .put(`/user/${decodedToken.identity}`, formData)
