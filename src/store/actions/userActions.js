@@ -26,7 +26,13 @@ export const signupUser = (newUserData) => (dispatch) => {
         payload: res.data.user,
       });
     })
-    .catch((err) => err.response.data.errors);
+    .catch((err) => {
+      if (err.response) {
+        return err.response.data.errors;
+      } else {
+        console.log(err);
+      }
+    });
 };
 
 export const loginUser = (userData) => (dispatch) => {
