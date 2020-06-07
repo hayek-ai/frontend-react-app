@@ -24,7 +24,13 @@ export const setProfile = (username) => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) => err.response.data);
+    .catch((err) => {
+      if (err.response) {
+        return err.response.data.errors;
+      } else {
+        console.log(err);
+      }
+    });
 };
 
 export const setProfileBookmarks = (username) => (dispatch) => {
@@ -36,7 +42,13 @@ export const setProfileBookmarks = (username) => (dispatch) => {
         payload: res.data.ideas,
       });
     })
-    .catch((err) => err.response.data);
+    .catch((err) => {
+      if (err.response) {
+        return err.response.data.errors;
+      } else {
+        console.log(err);
+      }
+    });
 };
 
 export const setProfileReviews = (analystId) => (dispatch) => {
@@ -86,7 +98,13 @@ export const uploadIdea = (formData) => (dispatch) => {
       });
       return res.data;
     })
-    .catch((err) => err.response.data);
+    .catch((err) => {
+      if (err.response) {
+        return err.response.data.errors;
+      } else {
+        console.log(err);
+      }
+    });
 };
 
 export const closeIdea = (ideaId) => (dispatch) => {
