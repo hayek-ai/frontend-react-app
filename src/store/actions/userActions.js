@@ -39,7 +39,13 @@ export const loginUser = (userData) => (dispatch) => {
         payload: res.data.user,
       });
     })
-    .catch((err) => err.response.data.errors);
+    .catch((err) => {
+      if (err.response) {
+        return err.response.data.errors;
+      } else {
+        console.log(err);
+      }
+    });
 };
 
 export const confirmUser = (verificationCode) => (dispatch) => {
@@ -48,7 +54,13 @@ export const confirmUser = (verificationCode) => (dispatch) => {
     .then(() => {
       dispatch({ type: SET_CONFIRMED });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      if (err.response) {
+        return err.response.data.errors;
+      } else {
+        console.log(err);
+      }
+    });
 };
 
 export const logoutUser = () => (dispatch) => {
@@ -168,7 +180,7 @@ export const updateUser = (formData) => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) => err.response.data.errors);
+    .catch((err) => console.log(err));
 };
 
 export const followAnalyst = (analystId) => (dispatch) => {
@@ -180,7 +192,7 @@ export const followAnalyst = (analystId) => (dispatch) => {
         payload: res.data.analyst,
       });
     })
-    .catch((err) => console.log(err.response.data.errors));
+    .catch((err) => console.log(err));
 };
 
 export const unfollowAnalyst = (analystId) => (dispatch) => {
@@ -192,7 +204,7 @@ export const unfollowAnalyst = (analystId) => (dispatch) => {
         payload: res.data.analyst,
       });
     })
-    .catch((err) => console.log(err.response.data.errors));
+    .catch((err) => console.log(err));
 };
 
 export const cancelSubscription = () => (dispatch) => {
