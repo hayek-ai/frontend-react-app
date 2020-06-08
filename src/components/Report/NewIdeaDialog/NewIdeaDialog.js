@@ -287,7 +287,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
     setLoading(true);
     uploadIdea(formData).then((res) => {
       setLoading(false);
-      if (res.errors) {
+      if (!res || res.errors) {
         setAlertState({
           open: true,
           message: res.errors[0]["detail"],
