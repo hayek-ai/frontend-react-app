@@ -25,7 +25,7 @@ const IdeaCardActions = ({ idea, handleVote }) => {
   });
 
   const handleIdeaLinkCopy = () => {
-    copy(`${getBaseUrl()}idea/${idea.id}`);
+    copy(`${getBaseUrl()}report/${idea.id}`);
     setAlertState({
       open: true,
       message: "Link copied!",
