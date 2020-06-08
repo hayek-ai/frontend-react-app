@@ -43,6 +43,10 @@ const Plan = (props) => {
     setSelectedPlan(event.target.value);
   };
 
+  const handleGetStarted = () => {
+    props.history.push("/");
+  };
+
   return (
     <FullPageLayout containerType="narrowContainer" paperBackground={true}>
       <Typography variant="body1" gutterBottom>
@@ -128,6 +132,7 @@ const Plan = (props) => {
           variant="contained"
           color="primary"
           style={{ margin: "30px 0", width: "100%" }}
+          onClick={handleGetStarted}
         >
           Get Started!
         </Button>
