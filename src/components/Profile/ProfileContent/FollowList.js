@@ -2,9 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-// Redux stuff
-import { connect } from "react-redux";
-
 // Mui stuff
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -35,20 +32,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FollowingList = (props) => {
-  const { user, profile } = props;
+const FollowList = ({ followList }) => {
   const classes = useStyles();
 
-  const following = profile.id === user.id ? user.following : profile.following;
-
   // save a few computations
-  const followingLength = following.length;
+  const length = followList.length;
 
   const ListItems = () => {
-    if (followingLength === 0) {
+    if (length === 0) {
       return <EmptyFeed message="No analysts to show." />;
     } else {
-      return following.map((analyst, index) => (
+      return followList.map((analyst, index) => (
         <React.Fragment key={index}>
           <ListItem style={{ padding: "10px" }}>
             <ListItemAvatar>
@@ -66,7 +60,7 @@ const FollowingList = (props) => {
             />
             {<FollowButton analyst={analyst} />}
           </ListItem>
-          {index !== followingLength - 1 && <Divider />}
+          {index !== length - 1 && <Divider />}
         </React.Fragment>
       ));
     }
@@ -81,13 +75,8 @@ const FollowingList = (props) => {
   );
 };
 
-FollowingList.propTypes = {
-  user: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
+FollowList.propTypes = {
+  followList: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user,
-});
-
-export default connect(mapStateToProps)(FollowingList);
+export default FollowList;

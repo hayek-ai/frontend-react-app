@@ -18,7 +18,7 @@ import RssFeedIcon from "@material-ui/icons/RssFeed";
 // Components
 import TabPanel from "../../util/TabPanel";
 import FeedContainer from "../../IdeaFeed/FeedContainer";
-import FollowingList from "./FollowingList";
+import FollowList from "./FollowList";
 import WithLoading from "../../util/WithLoading";
 
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +76,7 @@ const UserContent = (props) => {
         </WithLoading>
       </TabPanel>
       <TabPanel value={panelIndex} index={1}>
-        <FollowingList profile={profile} />
+        <FollowList followList={profile.following} />
       </TabPanel>
     </div>
   );
