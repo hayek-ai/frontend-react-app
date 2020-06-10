@@ -90,7 +90,9 @@ const IdeaCardHeader = ({ idea, user, closeIdea }) => {
         }
         subheader={`${dayjs(new Date(idea.createdAt)).format(
           "MMM DD YYYY"
-        )} | Analyst Rank: ${getNumberWithOrdinal(idea.analyst.analystRank)}`}
+        )} | Overall Ranking: ${getNumberWithOrdinal(
+          idea.analyst.analystRank
+        )}`}
       />
       <ConfirmActionDialog
         open={confirmIdeaCloseOpen}
