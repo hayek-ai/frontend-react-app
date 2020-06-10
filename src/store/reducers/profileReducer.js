@@ -13,6 +13,7 @@ import {
 const initialState = {
   bookmarkedIdeas: [],
   reviews: [],
+  followers: [],
 };
 
 export default function (state = initialState, action) {
