@@ -49,7 +49,7 @@ const ReviewContainer = (props) => {
     >
       Must be a Hayek Pro member to review an analyst
       <Button
-        style={{ margin: "10px" }}
+        style={{ margin: "20px" }}
         variant="outlined"
         color="primary"
         component={Link}

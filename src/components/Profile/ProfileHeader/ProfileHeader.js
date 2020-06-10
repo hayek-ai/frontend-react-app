@@ -19,8 +19,9 @@ import WithLoading from "../../util/WithLoading";
 import useStyles from "./ProfileHeader.styles";
 import NewIdeaDialog from "../../Report/NewIdeaDialog/NewIdeaDialog";
 import FollowButton from "../../util/FollowButton";
+import Followers from "./Followers";
 
-const ProfileHeader = ({ profile, user, ...props }) => {
+const ProfileHeader = ({ profile, user }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
@@ -74,13 +75,10 @@ const ProfileHeader = ({ profile, user, ...props }) => {
                 </Typography>
               </div>
             </Link>
-
-            <Typography
-              variant="subtitle2"
-              style={{ fontWeight: 700 }}
-            >{`${abbreviateNumber(profile.numFollowers)} Follower${
-              profile.numFollowers === 1 ? "" : "s"
-            }`}</Typography>
+            <Followers
+              numFollowers={profile.numFollowers}
+              followers={profile.followers}
+            />
           </React.Fragment>
         )}
         <Bio bio={profile.isOwn ? user.bio : profile.bio} />
