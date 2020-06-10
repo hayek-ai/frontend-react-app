@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { abbreviateNumber } from "../../../util/utils";
+import { Link } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
@@ -19,7 +20,7 @@ import useStyles from "./ProfileHeader.styles";
 import NewIdeaDialog from "../../Report/NewIdeaDialog/NewIdeaDialog";
 import FollowButton from "../../util/FollowButton";
 
-const ProfileHeader = ({ profile, user }) => {
+const ProfileHeader = ({ profile, user, ...props }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
@@ -54,18 +55,26 @@ const ProfileHeader = ({ profile, user }) => {
         <Typography className={classes.title}>{profile.username}</Typography>
         {profile.isAnalyst && (
           <React.Fragment>
-            <div className={classes.ratingContainer}>
-              <Rating
-                value={parseFloat(profile.reviewStarTotal / profile.numReviews)}
-                readOnly
-                precision={0.1}
-                size="small"
-                style={{ marginRight: "6px" }}
-              />
-              <Typography variant="body2">
-                {abbreviateNumber(profile.numReviews)}
-              </Typography>
-            </div>
+            <Link
+              to={`/profile/${profile.username}/reviews`}
+              className={classes.link}
+            >
+              <div className={classes.ratingContainer}>
+                <Rating
+                  value={parseFloat(
+                    profile.reviewStarTotal / profile.numReviews
+                  )}
+                  readOnly
+                  precision={0.1}
+                  size="small"
+                  style={{ marginRight: "6px" }}
+                />
+                <Typography variant="body2" style={{ fontWeight: 700 }}>
+                  {abbreviateNumber(profile.numReviews)}
+                </Typography>
+              </div>
+            </Link>
+
             <Typography
               variant="subtitle2"
               style={{ fontWeight: 700 }}

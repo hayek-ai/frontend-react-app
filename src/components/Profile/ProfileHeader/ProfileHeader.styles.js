@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginBottom: "5px",
   },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.primary.main,
+  },
 }));
 
 export default useStyles;
