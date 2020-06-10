@@ -40,7 +40,7 @@ const Profile = (props) => {
   return (
     <FullPageLayout containerType="feedContainer" paperBackground={false}>
       <WithLoading loading={loading}>
-        <ProfileHeader />
+        <ProfileHeader {...props} />
         {isAnalyst ? (
           <AnalystContent panel={panel} {...props} />
         ) : (
