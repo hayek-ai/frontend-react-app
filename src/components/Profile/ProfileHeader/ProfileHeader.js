@@ -21,7 +21,7 @@ import NewIdeaDialog from "../../Report/NewIdeaDialog/NewIdeaDialog";
 import FollowButton from "../../util/FollowButton";
 import Followers from "./Followers";
 
-const ProfileHeader = ({ profile, user }) => {
+const ProfileHeader = ({ profile, user, ...props }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
