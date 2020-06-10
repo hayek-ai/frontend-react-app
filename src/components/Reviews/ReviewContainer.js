@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
 import { postReview, deleteReview } from "../../store/actions/profileActions";
+
+// Mui stuff
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/IconButton";
 
 // Components
 import ReviewCard from "./ReviewCard";
@@ -16,15 +21,6 @@ const ReviewContainer = (props) => {
   const { reviews, analystId, user, postReview, deleteReview } = props;
   const [loading, setLoading] = useState(false);
   const [alertState, setAlertState] = useState({ open: false, message: "" });
-
-  // user cannot post review if not pro tier or if has already left review
-  let cannotReviewMessage = "";
-  if (!user.isProTier) {
-    cannotReviewMessage = "Must be a Hayek Pro member to post a review";
-  }
-  if (reviews.some((review) => review.userId === user.id)) {
-    cannotReviewMessage = "Thank you for posting your review!";
-  }
 
   const handlePostReview = (reviewData) => {
     setLoading(true);
@@ -42,15 +38,35 @@ const ReviewContainer = (props) => {
     });
   };
 
+  // user cannot post review if not pro tier or if has already left review
+  const reviewCallToAction = !user.isProTier ? (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      Must be a Hayek Pro member to review an analyst
+      <Button
+        style={{ margin: "10px" }}
+        variant="outlined"
+        color="primary"
+        component={Link}
+        to="/plan"
+      >
+        Join Hayek Pro
+      </Button>
+    </div>
+  ) : reviews.some((review) => review.userId === user.id) ? (
+    <Typography variant="body1">Thank you for posting your review!</Typography>
+  ) : (
+    <AddReviewDialog handlePostReview={handlePostReview} />
+  );
+
   return (
     <WithLoading loading={loading}>
-      <ReviewSummary reviews={reviews}>
-        {cannotReviewMessage === "" ? (
-          <AddReviewDialog handlePostReview={handlePostReview} />
-        ) : (
-          cannotReviewMessage
-        )}
-      </ReviewSummary>
+      <ReviewSummary reviews={reviews}>{reviewCallToAction}</ReviewSummary>
       {reviews.map((review, index) => (
         <ReviewCard
           key={index}
