@@ -28,7 +28,7 @@ import PerformanceTable from "./PerformanceTable";
 import PositionTable from "./PositionTable";
 import ReviewContainer from "../../Reviews/ReviewContainer";
 import FeedContainer from "../../IdeaFeed/FeedContainer";
-import FollowingList from "./FollowingList";
+import FollowList from "./FollowList";
 import WithLoading from "../../util/WithLoading";
 
 const useStyles = makeStyles((theme) => ({
@@ -165,7 +165,7 @@ const UserContent = (props) => {
         </WithLoading>
       </TabPanel>
       <TabPanel value={panelIndex} index={5}>
-        <FollowingList profile={profile} />
+        <FollowList followList={profile.following} />
       </TabPanel>
     </div>
   );
