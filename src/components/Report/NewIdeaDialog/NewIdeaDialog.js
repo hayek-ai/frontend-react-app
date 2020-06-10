@@ -285,32 +285,40 @@ const NewIdeaDialog = ({ uploadIdea }) => {
     formData.append("exhibitTitleMap", JSON.stringify(exhibitTitleMap));
     setPreviewState(initialPreviewState);
     setLoading(true);
-    uploadIdea(formData).then((res) => {
-      setLoading(false);
-      if (!res || res.errors) {
+    uploadIdea(formData)
+      .then((res) => {
+        setLoading(false);
+        if (!res || res.errors) {
+          setAlertState({
+            open: true,
+            message: res.errors[0]["detail"],
+            color: "error",
+          });
+          setActiveStep(0);
+        } else {
+          // position opened successfully
+          // restore to initial state and show success message
+          setOpen(false);
+          setActiveStep(0);
+          setIdeaState(initialIdeaState);
+          setThesisSummary(thesisSummaryInitialState);
+          setFullReport(fullReportInitialState);
+          setSelectedExhibits([]);
+          setPreviewState(initialPreviewState);
+          setAlertState({
+            open: true,
+            message: "Position opened successfully!",
+            color: null,
+          });
+        }
+      })
+      .catch(() => {
         setAlertState({
           open: true,
-          message: res.errors[0]["detail"],
+          message: "Oops, something went wrong.",
           color: "error",
         });
-        setActiveStep(0);
-      } else {
-        // position opened successfully
-        // restore to initial state and show success message
-        setOpen(false);
-        setActiveStep(0);
-        setIdeaState(initialIdeaState);
-        setThesisSummary(thesisSummaryInitialState);
-        setFullReport(fullReportInitialState);
-        setSelectedExhibits([]);
-        setPreviewState(initialPreviewState);
-        setAlertState({
-          open: true,
-          message: "Position opened successfully!",
-          color: null,
-        });
-      }
-    });
+      });
   };
 
   return (
