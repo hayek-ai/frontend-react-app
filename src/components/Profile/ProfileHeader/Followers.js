@@ -6,10 +6,9 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
-import Typography from "@material-ui/core/Typography";
 
 // Components
-import FollowList from "../ProfileContent/FollowList";
+import FollowList from "../../util/FollowList";
 import EmptyFeed from "../../util/EmptyFeed";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,13 +18,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     outline: "none",
   },
-  paper: {
+  container: {
     position: "absolute",
     width: 400,
-    backgroundColor: theme.palette.background.paper,
     borderRadius: "5px",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
     outline: "none",
   },
 }));
@@ -51,10 +48,7 @@ const Followers = ({ numFollowers, followers }) => {
         onClose={() => setOpen(false)}
         className={classes.modal}
       >
-        <div className={classes.paper}>
-          <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-            Followers
-          </Typography>
+        <div className={classes.container}>
           {numFollowers > 0 ? (
             <FollowList followList={followers} />
           ) : (
