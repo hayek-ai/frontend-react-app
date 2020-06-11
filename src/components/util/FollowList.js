@@ -42,23 +42,20 @@ const FollowList = ({ followList }) => {
     if (length === 0) {
       return <EmptyFeed message="No analysts to show." />;
     } else {
-      return followList.map((analyst, index) => (
+      return followList.map((user, index) => (
         <React.Fragment key={index}>
           <ListItem style={{ padding: "10px" }}>
             <ListItemAvatar>
-              <Avatar src={analyst.imageUrl} />
+              <Avatar src={user.imageUrl} />
             </ListItemAvatar>
             <ListItemText
               primary={
-                <Link
-                  to={`/profile/${analyst.username}`}
-                  className={classes.link}
-                >
-                  {analyst.username}
+                <Link to={`/profile/${user.username}`} className={classes.link}>
+                  {user.username}
                 </Link>
               }
             />
-            {<FollowButton analyst={analyst} />}
+            {user.isAnalyst && <FollowButton analyst={user} />}
           </ListItem>
           {index !== length - 1 && <Divider />}
         </React.Fragment>

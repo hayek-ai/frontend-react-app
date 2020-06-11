@@ -12,6 +12,8 @@ import FullPageLayout from "../components/Layout/FullPageLayout";
 import FinancialSnapshot from "../components/Report/FinancialSnapshot";
 import Report from "../components/Report/Report";
 import CommentContainer from "../components/Comments/CommentContainer";
+import ActionButtons from "../components/Report/ActionButtons";
+import ShareButtons from "../components/Report/ShareButtons";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,7 +22,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ReportPage = (props) => {
+function scrollToComments() {
+  document.getElementById("comments").scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+    inline: "nearest",
+  });
+}
+
+const ReportPage = () => {
   const classes = useStyles();
   const { ideaId, commentParam } = useParams();
   const [loading, setLoading] = useState(true);
@@ -29,6 +39,7 @@ const ReportPage = (props) => {
     fullReport: [],
     exhibits: [],
     comments: [],
+    analyst: {},
   });
 
   useEffect(() => {
@@ -45,11 +56,9 @@ const ReportPage = (props) => {
             exhibits: JSON.parse(idea.exhibits),
           });
           if (commentParam === "comments") {
-            document.getElementById("comments").scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-              inline: "nearest",
-            });
+            scrollToComments();
+          } else {
+            window.scrollTo(0, 0);
           }
         }
       });
@@ -61,7 +70,13 @@ const ReportPage = (props) => {
     <FullPageLayout containerType="reportContainer" paperBackground={false}>
       <WithLoading loading={loading}>
         <Paper variant="outlined" className={classes.container}>
+          <ActionButtons
+            idea={idea}
+            setIdea={setIdea}
+            scrollToComments={scrollToComments}
+          />
           <FinancialSnapshot idea={idea} />
+          <ShareButtons idea={idea} />
         </Paper>
         <Paper variant="outlined" className={classes.container}>
           <Report
