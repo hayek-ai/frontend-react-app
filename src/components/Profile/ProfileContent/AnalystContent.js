@@ -28,7 +28,7 @@ import PerformanceTable from "./PerformanceTable";
 import PositionTable from "./PositionTable";
 import ReviewContainer from "../../Reviews/ReviewContainer";
 import FeedContainer from "../../IdeaFeed/FeedContainer";
-import FollowList from "./FollowList";
+import FollowList from "../../util/FollowList";
 import WithLoading from "../../util/WithLoading";
 
 const useStyles = makeStyles((theme) => ({

@@ -18,7 +18,7 @@ import RssFeedIcon from "@material-ui/icons/RssFeed";
 // Components
 import TabPanel from "../../util/TabPanel";
 import FeedContainer from "../../IdeaFeed/FeedContainer";
-import FollowList from "./FollowList";
+import FollowList from "../../util/FollowList";
 import WithLoading from "../../util/WithLoading";
 
 const useStyles = makeStyles((theme) => ({
