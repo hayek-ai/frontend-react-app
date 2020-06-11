@@ -256,6 +256,13 @@ const CardForm = ({ proTierStatus, getUserData, ...props }) => {
 
   return (
     <React.Fragment>
+      <div style={{ width: "100%", textAlign: "left" }}>
+        <img
+          src="https://hayek-image-assets.s3.amazonaws.com/misc./powered_by_stripe%403x.png"
+          alt="powered by Stripe"
+          width="125px"
+        />
+      </div>
       <form onSubmit={handleSubmit}>
         <CardElement className={classes.StripeElement} options={options} />
         <WithLoading loading={loading}>
