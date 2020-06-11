@@ -13,8 +13,8 @@ import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 
 // Components
-import EmptyFeed from "../../util/EmptyFeed";
-import FollowButton from "../../util/FollowButton";
+import EmptyFeed from "./EmptyFeed";
+import FollowButton from "./FollowButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -14,6 +14,7 @@ const initialState = {
   bookmarkedIdeas: [],
   reviews: [],
   followers: [],
+  following: [],
 };
 
 export default function (state = initialState, action) {
