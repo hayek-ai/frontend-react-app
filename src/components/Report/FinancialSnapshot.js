@@ -134,7 +134,11 @@ const FinancialSnapShot = ({ idea }) => {
         )}
 
         <div
-          style={{ display: "flex", alignItems: "center", marginTop: "15px" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginTop: "15px",
+          }}
         >
           <Avatar src={analystImageUrl} style={{ marginRight: 10 }} />
           <Typography
@@ -145,12 +149,12 @@ const FinancialSnapShot = ({ idea }) => {
           >
             {analystUsername}
           </Typography>
-          {idea.analyst && (
-            <div style={{ marginLeft: "20px" }}>
-              <FollowButton analyst={idea.analyst} />
-            </div>
-          )}
         </div>
+        {idea.analyst && (
+          <div style={{ marginTop: "15px" }}>
+            <FollowButton analyst={idea.analyst} />
+          </div>
+        )}
         <div style={{ marginTop: "20px" }}>
           <ScenarioTable idea={idea} />
         </div>
