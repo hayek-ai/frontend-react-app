@@ -52,7 +52,7 @@ const ShareButtons = ({ idea }) => {
     });
   };
 
-  const reportUrl = `https://hayek.ai/report/${idea.id}`;
+  const reportUrl = `${getBaseUrl()}report/${idea.id}`;
   const title = `$${idea.symbol}: ${capitalizeFirstLetter(idea.positionType)} ${
     idea.companyName
   } by ${idea.analyst.username} (${formatNumber(
