@@ -19,7 +19,6 @@ import FollowButton from "./FollowButton";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: 10,
   },
   link: {
     textDecoration: "none",
