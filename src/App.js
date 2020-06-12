@@ -97,7 +97,7 @@ function App(props) {
                   path="/password-reset/:resetId"
                   component={PasswordReset}
                 />
-                <PrivateRoute path="/feed" component={Feed} />
+                <PrivateRoute path="/feed/:following?" component={Feed} />
                 <PrivateRoute path="/leaderboard" component={Leaderboard} />
                 <PrivateRoute
                   path="/profile/:username/:panel?"
