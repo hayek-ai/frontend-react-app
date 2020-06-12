@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getIdeaFeed } from "../api";
+
+// Mui stuff
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 // Components
 import FullPageLayout from "../components/Layout/FullPageLayout";
@@ -50,7 +55,17 @@ const SearchResults = (props) => {
 
   return (
     <FullPageLayout containerType="feedContainer" paperBackground={false}>
-      <SearchResultsHeader symbol={symbol} />
+      <AppBar variant="outlined" position="static" color="inherit">
+        <Tabs
+          value={0}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+        >
+          <Tab component={Link} label="Discover" to="/feed" />
+          <Tab component={Link} label="Following" to="/feed/following" />
+        </Tabs>
+      </AppBar>
       <SearchContainer {...props} searchbar={true}>
         <FilterSelect filter={sortFilter} setFilter={setSortFilter} />
         <FilterSelect
@@ -62,6 +77,7 @@ const SearchResults = (props) => {
           setFilter={setTimePeriodFilter}
         />
       </SearchContainer>
+      <SearchResultsHeader symbol={symbol} />
       <WithLoading loading={loading}>
         <FeedContainer ideaFeed={feed} history={props.history} />
       </WithLoading>

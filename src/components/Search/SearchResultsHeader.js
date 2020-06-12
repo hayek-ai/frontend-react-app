@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     padding: "20px",
+    marginTop: "10px",
   },
   pageTitle: {
     ...theme.typography.h5,

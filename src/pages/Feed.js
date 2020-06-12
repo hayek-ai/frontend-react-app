@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { getIdeaFeed } from "../api";
 
 // Mui stuff
@@ -15,7 +16,8 @@ import SearchContainer from "../components/Search/SearchContainer";
 import FilterSelect from "../components/Search/FilterSelect";
 
 const Feed = (props) => {
-  const [panelIndex, setPanelIndex] = useState(0);
+  const { following } = useParams();
+  const [panelIndex, setPanelIndex] = useState(following ? 1 : 0);
   const [loading, setLoading] = useState(true);
   const [feed, setFeed] = useState([]);
   const [sortFilter, setSortFilter] = useState({
