@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: 400,
     borderRadius: "5px",
+    backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     outline: "none",
   },

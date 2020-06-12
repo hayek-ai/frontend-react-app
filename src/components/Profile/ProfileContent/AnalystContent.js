@@ -165,7 +165,9 @@ const UserContent = (props) => {
         </WithLoading>
       </TabPanel>
       <TabPanel value={panelIndex} index={5}>
-        <FollowList followList={profile.following} />
+        <div style={{ marginTop: "10px" }}>
+          <FollowList followList={profile.following} />
+        </div>
       </TabPanel>
     </div>
   );
