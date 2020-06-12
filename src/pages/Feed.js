@@ -53,14 +53,14 @@ const Feed = (props) => {
 
     const queryString = filters.map((filter) => filter.value).join("&");
     if (panelIndex === 0) {
-      getIdeaFeed("following", queryString).then((ideas) => {
+      getIdeaFeed("discover", queryString).then((ideas) => {
         if (mounted) {
           setFeed([...ideas]);
           setLoading(false);
         }
       });
     } else {
-      getIdeaFeed("discover", queryString).then((ideas) => {
+      getIdeaFeed("following", queryString).then((ideas) => {
         if (mounted) {
           setFeed([...ideas]);
           setLoading(false);
@@ -88,12 +88,12 @@ const Feed = (props) => {
           textColor="primary"
           variant="fullWidth"
         >
-          <Tab label="Following" />
           <Tab label="Discover" />
+          <Tab label="Following" />
         </Tabs>
       </AppBar>
       <TabPanel value={panelIndex} index={0}>
-        <SearchContainer {...props} searchbar={false}>
+        <SearchContainer {...props} searchbar={true}>
           <FilterSelect filter={sortFilter} setFilter={setSortFilter} />
           <FilterSelect
             filter={positionTypeFilter}
@@ -114,7 +114,7 @@ const Feed = (props) => {
         </WithLoading>
       </TabPanel>
       <TabPanel value={panelIndex} index={1}>
-        <SearchContainer {...props} searchbar={true}>
+        <SearchContainer {...props} searchbar={false}>
           <FilterSelect filter={sortFilter} setFilter={setSortFilter} />
           <FilterSelect
             filter={positionTypeFilter}
