@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.body1,
     margin: "14px 0",
   },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.primary.main,
+  },
 }));
 
 const Serialize = ({ node }) => {
@@ -82,7 +86,12 @@ const Serialize = ({ node }) => {
       );
     case "link":
       return (
-        <a href={node.url} target="_blank" rel="noreferrer noopener">
+        <a
+          href={node.url}
+          target="_blank"
+          rel="noreferrer noopener"
+          className={classes.link}
+        >
           {children.map((child, index) => (
             <React.Fragment key={index}>{child}</React.Fragment>
           ))}
