@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo } from "react";
+import isUrl from "is-url";
 import PropTypes from "prop-types";
 
 // Slate stuff
 import { Editable, withReact, useSlate, Slate } from "slate-react";
-import { Editor, Transforms, createEditor } from "slate";
+import { Editor, Transforms, Range, createEditor } from "slate";
 import { withHistory } from "slate-history";
 import isHotkey from "is-hotkey";
 
@@ -20,6 +21,7 @@ import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import TitleIcon from "@material-ui/icons/Title";
+import InsertLinkIcon from "@material-ui/icons/InsertLink";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -56,7 +58,10 @@ const RichTextEditor = ({ value, setValue, placeholder }) => {
   const classes = useStyles();
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const editor = useMemo(
+    () => withLinks(withHistory(withReact(createEditor()))),
+    []
+  );
 
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
@@ -76,6 +81,7 @@ const RichTextEditor = ({ value, setValue, placeholder }) => {
               format="bulleted-list"
               icon={<FormatListBulletedIcon />}
             />
+            <LinkButton format={"link"} icon={<InsertLinkIcon />} />
           </ToggleButtonGroup>
         </div>
         <div className={classes.textField}>
@@ -179,6 +185,90 @@ const BlockButton = ({ format, icon }) => {
   );
 };
 
+const withLinks = (editor) => {
+  const { insertData, insertText, isInline } = editor;
+
+  editor.isInline = (element) => {
+    return element.type === "link" ? true : isInline(element);
+  };
+
+  editor.insertText = (text) => {
+    if (text && isUrl(text)) {
+      wrapLink(editor, text);
+    } else {
+      insertText(text);
+    }
+  };
+
+  editor.insertData = (data) => {
+    const text = data.getData("text/plain");
+
+    if (text && isUrl(text)) {
+      wrapLink(editor, text);
+    } else {
+      insertData(data);
+    }
+  };
+
+  return editor;
+};
+
+const insertLink = (editor, url) => {
+  if (editor.selection) {
+    wrapLink(editor, url);
+  }
+};
+
+const isLinkActive = (editor) => {
+  const [link] = Editor.nodes(editor, { match: (n) => n.type === "link" });
+  return !!link;
+};
+
+const unwrapLink = (editor) => {
+  Transforms.unwrapNodes(editor, { match: (n) => n.type === "link" });
+};
+
+const wrapLink = (editor, url) => {
+  if (isLinkActive(editor)) {
+    unwrapLink(editor);
+  }
+
+  const { selection } = editor;
+  const isCollapsed = selection && Range.isCollapsed(selection);
+  const link = {
+    type: "link",
+    url,
+    children: isCollapsed ? [{ text: url }] : [],
+  };
+
+  if (isCollapsed) {
+    Transforms.insertNodes(editor, link);
+  } else {
+    Transforms.wrapNodes(editor, link, { split: true });
+    Transforms.collapse(editor, { edge: "end" });
+  }
+};
+
+const LinkButton = ({ format, icon }) => {
+  const editor = useSlate();
+  return (
+    <ToggleButton
+      style={{ border: "none", padding: "0 5px" }}
+      size="small"
+      value={format}
+      selected={isLinkActive(editor)}
+      onMouseDown={(event) => {
+        event.preventDefault();
+        const url = window.prompt("Enter the URL of the link:");
+        if (!url) return;
+        insertLink(editor, url);
+      }}
+    >
+      {icon}
+    </ToggleButton>
+  );
+};
+
 const Element = ({ attributes, children, element }) => {
   const classes = useStyles();
 
@@ -201,6 +291,12 @@ const Element = ({ attributes, children, element }) => {
       return <li {...attributes}>{children}</li>;
     case "numbered-list":
       return <ol {...attributes}>{children}</ol>;
+    case "link":
+      return (
+        <a {...attributes} href={element.url}>
+          {children}
+        </a>
+      );
     default:
       return <p {...attributes}>{children}</p>;
   }

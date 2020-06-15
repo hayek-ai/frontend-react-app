@@ -80,6 +80,14 @@ const Serialize = ({ node }) => {
           ))}
         </blockquote>
       );
+    case "link":
+      return (
+        <a href={node.url} target="_blank" rel="noreferrer noopener">
+          {children.map((child, index) => (
+            <React.Fragment key={index}>{child}</React.Fragment>
+          ))}
+        </a>
+      );
     default:
       return children;
   }
