@@ -100,7 +100,7 @@ export const uploadIdea = (formData) => (dispatch) => {
     })
     .catch((err) => {
       if (err.response) {
-        return err.response.data.errors;
+        return err.response.data;
       } else {
         console.log(err);
       }
