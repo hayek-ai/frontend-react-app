@@ -53,12 +53,6 @@ const initialIdeaState = {
   symbol: "",
   positionType: "long",
   priceTarget: "",
-  bullTarget: "",
-  bullProbability: "",
-  baseTarget: "",
-  baseProbability: "",
-  bearTarget: "",
-  bearProbability: "",
   agreedToTerms: false,
   errors: {},
 };
@@ -67,12 +61,6 @@ const initialPreviewState = {
   symbol: null,
   positionType: null,
   priceTarget: null,
-  bullTarget: "",
-  bullProbability: "",
-  baseTarget: "",
-  baseProbability: "",
-  bearTarget: "",
-  bearProbability: "",
   agreedToTerms: false,
   companyName: null,
   exchange: null,
@@ -239,9 +227,6 @@ const NewIdeaDialog = ({ uploadIdea }) => {
             sector: info.sector,
             lastPrice: parseFloat(info.latestPrice),
             entryPrice: parseFloat(info.latestPrice),
-            bullProbability: parseFloat(ideaState.bullProbability) / 100,
-            baseProbability: parseFloat(ideaState.baseProbability) / 100,
-            bearProbability: parseFloat(ideaState.bearProbability) / 100,
             thesisSummary: thesisSummary,
             fullReport: fullReport,
             selectedExhibits: selectedExhibits,
@@ -264,12 +249,7 @@ const NewIdeaDialog = ({ uploadIdea }) => {
     formData.append("symbol", previewState.symbol);
     formData.append("entryPrice", previewState.entryPrice);
     formData.append("positionType", previewState.positionType);
-    formData.append("bullTarget", previewState.bullTarget);
-    formData.append("bullProbability", previewState.bullProbability);
-    formData.append("baseTarget", previewState.baseTarget);
-    formData.append("baseProbability", previewState.baseProbability);
-    formData.append("bearTarget", previewState.bearTarget);
-    formData.append("bearProbability", previewState.bearProbability);
+    formData.append("priceTarget", previewState.priceTarget);
     formData.append("agreedToTerms", previewState.agreedToTerms);
     formData.append(
       "thesisSummary",

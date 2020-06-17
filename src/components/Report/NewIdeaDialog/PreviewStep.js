@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 
 // Components
 import Report from "../Report";
-import ScenarioTable from "../ScenarioTable";
 
 const PreviewStep = ({ previewState }) => {
   let currentPrice, target, impliedReturn;
@@ -52,9 +51,6 @@ const PreviewStep = ({ previewState }) => {
         <br />
         {`Implied Return: ${impliedReturn}`}
       </Typography>
-      <div style={{ margin: "20px 0" }}>
-        <ScenarioTable idea={previewState} />
-      </div>
       <Report
         thesisSummary={previewState.thesisSummary}
         fullReport={previewState.fullReport}

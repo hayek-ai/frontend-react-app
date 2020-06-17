@@ -14,7 +14,6 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
 // Components
-import ScenarioTable from "./ScenarioTable";
 import FollowButton from "../util/FollowButton";
 
 import { STOCK_GREEN, STOCK_RED } from "../../util/theme";
@@ -47,11 +46,6 @@ const useStyles = makeStyles((theme) => ({
 const FinancialSnapShot = ({ idea }) => {
   const classes = useStyles();
   const keyMetrics = [
-    {
-      label: "Last price",
-      // use latestPrice (from IEX quote) - lastPrice stale (esp. if idea is closed)
-      value: formatNumber(idea.latestPrice, 2, "dollars"),
-    },
     {
       label: "52-wk high",
       value: formatNumber(idea.week52High, 2, "dollars"),
@@ -88,12 +82,10 @@ const FinancialSnapShot = ({ idea }) => {
 
   const analystUsername = idea.analyst ? idea.analyst.username : null;
   const analystImageUrl = idea.analyst ? idea.analyst.imageUrl : null;
-  const ideaReturn = priceReturn(
-    idea.positionType,
-    idea.entryPrice,
-    idea.lastPrice,
-    2
-  );
+  // use latestPrice (from IEX quote) - lastPrice stale (esp. if idea is closed)
+  const ideaReturn = idea.closedDate
+    ? priceReturn(idea.positionType, idea.entryPrice, idea.lastPrice, 2)
+    : priceReturn(idea.positionType, idea.entryPrice, idea.latestPrice, 2);
 
   return (
     <div>
@@ -112,27 +104,6 @@ const FinancialSnapShot = ({ idea }) => {
             "dollars"
           )} on ${dayjs(new Date(idea.createdAt)).format("MMM DD, YYYY")}`}
         </Typography>
-        {idea.closedDate && (
-          <div style={{ marginTop: "10px" }}>
-            <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-              {`This position was closed on ${dayjs(
-                new Date(idea.createdAt)
-              ).format("MMM DD, YYYY")} at an exit price of ${formatNumber(
-                idea.lastPrice,
-                2,
-                "dollars"
-              )} with a return of `}
-              <span
-                style={{
-                  color: `${
-                    parseFloat(ideaReturn) > 0 ? STOCK_GREEN : STOCK_RED
-                  }`,
-                }}
-              >{`${ideaReturn}`}</span>
-            </Typography>
-          </div>
-        )}
-
         <div
           style={{
             display: "flex",
@@ -155,8 +126,42 @@ const FinancialSnapShot = ({ idea }) => {
             <FollowButton analyst={idea.analyst} />
           </div>
         )}
-        <div style={{ marginTop: "20px" }}>
-          <ScenarioTable idea={idea} />
+        <div style={{ marginTop: "10px" }}>
+          {idea.closedDate ? (
+            <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+              {`This position was closed on ${dayjs(
+                new Date(idea.createdAt)
+              ).format("MMM DD, YYYY")} at an exit price of ${formatNumber(
+                idea.lastPrice,
+                2,
+                "dollars"
+              )} and a return of `}
+              <span
+                style={{
+                  color: `${
+                    parseFloat(ideaReturn) > 0 ? STOCK_GREEN : STOCK_RED
+                  }`,
+                }}
+              >{`${ideaReturn}`}</span>
+            </Typography>
+          ) : (
+            <div>
+              <Typography variant="subtitle1">
+                {`Price Target: ${formatNumber(
+                  idea.priceTarget,
+                  2,
+                  "dollars"
+                )}`}
+              </Typography>
+              <Typography variant="subtitle1">
+                {`Current Price: ${formatNumber(
+                  idea.latestPrice,
+                  2,
+                  "dollars"
+                )}`}
+              </Typography>
+            </div>
+          )}
         </div>
         <div className={classes.keyMetricsContainer}>
           <Typography
