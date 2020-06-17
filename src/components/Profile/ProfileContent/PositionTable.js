@@ -34,21 +34,21 @@ const useStyles = makeStyles((theme) => ({
 
 function createData(
   symbol,
+  performance,
   positionType,
   entryPrice,
   lastPrice,
   priceTarget,
-  timePeriod,
-  performance
+  timePeriod
 ) {
   return {
     symbol,
+    performance,
     positionType,
     entryPrice,
     lastPrice,
     priceTarget,
     timePeriod,
-    performance,
   };
 }
 
@@ -70,12 +70,12 @@ const PositionTable = ({ ideas }) => {
   const rows = ideas.map((idea) => {
     return createData(
       idea.symbol,
+      priceReturn(idea.positionType, idea.entryPrice, idea.lastPrice, 2),
       idea.positionType,
       formatNumber(idea.entryPrice, 2, "dollars"),
       formatNumber(idea.lastPrice, 2, "dollars"),
       formatNumber(idea.priceTarget, 2, "dollars"),
-      calcTimePeriod(idea.createdAt, idea.closedDate),
-      priceReturn(idea.positionType, idea.entryPrice, idea.lastPrice, 2)
+      calcTimePeriod(idea.createdAt, idea.closedDate)
     );
   });
 
@@ -86,6 +86,9 @@ const PositionTable = ({ ideas }) => {
           <TableHead>
             <TableRow className={classes.titleRow}>
               <TableCell className={classes.columnTitle}>Symbol</TableCell>
+              <TableCell className={classes.columnTitle} align="center">
+                Performance
+              </TableCell>
               <TableCell className={classes.columnTitle} align="center">
                 Position
               </TableCell>
@@ -101,9 +104,6 @@ const PositionTable = ({ ideas }) => {
               <TableCell className={classes.columnTitle} align="center">
                 Time Period
               </TableCell>
-              <TableCell className={classes.columnTitle} align="center">
-                Performance
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -116,11 +116,6 @@ const PositionTable = ({ ideas }) => {
                 >
                   {row.symbol}
                 </TableCell>
-                <TableCell align="center">{row.positionType}</TableCell>
-                <TableCell align="center">{row.entryPrice}</TableCell>
-                <TableCell align="center">{row.lastPrice}</TableCell>
-                <TableCell align="center">{row.priceTarget}</TableCell>
-                <TableCell align="center">{row.timePeriod}</TableCell>
                 <TableCell
                   align="center"
                   style={{
@@ -131,6 +126,11 @@ const PositionTable = ({ ideas }) => {
                 >
                   {row.performance}
                 </TableCell>
+                <TableCell align="center">{row.positionType}</TableCell>
+                <TableCell align="center">{row.entryPrice}</TableCell>
+                <TableCell align="center">{row.lastPrice}</TableCell>
+                <TableCell align="center">{row.priceTarget}</TableCell>
+                <TableCell align="center">{row.timePeriod}</TableCell>
               </TableRow>
             ))}
           </TableBody>
