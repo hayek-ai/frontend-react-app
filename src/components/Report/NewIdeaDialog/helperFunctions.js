@@ -12,52 +12,19 @@ export const isEmpty = (obj) => {
 
 export const verifyIdeaData = (state) => {
   const errors = {};
-  const bullTarget = parseFloat(state.bullTarget);
-  const bullProbability = parseFloat(state.bullProbability);
-  const baseTarget = parseFloat(state.baseTarget);
-  const baseProbability = parseFloat(state.baseProbability);
-  const bearTarget = parseFloat(state.bearTarget);
-  const bearProbability = parseFloat(state.bearProbability);
+  const priceTarget = parseFloat(state.priceTarget);
 
   if (state.symbol === "") {
     errors.symbol = "Cannot be blank";
   }
+  if (state.priceTarget === "") {
+    errors.priceTarget = "Cannot be blank";
+  }
   if (state.agreedToTerms === false) {
     errors.agreedToTerms = "Must agree to terms and conditions to submit.";
   }
-  if (
-    isNaN(bullTarget) ||
-    isNaN(bullProbability) ||
-    isNaN(baseTarget) ||
-    isNaN(baseProbability) ||
-    isNaN(bearTarget) ||
-    isNaN(bearProbability)
-  ) {
-    errors.priceTarget = "Invalid Scenario Inputs";
-  }
-  if (
-    bullTarget < 0 ||
-    bullProbability < 0 ||
-    baseTarget < 0 ||
-    baseProbability < 0 ||
-    bearTarget < 0 ||
-    bearProbability < 0
-  ) {
-    errors.priceTarget = "Scenario inputs cannot be negative";
-  }
-  if (bullProbability + baseProbability + bearProbability !== 100) {
-    errors.priceTarget = "Scenario probabilities must add up to 100%";
-  }
-  if (bullTarget < baseTarget || bullTarget < bearTarget) {
-    errors.priceTarget =
-      "Bull target must be greater than base and bear targets.";
-  }
-  if (bearTarget > baseTarget) {
-    errors.priceTarget = "Bear target must be less than base target";
-  }
-  if (baseProbability < bullProbability || baseProbability < bearProbability) {
-    errors.priceTarget =
-      "Base case must be most likely scenario (highest probability).";
+  if (isNaN(priceTarget)) {
+    errors.priceTarget = "Invalid input";
   }
   return errors;
 };
