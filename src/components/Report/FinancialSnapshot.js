@@ -130,7 +130,7 @@ const FinancialSnapShot = ({ idea }) => {
           {idea.closedDate ? (
             <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
               {`This position was closed on ${dayjs(
-                new Date(idea.createdAt)
+                new Date(idea.closedDate)
               ).format("MMM DD, YYYY")} at an exit price of ${formatNumber(
                 idea.lastPrice,
                 2,
