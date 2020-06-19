@@ -16,8 +16,12 @@ const TableHeader = (props) => {
   const headCells = [
     { id: "username", numeric: false, label: "Analyst" },
     { id: "analystRank", numeric: true, label: "Overall Rank" },
-    { id: "brierScore", numeric: true, label: "Brier Score" },
     { id: "avgReturn", numeric: true, label: "Average Return" },
+    {
+      id: "avgPriceTargetCapture",
+      numeric: true,
+      label: "Avg Price Target Capture",
+    },
     { id: "successRate", numeric: true, label: "Success Rate" },
     { id: "numIdeas", numeric: true, label: "Ideas" },
     { id: "avgHoldingPeriod", numeric: true, label: "Avg Holding Period" },

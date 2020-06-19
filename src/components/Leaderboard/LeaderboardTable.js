@@ -47,8 +47,8 @@ function stableSort(array, comparator) {
 function createData(
   username,
   analystRank,
-  brierScore,
   avgReturn,
+  avgPriceTargetCapture,
   successRate,
   numIdeas,
   avgHoldingPeriod,
@@ -57,8 +57,8 @@ function createData(
   return {
     username,
     analystRank,
-    brierScore,
     avgReturn,
+    avgPriceTargetCapture,
     successRate,
     numIdeas,
     avgHoldingPeriod,
@@ -121,7 +121,7 @@ const LeaderboardTable = ({ analysts }) => {
     return createData(
       analyst.username,
       analyst.analystRank,
-      analyst.brierScore,
+      analyst.avgPriceTargetCapture,
       analyst.avgReturn,
       analyst.successRate,
       analyst.numIdeas,
@@ -178,7 +178,7 @@ const LeaderboardTable = ({ analysts }) => {
                   {getNumberWithOrdinal(row.analystRank)}
                 </TableCell>
                 <TableCell align="center">
-                  {formatNumber(row.brierScore, 2)}
+                  {formatNumber(row.avgPriceTargetCapture, 2)}
                 </TableCell>
                 <TableCell align="center">
                   {formatNumber(row.avgReturn, 1, "percentage")}
