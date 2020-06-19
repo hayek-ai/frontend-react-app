@@ -121,8 +121,8 @@ const LeaderboardTable = ({ analysts }) => {
     return createData(
       analyst.username,
       analyst.analystRank,
-      analyst.avgPriceTargetCapture,
       analyst.avgReturn,
+      analyst.avgPriceTargetCapture,
       analyst.successRate,
       analyst.numIdeas,
       analyst.avgHoldingPeriod,
@@ -178,10 +178,10 @@ const LeaderboardTable = ({ analysts }) => {
                   {getNumberWithOrdinal(row.analystRank)}
                 </TableCell>
                 <TableCell align="center">
-                  {formatNumber(row.avgPriceTargetCapture, 2)}
+                  {formatNumber(row.avgReturn, 1, "percentage")}
                 </TableCell>
                 <TableCell align="center">
-                  {formatNumber(row.avgReturn, 1, "percentage")}
+                  {formatNumber(row.avgPriceTargetCapture, 1, "percentage")}
                 </TableCell>
                 <TableCell align="center">
                   {formatNumber(row.successRate, 1, "percentage")}
