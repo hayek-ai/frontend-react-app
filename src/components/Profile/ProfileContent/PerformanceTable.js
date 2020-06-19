@@ -50,16 +50,16 @@ const PerformanceTable = ({ analyst }) => {
       "We use a proprietary algorithm to rank analysts by the performance of their ideas. Model inputs include brier score, average return per idea, success rate, and statistical significance, among others."
     ),
     createData(
-      "Brier Score",
-      formatNumber(analyst.brierScore, 2),
-      formatNumber(analyst.brierScorePercentile, 1, "percentage"),
-      "The brier score measures the accuracy of an analyst's probabilistic predictions (i.e. bear cases, base cases and bull cases). The best possible Brier score is 0 (total acccuracy), and the worst is 1 (wholly inaccurate)."
-    ),
-    createData(
       "Average Return",
       formatNumber(analyst.avgReturn, 1, "percentage"),
       formatNumber(analyst.avgReturnPercentile, 1, "percentage"),
       "The average return of all ideas.  We don't want to measure single lucky hits but rather the analyst's overall performance. Analysts who pick more volatile stocks will naturally have higher returns on their winning trades, but those wins will still have to compensate for higher losses on bad recommendations."
+    ),
+    createData(
+      "Average Price Target Capture",
+      formatNumber(analyst.avgPriceTargetCapture, 2),
+      formatNumber(analyst.avgPriceTargetCapturePercentile, 1, "percentage"),
+      "Price target capture refers to the percentage of expected gains captured by an analyst.  For example, if an analyst enters a long position at $10/share with a $20 price target (100% expected return) and closes out the position at $17 (70% actual return), the analyst's price capture for that stock would be 70%. The highest possible score is 100% (if an analyst hits all of his or her price targets).  The lowest score is 0 (if all ideas experience negative returns)."
     ),
     createData(
       "Success Rate",
