@@ -57,7 +57,7 @@ const PerformanceTable = ({ analyst }) => {
     ),
     createData(
       "Average Price Target Capture",
-      formatNumber(analyst.avgPriceTargetCapture, 2),
+      formatNumber(analyst.avgPriceTargetCapture, 1, "percentage"),
       formatNumber(analyst.avgPriceTargetCapturePercentile, 1, "percentage"),
       "Price target capture refers to the percentage of expected gains captured by an analyst.  For example, if an analyst enters a long position at $10/share with a $20 price target (100% expected return) and closes out the position at $17 (70% actual return), the analyst's price capture for that stock would be 70%. The highest possible score is 100% (if an analyst hits all of his or her price targets).  The lowest score is 0 (if all ideas experience negative returns)."
     ),
