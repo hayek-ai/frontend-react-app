@@ -46,7 +46,7 @@ const AboutUs = (props) => {
         markets. If you want to join us, shoot us an email at team@hayek.ai.
       </Typography>
       <Typography variant="h5" color="primary" className={classes.heading}>
-        How Hayek Works in 523 Words
+        How Hayek Works in ~500 Words
       </Typography>
       <Typography
         variant="body1"
@@ -102,9 +102,7 @@ const AboutUs = (props) => {
         <li>
           <span style={{ fontWeight: 700 }}>Industry Reputation.</span> Anyone
           can establish a track record as one of the best analysts on the site
-          regardless of their professional or educational background. There's
-          also no downside given that accounts are pseudonymous—if your track
-          record is terrible, no one has to know it was you.
+          regardless of their professional or educational background.
         </li>
         <li>
           <span style={{ fontWeight: 700 }}>Financial Upside.</span> Great
