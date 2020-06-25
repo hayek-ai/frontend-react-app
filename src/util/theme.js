@@ -43,6 +43,6 @@ export const theme = (dark) =>
       paper: `${dark ? darkPaper : lightPaper}`,
     },
     typography: {
-      fontFamily: "'Muli', sans-serif",
+      fontFamily: "'Open Sans', sans-serif",
     },
   });
